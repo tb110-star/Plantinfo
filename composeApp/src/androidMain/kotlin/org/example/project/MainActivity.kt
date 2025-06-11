@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import org.example.project.data.di.initKoin
 import org.example.project.utils.initJsonLoader
 import org.example.project.utils.loadJsonFromResources
 
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
             val json = loadJsonFromResources("mock_plant_response.json")
             Log.d("JSONTest", json)
         }
+        initKoin()
         setContent {
             App()
         }

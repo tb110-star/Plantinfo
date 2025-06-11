@@ -7,10 +7,12 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.decodeFromString
 import org.example.project.data.remote.PlantRepository
 import org.example.project.data.model.PlantIdentificationResult
+import org.example.project.utils.loadJsonFromResources
 
-
-/*
-
-class FakePlantRepository : PlantRepository {
-
-}*/
+class FakePlantRepository() : PlantRepository
+{
+    override suspend fun getPlantIdentification(): PlantIdentificationResult {
+        val json = loadJsonFromResources("mock_plant_response.json")
+        return Json { ignoreUnknownKeys = true }.decodeFromString(json)
+    }
+}

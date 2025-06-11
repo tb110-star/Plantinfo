@@ -12,7 +12,7 @@ PlantCareApp is a cross-platform application developed with Kotlin Multiplatform
 - **Plant Identification:** Identify plants via the Plant.id API
 - **Disease Detection:** Detect common plant diseases from images
 - **Plant Care Advice:** Provide watering, lighting, and soil recommendations
-- **User History & Favorites:** Save results and manage favorite plants locally
+- **History & Favorites:** Save results and manage favorite plants locally
 - **Offline Mode with Fake Data:** Use a Fake Repository with local JSON data for development and testing without API access
 - **Multi-platform Support:** Runs on Android and iOS using shared Kotlin Multiplatform UI
 
