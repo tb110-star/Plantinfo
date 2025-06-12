@@ -20,6 +20,7 @@ data class PlantIdentificationResult(
 data class Input(
     val latitude: Double,
     val longitude: Double,
+    @SerialName("similar_images")
     val similarImages: Boolean,
     val images: List<String>,
     val datetime: String,
