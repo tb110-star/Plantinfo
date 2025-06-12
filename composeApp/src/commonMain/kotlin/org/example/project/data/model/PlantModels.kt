@@ -41,11 +41,11 @@ data class IsPlant(
 @Serializable
 
 data class Classification(
-    val suggestions: List<Suggestion>,
+    val suggestions: List<Suggestions>,
 )
 @Serializable
 
-data class Suggestion(
+data class Suggestions(
     val id: String,
     val name: String,
     val probability: Double,
@@ -83,7 +83,7 @@ data class Details(
     val synonyms: List<String>,
     val image: Image,
     @SerialName("edible_parts")
-    val edibleParts: Any?,
+    val edibleParts: List<String>?,
     val watering: Watering?,
     @SerialName("best_light_condition")
     val bestLightCondition: String,
