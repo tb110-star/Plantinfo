@@ -3,10 +3,13 @@ package org.example.project
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material.TopAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -16,6 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,6 +57,14 @@ fun App() {
     MaterialTheme {
         }
     Scaffold(
+        topBar ={
+            TopAppBar (
+                title = {
+                   selectedTab.label
+                }
+
+            )
+        },
         bottomBar = {
             BottomNavigationBar(
                 navItems = NavigationItem.entries,
@@ -62,11 +74,11 @@ fun App() {
                 selectedNavItem = selectedTab
             )
         }
-    ) { paddingValues ->
+    ) { innerPading ->
         NavHost(
             navController = navController,
-            startDestination = NavigationItem.Home.route,
-            modifier = Modifier.padding(paddingValues)
+            startDestination = selectedTab.route,
+            modifier = Modifier.padding(innerPading)
         ) {
             composable<HomeScreenRoutes> { PlantInfoScreen() }
             composable<SearchScreenRoutes> { SearchScreen() }

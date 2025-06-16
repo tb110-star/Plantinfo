@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.project.ui.components.PickImageButton
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -25,6 +26,7 @@ fun PlantInfoScreen(
 ){
 val plantInfo = viewModel.plantInfo.collectAsState()
     val suggestions = plantInfo.value?.result?.classification?.suggestions ?: emptyList()
+
     Column {
         Button(
             onClick = { viewModel.loadPlantInfo() },
@@ -48,5 +50,8 @@ val plantInfo = viewModel.plantInfo.collectAsState()
                 modifier = Modifier.padding(8.dp)
             )
         }
+        PickImageButton(
+            onPickImage = { }
+        )
     }
 }
