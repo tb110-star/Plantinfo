@@ -8,20 +8,32 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.compose_multiplatform
+import org.example.project.navigation.HistoryScreenRoutes
+import org.example.project.navigation.HomeScreenRoutes
+import org.example.project.navigation.NavigationItem
+import org.example.project.navigation.SearchScreenRoutes
+import org.example.project.ui.components.BottomNavigationBar
+import org.example.project.ui.screens.HistoryScreen
 import org.example.project.ui.screens.PlantInfoScreen
+import org.example.project.ui.screens.SearchScreen
 import kotlin.time.Clock
 /*
 fun todaysDate(): String {
@@ -31,35 +43,36 @@ fun todaysDate(): String {
     val zone = TimeZone.currentSystemDefault()
     return now.toLocalDateTime(zone).format()
 }*/
-@Composable
-@Preview
-fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false)
+@OptIn(ExperimentalMaterial3Api::class)
 
+@Composable
+//@Preview
+fun App() {
+    val navController = rememberNavController()
+    var selectedTab by rememberSaveable { mutableStateOf(NavigationItem.Home) }
+    MaterialTheme {
         }
-        Column(
-            modifier = Modifier
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
+    Scaffold(
+        bottomBar = {
+            BottomNavigationBar(
+                navItems = NavigationItem.entries,
+                onNavItemSelection = {
+                    selectedTab = it
+                },
+                selectedNavItem = selectedTab
+            )
+        }
+    ) { paddingValues ->
+        NavHost(
+            navController = navController,
+            startDestination = NavigationItem.Home.route,
+            modifier = Modifier.padding(paddingValues)
         ) {
-          /* *//* Text(
-                text = "Today's date is ${todaysDate()}",
-                modifier = Modifier.padding(20.dp),
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center
-            )*//*
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")*/
-            PlantInfoScreen()
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
+            composable<HomeScreenRoutes> { PlantInfoScreen() }
+            composable<SearchScreenRoutes> { SearchScreen() }
+            composable<HistoryScreenRoutes> { HistoryScreen() }
         }
+
+    }
+
     }

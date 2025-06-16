@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.implementation
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -34,7 +35,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
         }
         commonMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.2")
@@ -50,10 +50,20 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
+           // implementation("io.github.hoc081098:kmp-viewmodel-core:0.8.0")
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation("io.insert-koin:koin-core:3.5.0")
-            implementation("io.github.hoc081098:kmp-viewmodel-koin-compose:0.8.0")
-
+           // implementation("io.github.hoc081098:kmp-viewmodel-koin-compose:0.8.0")
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta01")
+            implementation(libs.composeIcons.fontAwesome)
+            implementation(libs.composeIcons.feather)
+            implementation(compose.material)
+            implementation(libs.koin.compose.viewmodel.nav)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
+            api(libs.koin.annotations)
+            implementation(libs.navigation.compose)
+            implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

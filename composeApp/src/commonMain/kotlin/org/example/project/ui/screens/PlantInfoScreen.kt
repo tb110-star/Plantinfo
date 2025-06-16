@@ -14,13 +14,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.project.ui.viewModels.PlantInfoViewModel
-import com.hoc081098.kmp.viewmodel.koin.compose.koinKmpViewModel
+import org.koin.compose.viewmodel.koinViewModel
+
 @OptIn(
     ExperimentalMaterial3Api::class
 )
 @Composable
 fun PlantInfoScreen(
-    viewModel: PlantInfoViewModel = koinKmpViewModel()
+    viewModel: PlantInfoViewModel = koinViewModel<PlantInfoViewModel>()
 ){
 val plantInfo = viewModel.plantInfo.collectAsState()
     val suggestions = plantInfo.value?.result?.classification?.suggestions ?: emptyList()
