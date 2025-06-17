@@ -38,6 +38,8 @@ import org.example.project.ui.components.BottomNavigationBar
 import org.example.project.ui.screens.HistoryScreen
 import org.example.project.ui.screens.PlantInfoScreen
 import org.example.project.ui.screens.SearchScreen
+import org.example.project.ui.theme.AppTheme
+import org.example.project.ui.theme.MyThemeColor
 import kotlin.time.Clock
 /*
 fun todaysDate(): String {
@@ -54,37 +56,41 @@ fun todaysDate(): String {
 fun App() {
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(NavigationItem.Home) }
-    MaterialTheme {
-        }
-    Scaffold(
-        topBar ={
-            TopAppBar (
-                title = {
-                   selectedTab.label
-                }
+    var darkTheme by remember { mutableStateOf(false) }
+    var selectedTheme by remember { mutableStateOf(MyThemeColor.GREEN) }
+    AppTheme(
+        darkTheme = darkTheme,
+        selectedTheme = selectedTheme
+    ) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        selectedTab.label
+                    }
 
-            )
-        },
-        bottomBar = {
-            BottomNavigationBar(
-                navItems = NavigationItem.entries,
-                onNavItemSelection = {
-                    selectedTab = it
-                },
-                selectedNavItem = selectedTab
-            )
-        }
-    ) { innerPading ->
-        NavHost(
-            navController = navController,
-            startDestination = selectedTab.route,
-            modifier = Modifier.padding(innerPading)
-        ) {
-            composable<HomeScreenRoutes> { PlantInfoScreen() }
-            composable<SearchScreenRoutes> { SearchScreen() }
-            composable<HistoryScreenRoutes> { HistoryScreen() }
-        }
+                )
+            },
+            bottomBar = {
+                BottomNavigationBar(
+                    navItems = NavigationItem.entries,
+                    onNavItemSelection = {
+                        selectedTab = it
+                    },
+                    selectedNavItem = selectedTab
+                )
+            }
+        ) { innerpading ->
+            NavHost(
+                navController = navController,
+                startDestination = selectedTab.route,
+                modifier = Modifier.padding(innerpading)
+            ) {
+                composable<HomeScreenRoutes> { PlantInfoScreen() }
+                composable<SearchScreenRoutes> { SearchScreen() }
+                composable<HistoryScreenRoutes> { HistoryScreen() }
+            }
 
+        }
     }
-
     }

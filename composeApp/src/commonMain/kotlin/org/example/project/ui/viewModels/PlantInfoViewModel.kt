@@ -12,6 +12,12 @@ import org.example.project.data.remote.PlantRepository
 class PlantInfoViewModel(
     private val repo: PlantRepository
 ) : ViewModel() {
+    private val _isShowingAddSheet = MutableStateFlow(false)
+    val isShowingAddSheet = _isShowingAddSheet.asStateFlow()
+    private val _isDone = MutableStateFlow(false)
+    val isDone = _isDone.asStateFlow()
+    private val _selectedImagePath = MutableStateFlow<String?>(null)
+    val selectedImagePath = _selectedImagePath.asStateFlow()
     private val _plantInfo = MutableStateFlow<PlantIdentificationResult?>(null)
     val plantInfo = _plantInfo.asStateFlow()
     fun loadPlantInfo() {
@@ -24,5 +30,11 @@ val result = repo.getPlantIdentification()
                 _plantInfo.value = null
             }
         }
+    }
+    fun enableAddSheet(){
+        _isShowingAddSheet.value = true
+    }
+    fun disableAddSheet(){
+        _isShowingAddSheet.value = false
     }
 }
