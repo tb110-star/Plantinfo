@@ -47,7 +47,10 @@ val plantInfo = viewModel.plantInfo.collectAsState()
             )
         },
         floatingActionButton = {
-            FloatingActionButton (onClick = viewModel::enableAddSheet){
+            FloatingActionButton (onClick = viewModel::enableAddSheet,
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            ){
                 Icon(Icons.Default.Camera,"Upload Image")
             }
         }

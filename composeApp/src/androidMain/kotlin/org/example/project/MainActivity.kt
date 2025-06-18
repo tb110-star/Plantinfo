@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import org.example.project.data.local.ThemeSettingRepository.appContext
 import org.example.project.data.di.initKoin
 import org.example.project.utils.initJsonLoader
 import org.example.project.utils.loadJsonFromResources
@@ -16,6 +17,7 @@ import org.example.project.utils.loadJsonFromResources
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
+        appContext = applicationContext
         super.onCreate(savedInstanceState)
         initJsonLoader(applicationContext)
         lifecycleScope.launch {

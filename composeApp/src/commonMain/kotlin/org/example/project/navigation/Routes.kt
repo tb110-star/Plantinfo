@@ -8,3 +8,5 @@ object HomeScreenRoutes
 object SearchScreenRoutes
 @Serializable
 object HistoryScreenRoutes
+@Serializable
+object SettingScreenRoutes
