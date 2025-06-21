@@ -10,28 +10,7 @@ import kotlinx.coroutines.launch
 import org.example.project.data.local.ThemeSettingRepository.ThemeSettingsRepository
 import org.example.project.data.model.ThemeSettings
 import org.example.project.ui.theme.MyThemeColor
-/*
 
-class ThemeViewModel {
-    private val _isDark = MutableStateFlow(true)
-    val isDark: StateFlow<Boolean> = _isDark
-
-    private val _theme = MutableStateFlow(MyThemeColor.GREEN)
-    val theme: StateFlow<MyThemeColor> = _theme
-
-    fun toggleDarkMode() {
-        _isDark.value = !_isDark.value
-        // save
-    }
-
-    fun setTheme(theme: MyThemeColor) {
-        _theme.value = theme
-        //save
-    }
-
-    //      /NSUserDefaults
-}
-*/
 class ThemeSettingsViewModel(
     private val repository: ThemeSettingsRepository
 ) : ViewModel() {

@@ -1,10 +1,10 @@
 package org.example.project.data.local.ThemeSettingRepository
 
 
+import androidx.compose.ui.graphics.Color
 import org.example.project.data.model.ThemeSettings
 import org.example.project.ui.theme.MyThemeColor
 import platform.Foundation.NSUserDefaults
-
 class IosThemeSettingsRepository : ThemeSettingsRepository {
     private val defaults = NSUserDefaults.standardUserDefaults
     private val DARK_KEY = "dark_mode"

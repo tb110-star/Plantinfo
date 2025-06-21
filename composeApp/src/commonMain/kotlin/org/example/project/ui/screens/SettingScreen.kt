@@ -4,7 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
+import androidx.compose.material3.Button
+
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Switch
@@ -40,7 +41,6 @@ fun SettingsScreen(
             )
         }
         Spacer(Modifier.padding(8.dp))
-        // انتخاب رنگ
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Theme color")
             Button(onClick = { expanded = true }) {

@@ -37,6 +37,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation("androidx.datastore:datastore-preferences:1.0.0")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+            implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
 
         }
         commonMain.dependencies {
@@ -53,10 +54,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
-           // implementation("io.github.hoc081098:kmp-viewmodel-core:0.8.0")
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation("io.insert-koin:koin-core:3.5.0")
-           // implementation("io.github.hoc081098:kmp-viewmodel-koin-compose:0.8.0")
             implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta01")
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.composeIcons.feather)
@@ -67,6 +66,9 @@ kotlin {
             api(libs.koin.annotations)
             implementation(libs.navigation.compose)
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+            api(libs.moko.permissions)
+            api(libs.moko.permissions.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

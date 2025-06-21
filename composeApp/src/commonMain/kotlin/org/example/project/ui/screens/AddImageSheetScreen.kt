@@ -11,7 +11,28 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import org.example.project.data.uploadImage.rememberCameraManager
+import org.example.project.data.uploadImage.rememberGalleryManager
+import org.example.project.ui.viewModels.UploadImageViewModel
 
+@Composable
+fun AddImageSheetScreenWrapper(
+    viewModel: UploadImageViewModel,
+    onCloseClick: () -> Unit
+) {
+    val image by viewModel.image.collectAsState()
+
+    val cameraManager = rememberCameraManager { result -> viewModel.setImage(result) }
+    val galleryManager = rememberGalleryManager { result -> viewModel.setImage(result) }
+
+    AddImageSheetScreen(
+        onGalleryClick = { galleryManager.launch() },
+        onCameraClick = { cameraManager.launch() },
+        onSendClick = { /* send image */ },
+        selectedImagePath = image?.localPath,
+        onCloseClick = onCloseClick
+    )
+}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddImageSheetScreen(
@@ -27,9 +48,8 @@ fun AddImageSheetScreen(
             .graphicsLayer { alpha = 0.95f }
             .background(
                 color = Color.White.copy(alpha = 0.15f),
-                // glassmorphic background
             )
-            .blur(0.3.dp) // افکت بلور پس زمینه
+            .blur(0.3.dp)
             .padding(24.dp)
     ) {
         Column(
@@ -39,13 +59,13 @@ fun AddImageSheetScreen(
             Text(
                 "Add Image of Plant",
                 style = MaterialTheme.typography.titleLarge,
-                color = Color.White.copy(alpha = 0.90f)
+                //color = Color.White.copy(alpha = 0.90f)
             )
             Spacer(Modifier.height(16.dp))
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                 Button(
                     onClick = onGalleryClick,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.18f))
+                    //colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.18f))
                 ) {
                     Icon(Icons.Default.Photo, "Gallery")
                     Spacer(Modifier.width(8.dp))
@@ -53,7 +73,7 @@ fun AddImageSheetScreen(
                 }
                 Button(
                     onClick = onCameraClick,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.18f))
+                   // colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.18f))
                 ) {
                     Icon(Icons.Default.CameraAlt, "Camera")
                     Spacer(Modifier.width(8.dp))
@@ -68,7 +88,7 @@ fun AddImageSheetScreen(
                     containerColor = if (selectedImagePath != null)
                         MaterialTheme.colorScheme.primary
                     else
-                        Color.White.copy(alpha = 0.18f)
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
                 ),
                 modifier = Modifier.fillMaxWidth()
             ) {

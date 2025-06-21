@@ -7,9 +7,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Camera
-import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material.icons.filled.Photo
-
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -24,8 +21,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import org.example.project.ui.components.PickImageButton
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -41,11 +36,7 @@ fun PlantInfoScreen(
 val plantInfo = viewModel.plantInfo.collectAsState()
     val suggestions = plantInfo.value?.result?.classification?.suggestions ?: emptyList()
     Scaffold (
-        topBar ={
-            TopAppBar(
-                title = {"GoodMorning"}
-            )
-        },
+
         floatingActionButton = {
             FloatingActionButton (onClick = viewModel::enableAddSheet,
                 containerColor = MaterialTheme.colorScheme.primary,
