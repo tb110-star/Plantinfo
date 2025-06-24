@@ -1,4 +1,4 @@
-# PlantCareApp — Plant Care & Identification Application (Kotlin Multiplatform)
+  ```   # PlantCareApp — Plant Care & Identification Application (Kotlin Multiplatform)
 
 ## Overview
 

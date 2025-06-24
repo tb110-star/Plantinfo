@@ -21,7 +21,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.project.ui.components.PlantCard
 import org.example.project.ui.viewModels.PlantInfoViewModel
+import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(
@@ -31,6 +33,8 @@ import org.koin.compose.viewmodel.koinViewModel
 fun PlantInfoScreen(
     viewModel: PlantInfoViewModel = koinViewModel<PlantInfoViewModel>()
 ){
+    val uploadImageViewModel: UploadImageViewModel = koinViewModel()
+
     val isShowingAddSheet by viewModel.isShowingAddSheet.collectAsState()
     val isDone by viewModel.isDone.collectAsState()
 val plantInfo = viewModel.plantInfo.collectAsState()
@@ -48,18 +52,19 @@ val plantInfo = viewModel.plantInfo.collectAsState()
 
     ){ innerPadding ->
         Column ( modifier = Modifier.padding(innerPadding)){
-            Button(
-                onClick = { viewModel.loadPlantInfo() },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Text("Load Plant Info")
-            }
 
             if (plantInfo != null) {
-                LazyColumn {
-                    items(suggestions) { suggestion ->
-                        Text(text = "${suggestion.name} - Confidence: ${(suggestion.probability * 100).toInt()}%")
+                val topSuggestions = suggestions
+                    .sortedByDescending { it.probability }
+                    .take(5)
 
+                LazyColumn {
+                    items(topSuggestions) { suggestion ->
+                        PlantCard(plant = suggestion) {
+                            // navigate to detail screen with this suggestion
+                            //  "detail/{id}"
+                            // navController.navigate("detail/${suggestion.id}")
+                        }
                     }
                 }
 
@@ -70,21 +75,18 @@ val plantInfo = viewModel.plantInfo.collectAsState()
                     modifier = Modifier.padding(8.dp)
                 )
             }
-           /* PickImageButton(
-                onPickImage = { }
-            )*/
+
         }
 
         if(isShowingAddSheet) {
+
             ModalBottomSheet(
                 onDismissRequest = viewModel :: disableAddSheet
             ) {
                 AddImageSheetScreen(
-                    onGalleryClick = {},
-                    onCameraClick = {  },
-                    onSendClick = {},
-                    selectedImagePath = viewModel.selectedImagePath.collectAsState().value,
-                    onCloseClick = viewModel::disableAddSheet
+
+                    onCloseClick = viewModel::disableAddSheet,
+
                 )
 
 

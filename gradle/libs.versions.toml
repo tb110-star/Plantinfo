@@ -19,7 +19,11 @@ koin = "4.1.0"
 koin-annotations = "2.0.1-Beta1"
 navigationCompose = "2.8.0-alpha10"
 moko = "0.18.0"
+coil = "3.0.4"
+
 [libraries]
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-testJunit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { module = "junit:junit", version.ref = "junit" }

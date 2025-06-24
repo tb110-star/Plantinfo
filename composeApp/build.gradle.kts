@@ -69,6 +69,8 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             api(libs.moko.permissions)
             api(libs.moko.permissions.compose)
+            implementation(libs.coil.compose)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

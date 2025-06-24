@@ -11,8 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.example.project.data.local.ThemeSettingRepository.appContext
 import org.example.project.data.di.initKoin
-import org.example.project.data.permissionManager.AndroidPermissionBridgeListener
-import org.example.project.data.permissionManager.PermissionBridge
 import org.example.project.utils.initJsonLoader
 import org.example.project.utils.loadJsonFromResources
 
@@ -21,8 +19,7 @@ class MainActivity : ComponentActivity(){
         enableEdgeToEdge()
         appContext = applicationContext
         super.onCreate(savedInstanceState)
-        val bridge = PermissionBridge()
-        bridge.setListener(AndroidPermissionBridgeListener(this))
+
         initJsonLoader(applicationContext)
         lifecycleScope.launch {
             val json = loadJsonFromResources("mock_plant_response.json")
