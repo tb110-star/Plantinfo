@@ -45,6 +45,17 @@ val result = repo.getPlantIdentification()
         _selectedSuggestion.value = suggestion
     }
 
+    fun splitTextSmart(text: String, maxLength: Int = 300): Pair<String, String> {
+        if (text.length <= maxLength) return text to ""
+
+        val breakpoint = text.lastIndexOfAny(charArrayOf('.', '\n'), maxLength)
+            .takeIf { it != -1 } ?: maxLength
+
+        val firstPart = text.substring(0, breakpoint + 1).trimEnd()
+        val secondPart = text.substring(breakpoint + 1).trimStart()
+
+        return firstPart to secondPart
+    }
 
 
 }
