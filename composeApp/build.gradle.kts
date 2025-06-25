@@ -18,7 +18,7 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -29,15 +29,16 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
-        
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation("androidx.datastore:datastore-preferences:1.0.0")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
+            implementation("io.ktor:ktor-client-android:3.1.3")
 
         }
         commonMain.dependencies {
@@ -56,7 +57,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation("io.insert-koin:koin-core:3.5.0")
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta01")
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta03")
             implementation(libs.composeIcons.fontAwesome)
             implementation(libs.composeIcons.feather)
             implementation(compose.material)
@@ -69,7 +70,10 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
             api(libs.moko.permissions)
             api(libs.moko.permissions.compose)
-            implementation(libs.coil.compose)
+            implementation("io.coil-kt.coil3:coil-compose:3.2.0")
+
+            implementation("io.coil-kt.coil3:coil-network-ktor3:3.2.0")
+
 
         }
         commonTest.dependencies {
@@ -108,4 +112,3 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-

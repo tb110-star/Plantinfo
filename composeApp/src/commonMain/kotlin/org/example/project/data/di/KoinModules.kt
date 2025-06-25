@@ -11,9 +11,10 @@ import org.koin.dsl.module
 
 val appModule = module {
     single<PlantRepository> { FakePlantRepository() }
-    // single { PlantInfoViewModel(get())}
-    factoryOf(::PlantInfoViewModel)
+     single { PlantInfoViewModel(get())}
+   // factoryOf(::PlantInfoViewModel)
     single { getThemeSettingsRepository() }
     single { ThemeSettingsViewModel(get()) }
     single { UploadImageViewModel() }
+
 }

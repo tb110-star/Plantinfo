@@ -1,54 +1,66 @@
 package org.example.project.ui.components
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import coil3.compose.AsyncImagePainter
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.error
+import kotlinproject.composeapp.generated.resources.placeholder
+
 import org.example.project.data.model.Suggestions
+import org.jetbrains.compose.resources.painterResource
+@OptIn(ExperimentalMaterial3Api::class)
 
 @Composable
 fun PlantCard(
     plant: Suggestions,
-    onClick: () -> Unit
+    onClick: (Suggestions) -> Unit
 ) {
+    val placeholderPainter = painterResource(Res.drawable.placeholder)
+    val errorPainter = painterResource(Res.drawable.error)
+    LaunchedEffect(Unit) {
+        println("Image URL: ${plant.details.image.value}")
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
-            .graphicsLayer {
-                alpha = 0.9f
-                shadowElevation = 8f
-                shape = RoundedCornerShape(24.dp)
-                clip = true
-            }
-            .clickable(onClick = onClick),
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .clickable(
+                onClick = {onClick(plant)}
+            ),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.2f),
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
-        shape = RoundedCornerShape(24.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = plant.name,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(6.dp))
                 Text(
                     text = "Confidence: ${(plant.probability * 100).toInt()}%",
                     style = MaterialTheme.typography.bodySmall,
@@ -58,15 +70,25 @@ fun PlantCard(
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            AsyncImage(
-                model = plant.details.image.value,
-                contentDescription = "Plant Image",
-                contentScale = ContentScale.Crop,
+            Box(
                 modifier = Modifier
-                    .size(64.dp)
+                    .size(70.dp)
                     .clip(CircleShape)
-            )
-
+                    .border(
+                        width = 2.dp,
+                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f),
+                        shape = CircleShape
+                    )
+            ) {
+                AsyncImage(
+                    model = plant.details.image.value,
+                    contentDescription = "Plant Image",
+                    contentScale = ContentScale.Crop,
+                    placeholder = placeholderPainter,
+                    error = errorPainter,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
         }
     }
 }

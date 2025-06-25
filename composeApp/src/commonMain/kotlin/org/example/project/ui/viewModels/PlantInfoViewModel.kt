@@ -1,12 +1,13 @@
 package org.example.project.ui.viewModels
 
-//import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+
 import org.example.project.data.model.PlantIdentificationResult
+import org.example.project.data.model.Suggestions
 import org.example.project.data.remote.PlantRepository
 //import com.hoc081098.kmp.viewmodel.ViewModel
 class PlantInfoViewModel(
@@ -37,4 +38,17 @@ val result = repo.getPlantIdentification()
     fun disableAddSheet(){
         _isShowingAddSheet.value = false
     }
+    private val _selectedSuggestion = MutableStateFlow<Suggestions?>(null)
+    val selectedSuggestion = _selectedSuggestion.asStateFlow()
+
+    fun selectSuggestion(suggestion: Suggestions) {
+        _selectedSuggestion.value = suggestion
+    }
+
+
+
 }
+
+
+
+

@@ -7,11 +7,12 @@ import androidx.compose.material.icons.filled.Search
 
 enum class NavigationItem(
     val route: Any,
+
     val label: String,
     val icon: ImageVector
 )
 {
     Home(HomeScreenRoutes, "Home", Icons.Default.Home),
     Search(SearchScreenRoutes, "Search", Icons.Default.Search),
-    Profile(HistoryScreenRoutes, "History", Icons.Default.History)
+    History(HistoryScreenRoutes, "History", Icons.Default.History)
 }

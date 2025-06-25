@@ -17,10 +17,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.project.data.model.Suggestions
 import org.example.project.ui.components.PlantCard
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.example.project.ui.viewModels.UploadImageViewModel
@@ -31,7 +33,8 @@ import org.koin.compose.viewmodel.koinViewModel
 )
 @Composable
 fun PlantInfoScreen(
-    viewModel: PlantInfoViewModel = koinViewModel<PlantInfoViewModel>()
+    viewModel: PlantInfoViewModel = koinViewModel<PlantInfoViewModel>(),
+    onDetailsClick: (Suggestions) -> Unit
 ){
     val uploadImageViewModel: UploadImageViewModel = koinViewModel()
 
@@ -39,6 +42,12 @@ fun PlantInfoScreen(
     val isDone by viewModel.isDone.collectAsState()
 val plantInfo = viewModel.plantInfo.collectAsState()
     val suggestions = plantInfo.value?.result?.classification?.suggestions ?: emptyList()
+    LaunchedEffect(Unit) {
+        println("All suggestions:")
+        plantInfo?.value?.result?.classification?.suggestions?.forEach {
+            println("Suggestion ID: ${it.id}")
+        }
+    }
     Scaffold (
 
         floatingActionButton = {
@@ -60,11 +69,20 @@ val plantInfo = viewModel.plantInfo.collectAsState()
 
                 LazyColumn {
                     items(topSuggestions) { suggestion ->
-                        PlantCard(plant = suggestion) {
-                            // navigate to detail screen with this suggestion
-                            //  "detail/{id}"
-                            // navController.navigate("detail/${suggestion.id}")
-                        }
+                        println("Clicked plant ID: ${suggestion.id}")
+                        PlantCard(
+                            plant = suggestion,
+                            onClick = onDetailsClick
+                        )
+/*
+onPlantClick = { suggestion ->
+    navController.navigate(
+        DetailsPlantRoute(suggestion = suggestion)
+    )
+}
+
+ */
+
                     }
                 }
 
