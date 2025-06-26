@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import org.example.project.data.di.RoomFactory
 import org.example.project.data.local.ThemeSettingRepository.appContext
 import org.example.project.data.di.initKoin
 import org.example.project.utils.initJsonLoader
@@ -25,7 +26,9 @@ class MainActivity : ComponentActivity(){
             val json = loadJsonFromResources("mock_plant_response.json")
             Log.d("JSONTest", json)
         }
-        initKoin()
+
+        val factory = RoomFactory(application)
+        initKoin(factory)
         setContent {
             App()
         }

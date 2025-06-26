@@ -1,5 +1,6 @@
 package org.example.project.data.model
 
+import androidx.room.Entity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -39,6 +40,7 @@ data class IsPlant(
     val threshold: Double,
     val binary: Boolean,
 )
+
 @Serializable
 
 data class Classification(

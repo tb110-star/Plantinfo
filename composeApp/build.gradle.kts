@@ -9,15 +9,20 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("org.jetbrains.kotlin.plugin.serialization") version "2.1.21"
+    alias(libs.plugins.room)
+    id("com.google.devtools.ksp") version "2.1.21-2.0.2"
+
 }
 
 kotlin {
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
+
 
     listOf(
         iosX64(),
@@ -39,6 +44,9 @@ kotlin {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
             implementation("io.ktor:ktor-client-android:3.1.3")
+            implementation(libs.androidx.room.paging)
+
+
 
         }
         commonMain.dependencies {
@@ -68,12 +76,11 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
-            api(libs.moko.permissions)
-            api(libs.moko.permissions.compose)
             implementation("io.coil-kt.coil3:coil-compose:3.2.0")
-
             implementation("io.coil-kt.coil3:coil-network-ktor3:3.2.0")
-
+            implementation(libs.androidx.paging.common)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
 
         }
         commonTest.dependencies {
@@ -111,4 +118,13 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosX64" , libs.androidx.room.compiler)
+   add("kspIosArm64",libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64",libs.androidx.room.compiler)
+
+
+}
+room {
+    schemaDirectory("$projectDir/schemas")
 }
