@@ -43,7 +43,7 @@ kotlin {
             implementation("androidx.datastore:datastore-preferences:1.0.0")
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
             implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
-            implementation("io.ktor:ktor-client-android:3.1.3")
+            implementation(libs.ktor.client.core)
             implementation(libs.androidx.room.paging)
 
 
@@ -86,6 +86,11 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+
+        }
+
     }
 }
 
@@ -117,6 +122,7 @@ android {
 }
 
 dependencies {
+
     debugImplementation(compose.uiTooling)
     add("kspAndroid", libs.androidx.room.compiler)
     add("kspIosX64" , libs.androidx.room.compiler)
