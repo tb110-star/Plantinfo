@@ -44,8 +44,8 @@ val plantInfo = viewModel.plantInfo.collectAsState()
     val suggestions = plantInfo.value?.result?.classification?.suggestions ?: emptyList()
     LaunchedEffect(Unit) {
         println("All suggestions:")
-        plantInfo?.value?.result?.classification?.suggestions?.forEach {
-            println("Suggestion ID: ${it.id}")
+        plantInfo.value?.result?.classification?.suggestions?.forEach { suggest ->
+            println("Suggestion ID: ${suggest.id}")
         }
     }
     Scaffold (

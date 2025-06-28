@@ -1,0 +1,351 @@
+{
+  "access_token": "56t1jquyA1hyfB4",
+  "model_version": "plant_id:4.3.1",
+  "custom_id": null,
+  "input": {
+    "latitude": 49.207,
+    "longitude": 16.608,
+    "similar_images": true,
+    "health": "only",
+    "images": [
+      "https://plant.id/media/imgs/5dbe6d1eb07845a8b19d84031a72c03d.jpg"
+    ],
+    "datetime": "2025-03-25T12:18:39.423922+00:00"
+  },
+  "result": {
+    "is_healthy": {
+      "binary": false,
+      "threshold": 0.525,
+      "probability": 0.0420382022857666
+    },
+    "disease": {
+      "suggestions": [
+        {
+          "id": "765b06482c4e4ae9",
+          "name": "nutrient deficiency",
+          "probability": 0.8306,
+          "similar_images": [
+            {
+              "id": "6b9696028539a451a6f1bf7c236f2bdd28e9f3f4",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/6b9/696028539a451a6f1bf7c236f2bdd28e9f3f4.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.599,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/6b9/696028539a451a6f1bf7c236f2bdd28e9f3f4.small.jpg"
+            },
+            {
+              "id": "cbb3aac34fdd574cc5ff9f3b6713e425802b39e7",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/cbb/3aac34fdd574cc5ff9f3b6713e425802b39e7.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.565,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/cbb/3aac34fdd574cc5ff9f3b6713e425802b39e7.small.jpg"
+            }
+          ],
+          "details": {
+            "local_name": "nutrient deficiency",
+            "description": "Nutrient deficiency is caused by a lack of macronutrients or micronutrients essential for the plant. This can be caused by insufficient amounts of nutrients in the soil or unsuitable conditions for nutrients uptake.",
+            "url": "https://www.missouribotanicalgarden.org/gardens-gardening/your-garden/help-for-the-home-gardener/advice-tips-resources/pests-and-problems/environmental/nutrients.aspx",
+            "treatment": {
+              "chemical": [
+                "Apply missing nutrients to the plant foliage (suitable for quick help). Follow the instructions on the chosen product to prevent excessive fertilizer usage.",
+                "Apply missing nutrients to the soil (suitable for long-term help). Follow the instructions on the chosen product to prevent excessive fertilizer usage."
+              ],
+              "biological": [
+                "Replant the plant into fresh soil rich in nutrients.",
+                "Add manure or compost to the soil."
+              ],
+              "prevention": [
+                "Apply fertilizer regularly. Fertilizing is especially important during spring and summer.",
+                "Change the soil regularly. Plants should be repotted when the soil is compacted, depleted of nutrients, and no longer retains water.",
+                "Choose suitable neighboring plants. Plants with similar nutrient requirements should not be planted close to each other."
+              ]
+            },
+            "classification": [
+              "Abiotic",
+              "nutrient-related issue"
+            ],
+            "common_names": null,
+            "cause": null,
+            "language": "en",
+            "entity_id": "765b06482c4e4ae9"
+          }
+        },
+        {
+          "id": "e5eed7f688efa59e",
+          "name": "water excess or uneven watering",
+          "probability": 0.6623,
+          "similar_images": [
+            {
+              "id": "81eef8a0953ad54472203dc5a9c1a6ea1790637b",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/81e/ef8a0953ad54472203dc5a9c1a6ea1790637b.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.684,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/81e/ef8a0953ad54472203dc5a9c1a6ea1790637b.small.jpg"
+            },
+            {
+              "id": "d4a7c9e0b7b8bb5fe1de7b86a0caba4bf77fc6de",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/d4a/7c9e0b7b8bb5fe1de7b86a0caba4bf77fc6de.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.635,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/d4a/7c9e0b7b8bb5fe1de7b86a0caba4bf77fc6de.small.jpg"
+            }
+          ],
+          "details": {
+            "local_name": "water excess or uneven watering",
+            "description": "Water excess and uneven watering are abiotic disorders caused by inadequate watering. Water excess may lead to rotting of the roots due to lack of oxygen, and higher susceptibility to infection. Symptoms of over-watering include stunted growth, yellow and brown leaves, wilting and higher susceptibility to leaf burn.",
+            "url": "https://www.missouribotanicalgarden.org/gardens-gardening/your-garden/help-for-the-home-gardener/advice-tips-resources/pests-and-problems/environmental/overwatering.aspx",
+            "treatment": {
+              "biological": [
+                "Remove and discard moldy soil or replant the plant into fresh soil.",
+                "Remove your plant from the pot and inspect the roots. Prune and discard rotten roots (brown, mushy, stinky).",
+                "Select a flower pot with the appropriate size and material.",
+                "Temporarily move the plant to a more shady place (roots might be damaged and do not manage to supply the plant with water)."
+              ],
+              "prevention": [
+                "Improve soil drainage (e.g. by adding compost to the soil or rocks to the bottom of the pot). Ensure having drainage holes at the bottom of the pot."
+              ]
+            },
+            "classification": [
+              "Abiotic",
+              "water-related issue"
+            ],
+            "common_names": [
+              "overwatering"
+            ],
+            "cause": null,
+            "language": "en",
+            "entity_id": "e5eed7f688efa59e"
+          }
+        },
+        {
+          "id": "9218257b5a5f1180",
+          "name": "lack of light",
+          "probability": 0.4334,
+          "similar_images": [
+            {
+              "id": "2d26bebf1ef6ce0239f6f752b9946284c4cc6963",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/2d2/6bebf1ef6ce0239f6f752b9946284c4cc6963.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.682,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/5/2d2/6bebf1ef6ce0239f6f752b9946284c4cc6963.small.jpg"
+            },
+            {
+              "id": "5dd87015c39e1aaf566a2314b5300c77318772a5",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/5dd/87015c39e1aaf566a2314b5300c77318772a5.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.632,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/5dd/87015c39e1aaf566a2314b5300c77318772a5.small.jpg"
+            }
+          ],
+          "details": {
+            "local_name": "lack of light",
+            "description": "Lack of light may lead to a leggy and weak appearance of the plant. Such plants often grow long internodes with smaller leaves, have stunted growth or the leaves become yellow.",
+            "url": "https://extension.umn.edu/planting-and-growing-guides/lighting-indoor-plants",
+            "treatment": {
+              "biological": [
+                "Use grow light to increase lightning.",
+                "Increase the spacing between plants."
+              ]
+            },
+            "classification": [
+              "Abiotic",
+              "light-related issue"
+            ],
+            "common_names": [
+              "light deficiency"
+            ],
+            "cause": null,
+            "language": "en",
+            "entity_id": "9218257b5a5f1180"
+          }
+        },
+        {
+          "id": "dbdc1966896977dd",
+          "name": "light excess",
+          "probability": 0.3087,
+          "similar_images": [
+            {
+              "id": "d27743cbba65bc0cb962dab7d8c25d5773b8fb9a",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/d27/743cbba65bc0cb962dab7d8c25d5773b8fb9a.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.64,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/d27/743cbba65bc0cb962dab7d8c25d5773b8fb9a.small.jpg"
+            },
+            {
+              "id": "0d19c89480f7963e143d3a0b2c18bdb932dbeeb0",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/0d1/9c89480f7963e143d3a0b2c18bdb932dbeeb0.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.571,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/0d1/9c89480f7963e143d3a0b2c18bdb932dbeeb0.small.jpg"
+            }
+          ],
+          "details": {
+            "local_name": "light excess",
+            "description": "Too much light can be harmful, especially to shade-loving plants. The excess light energy is converted to heat and can cause damage to the plant. The plant develops symptoms such as yellow or brown spots on the foliage, yellowing of the leaves, brown crispy leaf edges or tips, and wilting. In serious cases, excess light leads to sunburn or sunscald.",
+            "url": null,
+            "treatment": {
+              "biological": [
+                "Shade the plant using shade net.",
+                "Do not remove the sunburned leaves until the risk of sunburn is minimalized. This will protect other parts of the plant from sunburn.",
+                "For trees: for better wound healing you may carefully remove any dead bark. Depending on the size of the wound, healing may take many years."
+              ],
+              "prevention": [
+                "For trees: paint the trunk and sun-exposed branches with white color. Make sure that the paint is not toxic to the plant.",
+                "For trees: wrap the trunk and sun-exposed branches with white-colored tree wrap strips. Remove the wrap in early spring so that the tree can grow."
+              ]
+            },
+            "classification": [
+              "Abiotic",
+              "light-related issue"
+            ],
+            "common_names": null,
+            "cause": null,
+            "language": "en",
+            "entity_id": "dbdc1966896977dd"
+          }
+        },
+        {
+          "id": "c6fbc333b227bd54",
+          "name": "water deficiency",
+          "probability": 0.2143,
+          "similar_images": [
+            {
+              "id": "aac01f4215431f1301e64c024884427f06bd2e84",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/aac/01f4215431f1301e64c024884427f06bd2e84.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.595,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/aac/01f4215431f1301e64c024884427f06bd2e84.small.jpg"
+            },
+            {
+              "id": "482fcbdda9340978fb99c5fe38eab6c166ee7a40",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/482/fcbdda9340978fb99c5fe38eab6c166ee7a40.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.523,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/482/fcbdda9340978fb99c5fe38eab6c166ee7a40.small.jpg"
+            }
+          ],
+          "details": {
+            "local_name": "water deficiency",
+            "description": "Water deficiency is similar in its symptoms to over-watering and it is important to identify the cause. Symptoms include slow growth, wilting, discolored leaves and flowers, burning on edges of leaves. The affected plant can also suffer from disrupted nutrient uptake.",
+            "url": "https://www.missouribotanicalgarden.org/gardens-gardening/your-garden/help-for-the-home-gardener/advice-tips-resources/pests-and-problems/environmental/drought.aspx",
+            "treatment": {
+              "chemical": [
+                "You may apply hydrogel for plants to the soil to increase water retention capacity."
+              ],
+              "biological": [
+                "For potted plants: if the soil is really dry, you may immerse the whole pot in water and wait until the soil absorbs the water.",
+                "Replant the plant into a bigger pot, which has a higher retention capacity.",
+                "Temporarily move the plant to a more shady place (roots might be damaged and do not manage to supply the plant with water)."
+              ],
+              "prevention": [
+                "Mulch plants with a layer of organic mulch to reduce soil evaporation."
+              ]
+            },
+            "classification": [
+              "Abiotic",
+              "water-related issue"
+            ],
+            "common_names": [
+              "drought"
+            ],
+            "cause": null,
+            "language": "en",
+            "entity_id": "c6fbc333b227bd54"
+          }
+        },
+        {
+          "id": "af7b78782de52bd8",
+          "name": "senescence",
+          "probability": 0.1199,
+          "similar_images": [
+            {
+              "id": "629e28500262be9ea079492d2653c252be8f6308",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/629/e28500262be9ea079492d2653c252be8f6308.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.626,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/629/e28500262be9ea079492d2653c252be8f6308.small.jpg"
+            },
+            {
+              "id": "c76d621bb36b7634451471f62dd0457ca40906a8",
+              "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/c76/d621bb36b7634451471f62dd0457ca40906a8.jpg",
+              "license_name": "CC BY-NC-SA 4.0",
+              "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+              "citation": "FlowerChecker s.r.o.",
+              "similarity": 0.537,
+              "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/4/c76/d621bb36b7634451471f62dd0457ca40906a8.small.jpg"
+            }
+          ],
+          "details": {
+            "local_name": "senescence",
+            "description": "Senescence is a process of aging that can occur due to physiological aging or environmental stress.",
+            "url": "https://en.wikipedia.org/wiki/Plant_senescence",
+            "treatment": {
+              "biological": [
+                "Remove dead parts of the plant."
+              ],
+              "prevention": [
+                "Prevent plant stress by optimal watering, fertilizing and protection from sun and frost."
+              ]
+            },
+            "classification": [],
+            "common_names": [
+              "aging"
+            ],
+            "cause": null,
+            "language": "en",
+            "entity_id": "af7b78782de52bd8"
+          }
+        }
+      ],
+      "question": {
+        "text": "After watering, do the leaves remain wilted and soft instead of becoming firm?",
+        "translation": "After watering, do the leaves remain wilted and soft instead of becoming firm?",
+        "options": {
+          "yes": {
+            "suggestion_index": 1,
+            "entity_id": "e5eed7f688efa59e",
+            "name": "water excess or uneven watering",
+            "translation": "Yes"
+          },
+          "no": {
+            "suggestion_index": 0,
+            "entity_id": "765b06482c4e4ae9",
+            "name": "nutrient deficiency",
+            "translation": "No"
+          }
+        }
+      }
+    },
+    "is_plant": {
+      "probability": 0.99337137,
+      "threshold": 0.5,
+      "binary": true
+    }
+  },
+  "status": "COMPLETED",
+  "sla_compliant_client": true,
+  "sla_compliant_system": true,
+  "created": 1742905119.423922,
+  "completed": 1742905119.876707
+}

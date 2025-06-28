@@ -6,7 +6,7 @@ import org.example.project.data.model.Suggestions
 @Serializable
 object HomeScreenRoutes
 @Serializable
-object SearchScreenRoutes
+object HealthScreenRoutes
 @Serializable
 object HistoryScreenRoutes
 @Serializable

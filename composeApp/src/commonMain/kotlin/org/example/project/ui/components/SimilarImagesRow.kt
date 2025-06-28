@@ -35,9 +35,11 @@ import org.example.project.data.model.SimilarImage
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun SimilarImagesRow(
-    images: List<SimilarImage>,
-    modifier: Modifier = Modifier
+fun <T> SimilarImagesRow(
+    images: List<T>,
+    modifier: Modifier = Modifier,
+    getImageUrlSmall: (T) -> String,
+    getImageUrlLarge: (T) -> String
 ) {
     val enlargedImage = remember { mutableStateOf<String?>(null) }
     val placeholderPainter = painterResource(Res.drawable.placeholder)
@@ -50,7 +52,7 @@ fun SimilarImagesRow(
         ) {
             items(images) { image ->
                 AsyncImage(
-                    model = image.urlSmall,
+                    model =  getImageUrlSmall(image),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     placeholder = placeholderPainter,
@@ -59,8 +61,7 @@ fun SimilarImagesRow(
                         .size(80.dp)
                         .clip(CircleShape)
                         .clickable {
-                            enlargedImage.value = image.url
-                        }
+                            enlargedImage.value = getImageUrlLarge(image)                        }
                 )
             }
         }

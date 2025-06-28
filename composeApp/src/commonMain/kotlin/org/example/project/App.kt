@@ -93,10 +93,10 @@ fun App() {
                         }
                     )
                 }
-                composable<SearchScreenRoutes> {
+                composable<HealthScreenRoutes> {
                     showBackIcon = false
                     currentTopBarTitle = NavigationItem.Search.label
-                    SearchScreen()
+                    HealthInfoScreen()
                 }
                 composable<HistoryScreenRoutes> {
                     showBackIcon = false

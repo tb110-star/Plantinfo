@@ -1,22 +1,23 @@
 package org.example.project.data.model
-
 import androidx.room.Entity
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-
 @Serializable
 data class PlantIdentificationResult(
-    @SerialName("access_token")
+   /* @SerialName("access_token")
     val accessToken: String,
     @SerialName("model_version")
     val modelVersion: String,
     @SerialName("input")
     val input: Input,
-    @SerialName("result")
-    val result: Result,
+
     @SerialName("status")
     val status: String,
+    */
+   @SerialName("result")
+   val result: Result,
 )
+/*
 @Serializable
 data class Input(
     val latitude: Double,
@@ -26,28 +27,25 @@ data class Input(
     val images: List<String>,
     val datetime: String,
 )
-@Serializable
 
+ */
+@Serializable
 data class Result(
     @SerialName("is_plant")
     val isPlant: IsPlant,
     val classification: Classification,
 )
 @Serializable
-
 data class IsPlant(
     val probability: Double,
     val threshold: Double,
     val binary: Boolean,
 )
-
 @Serializable
-
 data class Classification(
     val suggestions: List<Suggestions>,
 )
 @Serializable
-
 data class Suggestions(
     val id: String,
     val name: String,
@@ -57,7 +55,6 @@ data class Suggestions(
     val details: Details,
 )
 @Serializable
-
 data class SimilarImage(
     val id: String,
     val url: String,
@@ -71,7 +68,6 @@ data class SimilarImage(
     val urlSmall: String,
 )
 @Serializable
-
 data class Details(
     @SerialName("common_names")
     val commonNames: List<String>?,

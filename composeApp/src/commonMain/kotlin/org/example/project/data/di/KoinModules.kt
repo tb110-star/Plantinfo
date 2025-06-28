@@ -7,6 +7,7 @@ import org.example.project.data.local.ThemeSettingRepository.getThemeSettingsRep
 import org.example.project.data.local.roomDataBase.AppDatabase
 import org.example.project.data.local.roomDataBase.AppDatabaseConstructor
 import org.example.project.data.remote.PlantRepository
+import org.example.project.ui.viewModels.HealthInfoViewModel
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
 import org.example.project.ui.viewModels.UploadImageViewModel
@@ -25,4 +26,6 @@ val appModule = module {
     single { getThemeSettingsRepository() }
     single { ThemeSettingsViewModel(get()) }
     single { UploadImageViewModel() }
+    single { HealthInfoViewModel(get()) }
+
 }

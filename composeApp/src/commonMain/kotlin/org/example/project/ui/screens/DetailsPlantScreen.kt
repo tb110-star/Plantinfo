@@ -67,13 +67,17 @@ fun DetailsPlantScreen(
 
                 Spacer(Modifier.height(12.dp))
 
-                suggestion.similarImages?.takeIf { it.isNotEmpty() }?.let { images ->
+                suggestion.similarImages.takeIf { it.isNotEmpty() }?.let { images ->
                     Text(
                         text = "Similar Images",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
-                    SimilarImagesRow(images = images)
+                    SimilarImagesRow(
+                        images = images,
+                        getImageUrlSmall = {it.urlSmall},
+                        getImageUrlLarge = {it.url}
+                    )
                     Spacer(Modifier.height(16.dp))
                 }
 
