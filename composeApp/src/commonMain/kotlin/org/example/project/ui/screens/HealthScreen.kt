@@ -1,37 +1,42 @@
 package org.example.project.ui.screens
-
+/*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
-import org.example.project.data.model.*
-import org.example.project.ui.components.HealthSummaryCard
-import org.example.project.ui.components.QuestionCard
-import org.example.project.ui.components.SuggestionCard
-import org.example.project.ui.viewModels.HealthInfoViewModel
-import org.koin.compose.viewmodel.koinViewModel
-import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import org.example.project.ui.components.SimilarImagesRow
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.error
+import kotlinproject.composeapp.generated.resources.placeholder
+import org.example.project.ui.components.HealthSummaryCard
+import org.example.project.ui.viewModels.HealthInfoViewModel
+import org.jetbrains.compose.resources.painterResource
+import org.koin.compose.viewmodel.koinViewModel
 
-@OptIn(
-    ExperimentalMaterial3Api::class
-)
 @Composable
-fun HealthInfoScreen(
+fun HealthScreen(
 ) {
 
     val viewModel: HealthInfoViewModel = koinViewModel()
     val healthInfo = viewModel.healthInfo.collectAsState()
     val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
     var expandedId by remember { mutableStateOf<String?>(null) }
+    val allImages = suggestions.flatMap { it.similarImages }
+    val enlargedImage = remember { mutableStateOf<String?>(null) }
+    val placeholderPainter = painterResource(Res.drawable.placeholder)
+    val errorPainter = painterResource(Res.drawable.error)
 
     LaunchedEffect(Unit) {
         println(" All health suggestions:")
@@ -54,68 +59,132 @@ fun HealthInfoScreen(
             RoundedCornerShape(16.dp)
         )
         .blur(0.1.dp)
+    Column(modifier = Modifier.padding(16.dp)) {
+        if (allImages.isNotEmpty()) {
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        healthInfo.value?.let { info ->
-            item {
-                HealthSummaryCard(
-                    healthInfo = info,
-                    glassyBackground
-                )
-            }
+            Text(
+                text = "🖼️ Similar Images",
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
 
-/////
+            LazyRow(
+                modifier = Modifier.padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(allImages) { image ->
+                    AsyncImage(
 
-            items(suggestions.chunked(2)) { rowItems ->
-                val expandedInRow = rowItems.firstOrNull { it.id == expandedId }
+                       // model = image.urlSmall,
+                         model = "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png",
 
-                if (expandedInRow != null) {
-                    SuggestionCard(
-                        suggestion = expandedInRow,
-                        isExpanded = true,
-                        onExpandChange = { isExpanded ->
-                            expandedId = if (isExpanded) expandedInRow.id else null
-                        },
-                        glassyBackground,
-                        themeColor = MaterialTheme.colorScheme.onBackground
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        placeholder = placeholderPainter,
+                        error = errorPainter,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape)
+                            .clickable {
+                                enlargedImage.value = image.url
+                            }
+
                     )
-                } else {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        rowItems.forEach { suggestion ->
-                            SuggestionCard(
-                                suggestion = suggestion,
-                                isExpanded = false,
-                                onExpandChange = { isExpanded ->
-                                    expandedId = if (isExpanded) suggestion.id else null
-                                },
-                                glassyBackground,
-                                themeColor = MaterialTheme.colorScheme.onBackground,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .height(120.dp)
-                            )
-                        }
-                    }
                 }
             }
 
-            /////
-            healthInfo.value?.result?.disease?.question?.let { ques ->
-                item {
-                    QuestionCard(
-                        question = ques,
-                        backgroundModifier = Modifier
+            println("Similar Images URLs:")
+            allImages.forEach {
+                println(" - small: ${it.urlSmall}")
+                println(" - large: ${it.url}")
+            }
+
+            enlargedImage.value?.let { imageUrl ->
+                Dialog(onDismissRequest = { enlargedImage.value = null }) {
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                        placeholder = placeholderPainter,
+                        error = errorPainter,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f)
+                            .padding(16.dp)
+                            .clip(RoundedCornerShape(12.dp))
                     )
+                }
+            }
+        } else {
+            Text(
+                text = "No similar images available.",
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(vertical = 4.dp)
+            )
+        }
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            healthInfo.value?.let { info ->
+                item {
+                    HealthSummaryCard(
+                        healthInfo = info,
+                        glassyBackground
+                    )
+                }
+
+/////
+
+                items(suggestions.chunked(2)) { rowItems ->
+                    val expandedInRow = rowItems.firstOrNull { it.id == expandedId }
+
+                    if (expandedInRow != null) {
+                        SuggestionCard(
+                            suggestion = expandedInRow,
+                            isExpanded = true,
+                            onExpandChange = { isExpanded ->
+                                expandedId = if (isExpanded) expandedInRow.id else null
+                            },
+                            glassyBackground,
+                            themeColor = MaterialTheme.colorScheme.onBackground
+                        )
+                    } else {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            rowItems.forEach { suggestion ->
+
+                                SuggestionCard(
+                                    suggestion = suggestion,
+                                    isExpanded = false,
+                                    onExpandChange = { isExpanded ->
+                                        expandedId = if (isExpanded) suggestion.id else null
+                                    },
+                                    glassyBackground,
+                                    themeColor = MaterialTheme.colorScheme.onBackground,
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .height(120.dp)
+                                )
+                            }
+                        }
+                    }
+                }
+
+                /////
+                healthInfo.value?.result?.disease?.question?.let { ques ->
+                    item {
+                        QuestionCard(
+                            question = ques,
+                            backgroundModifier = Modifier
+                        )
+                    }
                 }
             }
         }
     }
 }
-
+*/

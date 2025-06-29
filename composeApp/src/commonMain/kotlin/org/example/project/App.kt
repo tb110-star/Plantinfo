@@ -10,17 +10,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import androidx.navigation.navArgument
-import androidx.navigation.toRoute
 import org.example.project.navigation.*
 import org.example.project.ui.components.BottomNavigationBar
 import org.example.project.ui.screens.*
 import org.example.project.ui.theme.AppTheme
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
-import org.koin.android.annotation.KoinViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)

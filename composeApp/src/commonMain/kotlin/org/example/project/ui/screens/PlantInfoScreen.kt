@@ -48,6 +48,9 @@ val plantInfo = viewModel.plantInfo.collectAsState()
             println("Suggestion ID: ${suggest.id}")
         }
     }
+
+
+
     Scaffold (
 
         floatingActionButton = {

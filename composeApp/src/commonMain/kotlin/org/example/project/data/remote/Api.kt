@@ -1,4 +1,6 @@
 package org.example.project.data.remote
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.*
@@ -11,6 +13,9 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import org.example.project.data.model.PlantIdentificationResult
 
 /*
@@ -75,3 +80,4 @@ class ApiService(
 
 
  */
+

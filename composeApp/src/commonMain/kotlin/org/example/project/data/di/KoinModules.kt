@@ -28,4 +28,5 @@ val appModule = module {
     single { UploadImageViewModel() }
     single { HealthInfoViewModel(get()) }
 
+
 }

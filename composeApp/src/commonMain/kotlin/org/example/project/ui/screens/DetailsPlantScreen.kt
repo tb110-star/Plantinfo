@@ -1,6 +1,7 @@
 package org.example.project.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -8,16 +9,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Landscape
-import androidx.compose.material.icons.filled.Opacity
 import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -25,9 +25,9 @@ import org.example.project.data.local.roomModel.toPlantHistory
 import org.example.project.data.model.Suggestions
 import org.example.project.ui.components.ExpandableInfoCard
 import org.example.project.ui.components.SimilarImagesRow
+import org.example.project.ui.viewModels.HealthInfoViewModel
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
 fun DetailsPlantScreen(
@@ -35,6 +35,10 @@ fun DetailsPlantScreen(
     onBack: () -> Unit
 ) {
     val vM: PlantInfoViewModel = koinViewModel()
+    val viewModel: HealthInfoViewModel = koinViewModel()
+    val healthInfo = viewModel.healthInfo.collectAsState()
+    val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
+    val allImages = suggestions.flatMap { it.similarImages }
 
     val d = suggestion.details
     val wMin = d.watering?.min ?: "-"
@@ -64,7 +68,16 @@ fun DetailsPlantScreen(
                         .height(160.dp)
                         .clip(RoundedCornerShape(12.dp))
                 )
-
+                AsyncImage(
+                    model = allImages.firstOrNull()?.url,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(160.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .border(width = 2.dp, shape = RectangleShape, color = Color.Red)
+                )
                 Spacer(Modifier.height(12.dp))
 
                 suggestion.similarImages.takeIf { it.isNotEmpty() }?.let { images ->
