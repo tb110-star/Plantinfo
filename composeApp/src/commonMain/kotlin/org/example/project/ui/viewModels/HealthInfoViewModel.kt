@@ -7,10 +7,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.Questions
-import org.example.project.data.remote.PlantRepository
+import org.example.project.data.model.RequestModel
+import org.example.project.data.remote.PlantRepositoryInterface
 
 class HealthInfoViewModel (
-    private val repo: PlantRepository
+    private val repo: PlantRepositoryInterface
     ):ViewModel() {
     private val _healthInfo = MutableStateFlow<HealthAssessmentResponse?>(null)
     val healthInfo = _healthInfo.asStateFlow()
@@ -28,12 +29,12 @@ class HealthInfoViewModel (
         _selectedSuggestion.value = selectedName
         println("Selected Suggestion: $selectedName")
     }
-    fun loadHealthInfo() {
+    fun loadHealthInfo(request: RequestModel) {
         viewModelScope.launch {
             _isLoading.value = true
             _errorMessage.value = null
             try {
-                val result = repo.getHealthAssessment()
+                val result = repo.getHealthAssessment(request)
                 _healthInfo.value = result
             } catch (e: Exception) {
                 println("Error loading health info: $e")

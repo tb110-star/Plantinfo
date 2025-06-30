@@ -5,19 +5,17 @@ import org.example.project.data.local.PlantHistoryRepository
 import org.example.project.data.local.PlantHistoryRepositoryImpl
 import org.example.project.data.local.ThemeSettingRepository.getThemeSettingsRepository
 import org.example.project.data.local.roomDataBase.AppDatabase
-import org.example.project.data.local.roomDataBase.AppDatabaseConstructor
-import org.example.project.data.remote.PlantRepository
+import org.example.project.data.remote.PlantRepositoryInterface
 import org.example.project.ui.viewModels.HealthInfoViewModel
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
 import org.example.project.ui.viewModels.UploadImageViewModel
-import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
 val appModule = module {
     single { get<AppDatabase>().plantHistoryDao() }
     single<PlantHistoryRepository> { PlantHistoryRepositoryImpl(get()) }
-    single<PlantRepository> { FakePlantRepository() }
+    single<PlantRepositoryInterface> { FakePlantRepository() }
      single { PlantInfoViewModel(
          repo = get(),
          historyRepository = get()

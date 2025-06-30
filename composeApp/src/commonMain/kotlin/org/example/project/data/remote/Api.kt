@@ -19,31 +19,6 @@ import kotlinx.coroutines.launch
 import org.example.project.data.model.PlantIdentificationResult
 
 /*
- class ApiService{
-
-     private val client = HttpClient(CIO) {
-         install(ContentNegotiation) {
-             json(Json {
-                 ignoreUnknownKeys = true
-                 prettyPrint = true
-             })
-         }
-     }
-
-     companion object {
-         suspend fun getPlantInfo(apiService: ApiService): String {
-             return apiService.client.post("https://api.plant.id/v2/identify") {
-                 headers {
-                     append(HttpHeaders.Authorization, "Bearer Jm1Fqb01dwZtjONk7zpNQ6aBw7gaOOUp0WWeKBLBhivW3JG7sV")
-                     append(HttpHeaders.ContentType, ContentType.Application.Json.toString())
-                 }
-             }.body()
-         }
-     }
- }
-
- */
-/*
 class ApiService(
     private val httpClient: HttpClient,
     private val apiKey: String
@@ -51,11 +26,11 @@ class ApiService(
 
     private val baseUrl = "https://api.plant.id/api/v3"
 
-    suspend fun identifyPlant(requestBody: IdentifyRequestBody): PlantIdentificationResult {
+    suspend fun identifyPlant(request: IdentifyRequestBody): PlantIdentificationResult {
         val response: HttpResponse = httpClient.post("$baseUrl/identify") {
             contentType(ContentType.Application.Json)
             header("Api-Key", apiKey)
-            setBody(requestBody)
+            setBody(request)
         }
         return response.body()
     }

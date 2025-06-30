@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.example.project.data.model.RequestModel
 import shared.SharedImage
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -16,7 +17,6 @@ class UploadImageViewModel(
 ) : ViewModel(), CoroutineScope by MainScope()  {
     private val _image = MutableStateFlow<SharedImage?>(null)
     val image: StateFlow<SharedImage?> = _image.asStateFlow()
-
     private val _base64 = MutableStateFlow<String?>(null)
     val base64: StateFlow<String?> = _base64.asStateFlow()
 
@@ -26,7 +26,6 @@ class UploadImageViewModel(
             onImageSelected(image)
         }
     }
-
     @OptIn(ExperimentalEncodingApi::class)
     private fun onImageSelected(sharedImage: SharedImage) {
         viewModelScope.launch {
@@ -34,11 +33,18 @@ class UploadImageViewModel(
             _base64.value = byteArray?.let { Base64.encode(it) }
         }
     }
-
-
     fun clear() {
         _image.value = null
         _base64.value = null
     }
+    fun createRequest(base64: String): RequestModel {
+        return RequestModel(
+            images = listOf(base64),
+            latitude = 49.207,
+            longitude = 16.608,
+            similarImagesS = true
+        )
+    }
+
 }
 

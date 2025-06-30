@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.example.project.ui.viewModels.HealthInfoViewModel
 import org.example.project.ui.viewModels.PlantInfoViewModel
 
 import org.example.project.ui.viewModels.UploadImageViewModel
@@ -36,6 +37,7 @@ fun AddImageSheetScreen(
 ) {
     val uploadImageViewModel: UploadImageViewModel = koinViewModel()
     val plantInfoViewModel: PlantInfoViewModel = koinViewModel()
+    val healthInfoViewModel:HealthInfoViewModel = koinViewModel()
     val coroutineScope = rememberCoroutineScope()
     val image by uploadImageViewModel.image.collectAsState()
     val imageBitmapState = remember { mutableStateOf<ImageBitmap?>(null) }
@@ -157,12 +159,17 @@ fun AddImageSheetScreen(
                 )
             }
             Spacer(Modifier.height(16.dp))
-
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ){
             Button(
-                onClick = { /*send image*/
-                    plantInfoViewModel.loadPlantInfo()
-                    println("Sending base64 image: $base64")
-                    onCloseClick()
+                onClick = {
+                    base64?.let { base64Str ->
+                        val request = uploadImageViewModel.createRequest(base64Str)
+                        plantInfoViewModel.loadPlantInfo(request)
+                        onCloseClick()
+                    }
                 },
                 enabled = image != null,
                 colors = ButtonDefaults.buttonColors(
@@ -173,9 +180,32 @@ fun AddImageSheetScreen(
                 ),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Send Image")
+                Text("Get Plant Info")
             }
-
+                Button(
+                    onClick =  {
+                        base64?.let { base64Str ->
+                        val request = uploadImageViewModel.createRequest(base64Str)
+                        healthInfoViewModel.loadHealthInfo(request)
+                        onCloseClick()
+                            //
+                            //  health screen navigation
+                          //
+                           // navigateToHealthScreen()
+                        }
+                    },
+                    enabled = image != null,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (image != null)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Get Health Info")
+                }
+        }
             Spacer(Modifier.height(16.dp))
 
             TextButton(onClick = onCloseClick) {

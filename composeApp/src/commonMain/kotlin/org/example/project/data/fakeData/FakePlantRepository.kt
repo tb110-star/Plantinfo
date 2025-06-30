@@ -1,22 +1,23 @@
 package org.example.project.data.fakeData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.builtins.serializer
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.decodeFromString
 import org.example.project.data.model.HealthAssessmentResponse
-import org.example.project.data.remote.PlantRepository
+import org.example.project.data.remote.PlantRepositoryInterface
 import org.example.project.data.model.PlantIdentificationResult
+import org.example.project.data.model.RequestModel
 import org.example.project.utils.loadJsonFromResources
 
-class FakePlantRepository() : PlantRepository
+class FakePlantRepository() : PlantRepositoryInterface
 {
-    override suspend fun getPlantIdentification(): PlantIdentificationResult {
+    override suspend fun getPlantIdentification(request: RequestModel): PlantIdentificationResult {
+        println("FakePlantRepository -> getPlantIdentification called with: $request")
+        delay(500)
         val json = loadJsonFromResources("mock_plant_response.json")
         return Json { ignoreUnknownKeys = true }.decodeFromString(json)
     }
-    override suspend fun getHealthAssessment(): HealthAssessmentResponse {
+    override suspend fun getHealthAssessment(request: RequestModel): HealthAssessmentResponse {
+        println("FakePlantRepository -> getHealthAssessment called with: $request")
+        delay(500)
         val json = loadJsonFromResources("mock_health_response.json")
         return Json { ignoreUnknownKeys = true }.decodeFromString(json)
     }

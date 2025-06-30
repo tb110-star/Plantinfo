@@ -9,14 +9,16 @@ import org.example.project.data.local.PlantHistoryRepository
 import org.example.project.data.local.roomModel.PlantHistoryEntity
 
 import org.example.project.data.model.PlantIdentificationResult
+import org.example.project.data.model.RequestModel
 import org.example.project.data.model.Suggestions
-import org.example.project.data.remote.PlantRepository
-//import com.hoc081098.kmp.viewmodel.ViewModel
+import org.example.project.data.remote.PlantRepositoryInterface
 class PlantInfoViewModel(
-    private val repo: PlantRepository,
+    private val repo: PlantRepositoryInterface,
     private val historyRepository: PlantHistoryRepository
 
 ) : ViewModel() {
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
     private val _isShowingAddSheet = MutableStateFlow(false)
     val isShowingAddSheet = _isShowingAddSheet.asStateFlow()
     private val _isDone = MutableStateFlow(false)
@@ -26,17 +28,21 @@ class PlantInfoViewModel(
     private val _plantInfo = MutableStateFlow<PlantIdentificationResult?>(null)
     val plantInfo = _plantInfo.asStateFlow()
 
-    fun loadPlantInfo() {
+    fun loadPlantInfo(request: RequestModel) {
         viewModelScope.launch {
+            _isLoading.value = true
             try {
-val result = repo.getPlantIdentification()
+                val result = repo.getPlantIdentification(request)
                 _plantInfo.value = result
-            } catch (e: Exception){
+            } catch (e: Exception) {
                 println("Error loading plant info: $e")
                 _plantInfo.value = null
+            } finally {
+                _isLoading.value = false
             }
         }
     }
+
     fun enableAddSheet(){
         _isShowingAddSheet.value = true
     }
@@ -49,7 +55,6 @@ val result = repo.getPlantIdentification()
     fun selectSuggestion(suggestion: Suggestions) {
         _selectedSuggestion.value = suggestion
     }
-
     fun splitTextSmart(text: String, maxLength: Int = 300): Pair<String, String> {
         if (text.length <= maxLength) return text to ""
 
