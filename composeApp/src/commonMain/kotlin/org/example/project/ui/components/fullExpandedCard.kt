@@ -152,10 +152,10 @@ fun SuggestionCard(
                     )
                     SimilarImagesRow(
                         images = images,
-                        // getImageUrlSmall = { it.urlSmall },
-                        getImageUrlSmall = { "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" },
-                        getImageUrlLarge =  { "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" }
-                        // getImageUrlLarge = { it.url }
+                         getImageUrlSmall = { it.urlSmall },
+                      //  getImageUrlSmall = { "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" },
+                      //  getImageUrlLarge =  { "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" }
+                         getImageUrlLarge = { it.url }
                     )
 
                 }

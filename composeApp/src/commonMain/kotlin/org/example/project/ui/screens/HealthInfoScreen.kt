@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,6 +22,12 @@ import org.example.project.ui.components.SuggestionCard
 import org.example.project.ui.viewModels.HealthInfoViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import coil3.compose.AsyncImage
+import org.example.project.ui.components.SimilarImagesRow
 
 
 @OptIn(
@@ -34,6 +41,7 @@ fun HealthInfoScreen(
     val healthInfo = viewModel.healthInfo.collectAsState()
     val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
     var expandedId by remember { mutableStateOf<String?>(null) }
+    val allImages = suggestions.flatMap { it.similarImages }
 
     LaunchedEffect(Unit) {
         println(" All health suggestions:")
@@ -62,6 +70,24 @@ fun HealthInfoScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        allImages.takeIf { it.isNotEmpty() }?.let { images ->
+            item {
+                Column {
+                    Text(
+                        text = "Similar Images",
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                    SimilarImagesRow(
+                        images = images,
+                        getImageUrlSmall = { it.urlSmall },
+                        getImageUrlLarge = { it.url }
+                    )
+                    Spacer(Modifier.height(16.dp))
+                }
+            }
+        }
+
         healthInfo.value?.let { info ->
             item {
                 HealthSummaryCard(

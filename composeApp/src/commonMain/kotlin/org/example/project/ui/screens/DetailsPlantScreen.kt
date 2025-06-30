@@ -38,7 +38,6 @@ fun DetailsPlantScreen(
     val viewModel: HealthInfoViewModel = koinViewModel()
     val healthInfo = viewModel.healthInfo.collectAsState()
     val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
-    val allImages = suggestions.flatMap { it.similarImages }
 
     val d = suggestion.details
     val wMin = d.watering?.min ?: "-"
@@ -68,16 +67,7 @@ fun DetailsPlantScreen(
                         .height(160.dp)
                         .clip(RoundedCornerShape(12.dp))
                 )
-                AsyncImage(
-                    model = allImages.firstOrNull()?.url,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(160.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .border(width = 2.dp, shape = RectangleShape, color = Color.Red)
-                )
+
                 Spacer(Modifier.height(12.dp))
 
                 suggestion.similarImages.takeIf { it.isNotEmpty() }?.let { images ->
