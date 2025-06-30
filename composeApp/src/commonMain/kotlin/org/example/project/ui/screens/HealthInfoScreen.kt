@@ -42,6 +42,7 @@ fun HealthInfoScreen(
     val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
     var expandedId by remember { mutableStateOf<String?>(null) }
     val allImages = suggestions.flatMap { it.similarImages }
+    val selectedSuggestion by viewModel.selectedSuggestion.collectAsState()
 
     LaunchedEffect(Unit) {
         println(" All health suggestions:")
@@ -73,11 +74,13 @@ fun HealthInfoScreen(
         allImages.takeIf { it.isNotEmpty() }?.let { images ->
             item {
                 Column {
+                    /*
                     Text(
                         text = "Similar Images",
                         style = MaterialTheme.typography.titleMedium,
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
+                    */
                     SimilarImagesRow(
                         images = images,
                         getImageUrlSmall = { it.urlSmall },
@@ -92,12 +95,11 @@ fun HealthInfoScreen(
             item {
                 HealthSummaryCard(
                     healthInfo = info,
-
                 )
+                Spacer(Modifier.height(16.dp))
+
             }
-
 /////
-
             items(suggestions.chunked(2)) { rowItems ->
                 val expandedInRow = rowItems.firstOrNull { it.id == expandedId }
 
@@ -131,15 +133,19 @@ fun HealthInfoScreen(
                             )
                         }
                     }
+                    Spacer(Modifier.height(16.dp))
                 }
             }
 
-            /////
+
             healthInfo.value?.result?.disease?.question?.let { ques ->
                 item {
                     QuestionCard(
                         question = ques,
-                        backgroundModifier = Modifier
+                        selectedSuggestion = selectedSuggestion,
+                        onAnswerSelected = { isYes ->
+                            viewModel.onQuestionAnswered(isYes, ques)
+                        }
                     )
                 }
             }

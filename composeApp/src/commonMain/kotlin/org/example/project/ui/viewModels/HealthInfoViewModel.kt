@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.example.project.data.model.HealthAssessmentResponse
+import org.example.project.data.model.Questions
 import org.example.project.data.remote.PlantRepository
 
 class HealthInfoViewModel (
@@ -19,7 +20,14 @@ class HealthInfoViewModel (
 
     private val _errorMessage = MutableStateFlow<String?>(null)
     val errorMessage = _errorMessage.asStateFlow()
+    private val _selectedSuggestion = MutableStateFlow<String?>(null)
+    val selectedSuggestion = _selectedSuggestion.asStateFlow()
 
+    fun onQuestionAnswered(isYes: Boolean, question: Questions) {
+        val selectedName = if (isYes) question.options.yes.name else question.options.no.name
+        _selectedSuggestion.value = selectedName
+        println("Selected Suggestion: $selectedName")
+    }
     fun loadHealthInfo() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -52,4 +60,5 @@ class HealthInfoViewModel (
 
         return firstPart to secondPart
     }
+
 }
