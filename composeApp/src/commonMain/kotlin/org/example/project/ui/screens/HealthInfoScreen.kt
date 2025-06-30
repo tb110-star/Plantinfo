@@ -92,7 +92,7 @@ fun HealthInfoScreen(
             item {
                 HealthSummaryCard(
                     healthInfo = info,
-                    glassyBackground
+
                 )
             }
 
