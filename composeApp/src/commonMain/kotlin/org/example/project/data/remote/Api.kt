@@ -16,18 +16,26 @@ import io.ktor.http.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.PlantIdentificationResult
+import org.example.project.data.model.RequestModel
 
-/*
+import org.example.project.secret.Secrets
+
 class ApiService(
-    private val httpClient: HttpClient,
-    private val apiKey: String
 ) {
-
+    private val apiKey: String = Secrets.plantIdApiKey
     private val baseUrl = "https://api.plant.id/api/v3"
-
-    suspend fun identifyPlant(request: IdentifyRequestBody): PlantIdentificationResult {
-        val response: HttpResponse = httpClient.post("$baseUrl/identify") {
+    private val client = HttpClient {
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+                prettyPrint = true
+            })
+        }
+    }
+    suspend fun identifyPlant(request: RequestModel): PlantIdentificationResult {
+        val response: HttpResponse = client.post("$baseUrl/identify") {
             contentType(ContentType.Application.Json)
             header("Api-Key", apiKey)
             setBody(request)
@@ -35,24 +43,20 @@ class ApiService(
         return response.body()
     }
 
-    suspend fun assessPlantHealth(
-        requestBody: HealthAssessmentRequestBody,
-        language: String = "en",
-        details: String = "all"
-    ): HealthAssessmentResponse {
-        val response: HttpResponse = httpClient.post("$baseUrl/health_assessment") {
+    suspend fun assessPlantHealth(request: RequestModel ): HealthAssessmentResponse {
+        val response: HttpResponse = client.post("$baseUrl/health_assessment") {
             contentType(ContentType.Application.Json)
             header("Api-Key", apiKey)
-            url {
-                parameters.append("language", language)
-                parameters.append("details", details)
-            }
-            setBody(requestBody)
+           url {
+            parameters.append("language", "en")
+            parameters.append("details", "all")
+        }
+
+            setBody(request)
         }
         return response.body()
     }
 }
 
 
- */
 

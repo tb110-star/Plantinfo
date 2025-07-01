@@ -16,3 +16,5 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+composeApp/src/androidMain/kotlin/org/example/project/secret/Secrets.kt
+composeApp/src/iosMain/kotlin/org/example/project/secret/Secrets.kt
