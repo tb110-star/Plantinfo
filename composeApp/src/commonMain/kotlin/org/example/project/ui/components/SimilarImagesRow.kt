@@ -31,8 +31,8 @@ import org.jetbrains.compose.resources.painterResource
 fun <T> SimilarImagesRow(
     images: List<T>,
     modifier: Modifier = Modifier,
-    getImageUrlSmall: (T) -> String,
-    getImageUrlLarge: (T) -> String
+    getImageUrlSmall: (T) -> String?,
+    getImageUrlLarge: (T) -> String?
 ) {
     val enlargedImage = remember { mutableStateOf<String?>(null) }
     val placeholderPainter = painterResource(Res.drawable.placeholder)

@@ -42,69 +42,69 @@ data class HealthCheck(
 )
 @Serializable
 data class DiseaseResult(
-    val suggestions: List<DiseaseSuggestion>,
-    val question: Questions
+    val suggestions: List<DiseaseSuggestion>? = emptyList(),
+    val question: Questions? = null
 )
 @Serializable
 data class Questions(
-    val text:String,
+    val text:String? = null,
     val translation: String?= "",
-    val options: QuestionOptions
+    val options: QuestionOptions? = null
 
 )
 @Serializable
 data class QuestionOptions(
-    val yes: QuestionOptionDetail,
-    val no: QuestionOptionDetail
+    val yes: QuestionOptionDetail? = null,
+    val no: QuestionOptionDetail? = null
 )
 
 @Serializable
 data class QuestionOptionDetail(
     @SerialName("suggestion_index")
-    val suggestionIndex: Int,
+    val suggestionIndex: Int? = null,
     @SerialName("entity_id")
-    val entityId: String,
-    val name: String,
-    val translation: String?
+    val entityId: String? = null,
+    val name: String? = null,
+    val translation: String? = null
 )
 @Serializable
 data class DiseaseSuggestion(
-    val id: String,
-    val name: String,
-    val probability: Double,
+    val id: String? = null,
+    val name: String? = null,
+    val probability: Double? = null,
     @SerialName("similar_images")
-    val similarImages: List<SimilarImages>,
+    val similarImages: List<SimilarImages>? = emptyList(),
     @SerialName("details")
-    val details: HealthDetails
+    val details: HealthDetails? = null
     )
 
 @Serializable
 data class SimilarImages(
-    val id: String,
-    val url: String,
+    val id: String? = null,
+    val url: String? = null,
     @SerialName("license_name")
-    val licenseName: String,
+    val licenseName: String? = null,
     @SerialName("license_url")
-    val licenseUrl: String,
-    val citation: String,
-    val similarity: Double,
+    val licenseUrl: String? = null,
+    val citation: String? = null,
+    val similarity: Double? = null,
     @SerialName("url_small")
-    val urlSmall: String
+    val urlSmall: String? = null
 )
 
 @Serializable
 data class HealthDetails(
     @SerialName("local_name")
-    val localName:String,
+    val localName:String? = null,
     val description: String? = "",
     val url:String?= "",
-    val treatment: Treatment?,
+    val treatment: Treatment? = null,
     val classification: List<String>? = emptyList(),
     @SerialName("common_names")
     val commonName: List<String>? = emptyList(),
     val cause: List<String>? = emptyList(),
     @SerialName("entity_id")
-    val entityId : String
+    val entityId : String? = null
     )
 @Serializable
 data class Treatment(

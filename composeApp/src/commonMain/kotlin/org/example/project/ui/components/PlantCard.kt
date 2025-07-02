@@ -31,7 +31,7 @@ fun PlantCard(
     val placeholderPainter = painterResource(Res.drawable.placeholder)
     val errorPainter = painterResource(Res.drawable.error)
     LaunchedEffect(Unit) {
-        println("Image URL: ${plant.details.image.value}")
+        println("Image URL: ${plant.details.image?.value}")
     }
 
     Card(
@@ -81,7 +81,7 @@ fun PlantCard(
                     )
             ) {
                 AsyncImage(
-                    model = plant.details.image.value,
+                    model = plant.details.image?.value,
                     contentDescription = "Plant Image",
                     contentScale = ContentScale.Crop,
                     placeholder = placeholderPainter,

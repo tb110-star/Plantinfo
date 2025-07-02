@@ -43,7 +43,7 @@ fun SuggestionCard(
     ) {
         Column(modifier = modifier.padding(16.dp)) {
             Text(
-                suggestion.name,
+                text = suggestion.name ?: "Unknown disease",
                 style = MaterialTheme.typography.titleMedium,
                 color = themeColor,
                 fontFamily = FontFamily.Serif
@@ -61,7 +61,7 @@ fun SuggestionCard(
 
 
             if (isExpanded) {
-                suggestion.details.description?.let {
+                suggestion.details?.description?.let {
                     Text(
                         text = it,
                         style = MaterialTheme.typography.bodyMedium,
@@ -73,7 +73,7 @@ fun SuggestionCard(
                 Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
 
-                suggestion.details.classification?.let {
+                suggestion.details?.classification?.let {
                     Text(
                         text = "📝 Classification: ${it.joinToString()}",
                         style = MaterialTheme.typography.bodySmall,
@@ -83,7 +83,7 @@ fun SuggestionCard(
                     )
                 }
 
-                suggestion.details.commonName?.let {
+                suggestion.details?.commonName?.let {
                     Text(
                         text = "🌱 Common Names: ${it.joinToString()}",
                         style = MaterialTheme.typography.bodySmall,
@@ -97,7 +97,7 @@ fun SuggestionCard(
                 Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
 
-                suggestion.details.treatment?.let { treatment ->
+                suggestion.details?.treatment?.let { treatment ->
                     treatment.chemical?.let {
                         Surface(
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f),
@@ -143,7 +143,7 @@ fun SuggestionCard(
 
                 Spacer(Modifier.height(12.dp))
 
-                suggestion.similarImages.takeIf { it.isNotEmpty() }?.let { images ->
+                suggestion.similarImages.orEmpty().takeIf { it.isNotEmpty() }?.let { images ->
 
                     Text(
                         text = "🖼️ Similar Images",

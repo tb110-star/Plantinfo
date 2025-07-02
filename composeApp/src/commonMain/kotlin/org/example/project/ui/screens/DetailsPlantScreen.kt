@@ -59,7 +59,7 @@ fun DetailsPlantScreen(
             ) {
 
                 AsyncImage(
-                    model = d.image.value,
+                    model = d.image?.value,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -84,8 +84,8 @@ fun DetailsPlantScreen(
                     Spacer(Modifier.height(16.dp))
                 }
 
-                val (shortDesc, restDesc) = vM.splitTextSmart(suggestion.details.description.value)
-
+                val descText = suggestion.details.description?.value ?: "No description available."
+                val (shortDesc, restDesc) = vM.splitTextSmart(descText)
                 ExpandableInfoCard(
                     title = "Description",
                     icon = Icons.Default.Info,
@@ -125,7 +125,8 @@ fun DetailsPlantScreen(
                 Spacer(Modifier.height(12.dp))
 
 // Light
-                val (shortLight, restLight) = vM.splitTextSmart("${suggestion.details.bestLightCondition}")
+                val lightText = suggestion.details.bestLightCondition?.takeIf { it.isNotBlank() } ?: "No light data available."
+                val (shortLight, restLight) = vM.splitTextSmart(lightText)
 
                 ExpandableInfoCard(
                     title = "Light",
@@ -139,7 +140,8 @@ fun DetailsPlantScreen(
                 Spacer(Modifier.height(12.dp))
 
 // Soil
-                val (shortSoil, restSoil) = vM.splitTextSmart("${suggestion.details.bestSoilType}")
+                val soilText = suggestion.details.bestSoilType?.takeIf { it.isNotBlank() } ?: "No soil data available."
+                val (shortSoil, restSoil) = vM.splitTextSmart(soilText)
 
                 ExpandableInfoCard(
                     title = "Soil",
@@ -153,7 +155,8 @@ fun DetailsPlantScreen(
                 Spacer(Modifier.height(12.dp))
 
 // Uses
-                val (shortUses, restUses) = vM.splitTextSmart("${suggestion.details.commonUses}")
+                val usesText = suggestion.details.commonUses?.takeIf { it.isNotBlank() } ?: "No usage data available."
+                val (shortUses, restUses) = vM.splitTextSmart(usesText)
 
                 ExpandableInfoCard(
                     title = "Uses",

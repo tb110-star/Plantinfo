@@ -42,7 +42,7 @@ fun QuestionCard(
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             Text(
-                text = question.text,
+                text = question.text ?: "Unknown question",
                 style = MaterialTheme.typography.titleMedium
             )
 

@@ -178,7 +178,7 @@ fun AddImageSheetScreen(
                     else
                         MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
                 ),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.weight(1f)
             ) {
                 Text("Get Plant Info")
             }
@@ -201,7 +201,7 @@ fun AddImageSheetScreen(
                         else
                             MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
                     ),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.weight(1f)
                 ) {
                     Text("Get Health Info")
                 }

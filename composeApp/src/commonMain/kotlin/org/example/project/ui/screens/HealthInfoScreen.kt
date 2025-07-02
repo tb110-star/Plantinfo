@@ -41,12 +41,11 @@ fun HealthInfoScreen(
     val healthInfo = viewModel.healthInfo.collectAsState()
     val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
     var expandedId by remember { mutableStateOf<String?>(null) }
-    val allImages = suggestions.flatMap { it.similarImages }
+    val allImages = suggestions.flatMap { it.similarImages ?: emptyList() }
     val selectedSuggestion by viewModel.selectedSuggestion.collectAsState()
 
     LaunchedEffect(Unit) {
         println(" All health suggestions:")
-        viewModel.loadHealthInfo()
 
         suggestions.forEach {
             println("Suggestion ID: ${it.id}")

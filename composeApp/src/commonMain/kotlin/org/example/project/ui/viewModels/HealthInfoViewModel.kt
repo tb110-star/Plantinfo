@@ -25,7 +25,11 @@ class HealthInfoViewModel (
     val selectedSuggestion = _selectedSuggestion.asStateFlow()
 
     fun onQuestionAnswered(isYes: Boolean, question: Questions) {
-        val selectedName = if (isYes) question.options.yes.name else question.options.no.name
+        val selectedName = if (isYes) {
+            question.options?.yes?.name
+        } else {
+            question.options?.no?.name
+        } ?: ""
         _selectedSuggestion.value = selectedName
         println("Selected Suggestion: $selectedName")
     }
