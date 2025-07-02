@@ -84,6 +84,7 @@ kotlin {
             implementation(libs.androidx.paging.common)
             implementation(libs.androidx.room.runtime)
             implementation(libs.sqlite.bundled)
+            implementation("com.benasher44:uuid:0.6.0")
 
         }
         commonTest.dependencies {

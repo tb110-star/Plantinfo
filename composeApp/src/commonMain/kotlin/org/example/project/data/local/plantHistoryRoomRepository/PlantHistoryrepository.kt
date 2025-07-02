@@ -1,4 +1,4 @@
-package org.example.project.data.local
+package org.example.project.data.local.plantHistoryRoomRepository
 
 import kotlinx.coroutines.flow.Flow
 import org.example.project.data.local.roomModel.PlantHistoryEntity

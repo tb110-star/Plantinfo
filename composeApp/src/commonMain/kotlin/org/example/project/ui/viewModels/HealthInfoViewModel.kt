@@ -5,14 +5,19 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepository
+import org.example.project.data.local.plantHistoryRoomRepository.PlantHistoryRepository
+import org.example.project.data.local.roomModel.HealthHistoryEntity
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.Questions
 import org.example.project.data.model.RequestModel
 import org.example.project.data.remote.PlantRepositoryInterface
 
 class HealthInfoViewModel (
-    private val repo: PlantRepositoryInterface
-    ):ViewModel() {
+    private val repo: PlantRepositoryInterface,
+    private val historyRepository: HealthHistoryRepository
+
+):ViewModel() {
     private val _healthInfo = MutableStateFlow<HealthAssessmentResponse?>(null)
     val healthInfo = _healthInfo.asStateFlow()
 
@@ -65,5 +70,13 @@ class HealthInfoViewModel (
 
         return firstPart to secondPart
     }
-
+    fun saveToHealthHistory(entity: HealthHistoryEntity) {
+        viewModelScope.launch {
+            try {
+                historyRepository.saveHealthRecord(entity)
+            } catch (e: Exception) {
+                println("Error saving health history: $e")
+            }
+        }
+    }
 }

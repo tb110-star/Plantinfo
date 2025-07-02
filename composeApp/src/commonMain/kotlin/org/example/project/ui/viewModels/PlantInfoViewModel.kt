@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.example.project.data.local.PlantHistoryRepository
+import org.example.project.data.local.plantHistoryRoomRepository.PlantHistoryRepository
+import org.example.project.data.local.roomModel.HealthHistoryEntity
 import org.example.project.data.local.roomModel.PlantHistoryEntity
 
 import org.example.project.data.model.PlantIdentificationResult
@@ -66,15 +67,18 @@ class PlantInfoViewModel(
 
         return firstPart to secondPart
     }
-    fun saveToHistory(entity: PlantHistoryEntity) {
+    fun saveToPlantstory(entity: PlantHistoryEntity) {
         viewModelScope.launch {
             try {
                 historyRepository.saveToHistory(entity)
             } catch (e: Exception) {
-                println("Error saving history: $e")
+                println("Error saving Plant history: $e")
             }
         }
+
     }
+
+
 
 }
 

@@ -36,7 +36,6 @@ fun PlantInfoScreen(
     viewModel: PlantInfoViewModel = koinViewModel<PlantInfoViewModel>(),
     onDetailsClick: (Suggestions) -> Unit
 ){
-    val uploadImageViewModel: UploadImageViewModel = koinViewModel()
 
     val isShowingAddSheet by viewModel.isShowingAddSheet.collectAsState()
     val isDone by viewModel.isDone.collectAsState()

@@ -27,6 +27,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import coil3.compose.AsyncImage
+import org.example.project.data.local.roomModel.toHealthHistory
+import org.example.project.data.local.roomModel.toPlantHistory
+import org.example.project.data.model.DiseaseSuggestion
 import org.example.project.ui.components.SimilarImagesRow
 
 
@@ -70,6 +73,7 @@ fun HealthInfoScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+
         allImages.takeIf { it.isNotEmpty() }?.let { images ->
             item {
                 Column {
@@ -104,6 +108,13 @@ fun HealthInfoScreen(
 
                 if (expandedInRow != null) {
                     SuggestionCard(
+                        onConfirm = {confirmedSuggestion ->
+                            val entity = confirmedSuggestion.toHealthHistory(
+                                healthStatus = healthInfo.value?.result?.isHealthy?.binary.toString(),
+                                selectedSuggestion = viewModel.selectedSuggestion.value
+                            )
+                            viewModel.saveToHealthHistory(entity)
+                        },
                         suggestion = expandedInRow,
                         isExpanded = true,
                         onExpandChange = { isExpanded ->
@@ -119,6 +130,13 @@ fun HealthInfoScreen(
                     ) {
                         rowItems.forEach { suggestion ->
                             SuggestionCard(
+                                onConfirm = {confirmedSuggestion ->
+                                    val entity = confirmedSuggestion.toHealthHistory(
+                                        healthStatus = healthInfo.value?.result?.isHealthy?.binary.toString(),
+                                        selectedSuggestion = viewModel.selectedSuggestion.value
+                                    )
+                                    viewModel.saveToHealthHistory(entity)
+                                },
                                 suggestion = suggestion,
                                 isExpanded = false,
                                 onExpandChange = { isExpanded ->

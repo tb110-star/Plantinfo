@@ -1,7 +1,6 @@
 package org.example.project.ui.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,7 +16,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -167,13 +165,20 @@ fun DetailsPlantScreen(
                     backgroundColor = Color(0xFFCCAAAA).copy(alpha = 0.7f)
                 )
 
+                Button(
+                    onClick = {
+                        val plantEntity = suggestion.toPlantHistory().copy(isConfirmed = true)
+                        vM.saveToPlantstory(plantEntity)
+                       // onBack()
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Confirm & Save")
+                }
 
             }
         }
-        LaunchedEffect(Unit) {
-            val plantEntity = suggestion.toPlantHistory()
-            vM.saveToHistory(plantEntity)
-        }
+
 
     }
 }

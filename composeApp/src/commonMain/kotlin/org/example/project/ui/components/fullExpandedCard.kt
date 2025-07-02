@@ -25,6 +25,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SuggestionCard(
+    onConfirm: (DiseaseSuggestion) -> Unit,
     suggestion: DiseaseSuggestion,
     isExpanded: Boolean,
     onExpandChange: (Boolean) -> Unit,
@@ -157,7 +158,15 @@ fun SuggestionCard(
                       //  getImageUrlLarge =  { "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" }
                          getImageUrlLarge = { it.url }
                     )
-
+                    Button(
+                        onClick = {
+                            val healthEntity =
+                                onConfirm(suggestion)
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("Confirm & Save")
+                    }
                 }
             }
 
