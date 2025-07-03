@@ -6,15 +6,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.example.project.data.local.plantHistoryRoomRepository.PlantHistoryRepository
-import org.example.project.data.local.roomModel.HealthHistoryEntity
 import org.example.project.data.local.roomModel.PlantHistoryEntity
+import org.example.project.data.local.roomModel.toPlantHistory
 
 import org.example.project.data.model.PlantIdentificationResult
 import org.example.project.data.model.RequestModel
 import org.example.project.data.model.Suggestions
-import org.example.project.data.remote.PlantRepositoryInterface
+import org.example.project.data.remote.ApiRepositoryInterface
 class PlantInfoViewModel(
-    private val repo: PlantRepositoryInterface,
+    private val repo: ApiRepositoryInterface,
     private val historyRepository: PlantHistoryRepository
 
 ) : ViewModel() {
@@ -28,6 +28,13 @@ class PlantInfoViewModel(
     val selectedImagePath = _selectedImagePath.asStateFlow()
     private val _plantInfo = MutableStateFlow<PlantIdentificationResult?>(null)
     val plantInfo = _plantInfo.asStateFlow()
+    private val _serverImageUrl = MutableStateFlow<String?>(null)
+    val serverImageUrl = _serverImageUrl.asStateFlow()
+
+    fun setServerImageUrl(url: String?) {
+        _serverImageUrl.value = url
+    }
+
 
     fun loadPlantInfo(request: RequestModel) {
         viewModelScope.launch {
@@ -35,6 +42,8 @@ class PlantInfoViewModel(
             try {
                 val result = repo.getPlantIdentification(request)
                 _plantInfo.value = result
+                _serverImageUrl.value = result.input.images.firstOrNull()
+
             } catch (e: Exception) {
                 println("Error loading plant info: $e")
                 _plantInfo.value = null
@@ -67,16 +76,29 @@ class PlantInfoViewModel(
 
         return firstPart to secondPart
     }
-    fun saveToPlantstory(entity: PlantHistoryEntity) {
+    fun saveToPlantstory(
+        suggestion: Suggestions,
+        serverImageUrl: String?
+    ) {
         viewModelScope.launch {
             try {
+                println("saveToPlantstory called with  serverImageUrl=$serverImageUrl")
+                val combinedId = "${suggestion.id}_${serverImageUrl}"
+                val entity = suggestion.toPlantHistory(
+                    combinedId = combinedId,
+                    serverImageUrl = serverImageUrl
+                ).copy(isConfirmed = true)
+                println("PlantHistoryEntity: $entity")
+
                 historyRepository.saveToHistory(entity)
+                println("Saved successfully: $entity")
+
             } catch (e: Exception) {
                 println("Error saving Plant history: $e")
             }
         }
-
     }
+
 
 
 

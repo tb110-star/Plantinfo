@@ -9,7 +9,8 @@ data class HealthAssessmentResponse(
     val modelVersion: String? = null,
     @SerialName("custom_id")
     val customId: String? = null,
-  //  val input: HealthInput? = null,
+    @SerialName("input")
+    val input: HealthInput ,
     val result: HealthResult,
     val status: String? = null,
     @SerialName("sla_compliant_client")
@@ -18,6 +19,12 @@ data class HealthAssessmentResponse(
     val slaCompliantSystem: Boolean? = null,
     val created: Double? = null,
     val completed: Double? = null
+)
+
+@Serializable
+data class HealthInput(
+
+    val images: List<String>,
 )
 
 @Serializable

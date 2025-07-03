@@ -2,12 +2,12 @@ package org.example.project.data.fakeData
 import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
 import org.example.project.data.model.HealthAssessmentResponse
-import org.example.project.data.remote.PlantRepositoryInterface
+import org.example.project.data.remote.ApiRepositoryInterface
 import org.example.project.data.model.PlantIdentificationResult
 import org.example.project.data.model.RequestModel
 import org.example.project.utils.loadJsonFromResources
 
-class FakePlantRepository() : PlantRepositoryInterface
+class FakeApiRepository() : ApiRepositoryInterface
 {
     override suspend fun getPlantIdentification(request: RequestModel): PlantIdentificationResult {
         println("FakePlantRepository -> getPlantIdentification called with: $request")

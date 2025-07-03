@@ -1,13 +1,12 @@
 package org.example.project.data.remote
 
-import kotlinx.serialization.json.Json
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.PlantIdentificationResult
 import org.example.project.data.model.RequestModel
-import org.example.project.utils.loadJsonFromResources
-class PlantRepository(
+
+class ApiRepository(
     private val api: ApiService
-) : PlantRepositoryInterface {
+) : ApiRepositoryInterface {
     override suspend fun getPlantIdentification(request: RequestModel): PlantIdentificationResult {
         return api.identifyPlant(request)
             ?: throw IllegalStateException("identifyPlant returned null")

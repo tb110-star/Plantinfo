@@ -4,31 +4,19 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 @Serializable
 data class PlantIdentificationResult(
-   /* @SerialName("access_token")
-    val accessToken: String,
-    @SerialName("model_version")
-    val modelVersion: String,
-    @SerialName("input")
-    val input: Input,
-
-    @SerialName("status")
-    val status: String,
-    */
+   @SerialName("input")
+   val input: Input,
    @SerialName("result")
    val result: Result,
 )
-/*
+
 @Serializable
 data class Input(
-    val latitude: Double,
-    val longitude: Double,
-    @SerialName("similar_images")
-    val similarImages: Boolean,
+
     val images: List<String>,
-    val datetime: String,
 )
 
- */
+
 @Serializable
 data class Result(
     @SerialName("is_plant")

@@ -162,6 +162,7 @@ fun SuggestionCard(
                         onClick = {
                             val healthEntity =
                                 onConfirm(suggestion)
+                            onExpandChange(false)
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {

@@ -25,6 +25,8 @@ import org.example.project.ui.components.ExpandableInfoCard
 import org.example.project.ui.components.SimilarImagesRow
 import org.example.project.ui.viewModels.HealthInfoViewModel
 import org.example.project.ui.viewModels.PlantInfoViewModel
+import org.example.project.ui.viewModels.UploadImageViewModel
+import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -32,6 +34,7 @@ fun DetailsPlantScreen(
     suggestion: Suggestions,
     onBack: () -> Unit
 ) {
+    val uploadImageViewModel: UploadImageViewModel = getKoin().get()
     val vM: PlantInfoViewModel = koinViewModel()
     val viewModel: HealthInfoViewModel = koinViewModel()
     val healthInfo = viewModel.healthInfo.collectAsState()
@@ -101,7 +104,7 @@ fun DetailsPlantScreen(
 
                 val shortWatering = buildString {
                     if (wateringInfo != null) {
-                        append("Min:${wateringInfo.min} , Max: ${wateringInfo.max}\n")
+                        append("Min:${wMin} , Max: ${wMax}\n")
                     }
                 }.ifEmpty { "No watering data available." }
 
@@ -164,17 +167,19 @@ fun DetailsPlantScreen(
                     remainingDescription = restUses,
                     backgroundColor = Color(0xFFCCAAAA).copy(alpha = 0.7f)
                 )
-
                 Button(
                     onClick = {
-                        val plantEntity = suggestion.toPlantHistory().copy(isConfirmed = true)
-                        vM.saveToPlantstory(plantEntity)
-                       // onBack()
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
+                        vM.saveToPlantstory(
+                            suggestion = suggestion,
+                            serverImageUrl = vM.serverImageUrl.value
+                        )
+                        onBack()
+                    }
+                )
+                {
                     Text("Confirm & Save")
                 }
+
 
             }
         }

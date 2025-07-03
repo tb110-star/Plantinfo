@@ -23,7 +23,7 @@ fun appLog(level: AppLogLevel, message: String) {
 }
 
 class ApiService {
-    private val apiKey = "J"
+    private val apiKey = "Jm1Fqb01dwZtjONk7zpNQ6aBw7gaOOUp0WWeKBLBhivW3JG7sV"
     private val baseUrl = "https://plant.id/api/v3"
     private val client = HttpClient {
         install(ContentNegotiation) {

@@ -12,7 +12,7 @@ import org.example.project.data.model.Suggestions
 
 @Entity(tableName = "plantHistory")
 data class PlantHistoryEntity(
-    @PrimaryKey val id: String = uuid4().toString(),
+    @PrimaryKey val id: String,
     val date: Long = Clock.System.now().toEpochMilliseconds(),
     val name: String?,
     val probability: Double?,
@@ -24,11 +24,15 @@ data class PlantHistoryEntity(
     val bestLight: String? = "Not specified",
     val bestSoil: String? = "Not specified",
     val uses: String ?= "Not specified",
-    val isConfirmed: Boolean = false
+    val isConfirmed: Boolean = false,
+    val imageUploadedUrl: String?,
 )
-fun Suggestions.toPlantHistory(): PlantHistoryEntity {
+fun Suggestions.toPlantHistory(
+    combinedId: String,
+    serverImageUrl: String?
+): PlantHistoryEntity {
     return PlantHistoryEntity(
-
+        id = combinedId,
         name = this.name,
         probability = this.probability,
         imageUrl = this.details.image?.value ?: "",
@@ -39,7 +43,8 @@ fun Suggestions.toPlantHistory(): PlantHistoryEntity {
         bestLight = this.details.bestLightCondition ?: "Not specified",
         bestSoil = this.details.bestSoilType ?: "Not specified",
         uses = this.details.commonUses ?: "Not specified",
-        isConfirmed = true
+        isConfirmed = true,
+        imageUploadedUrl = serverImageUrl
     )
 }
 /*
@@ -52,26 +57,32 @@ LaunchedEffect(Unit) {
 
 @Entity(tableName = "health_history")
 data class HealthHistoryEntity(
-    @PrimaryKey val id: String = uuid4().toString(),
+    @PrimaryKey val id: String,
     val date: Long = Clock.System.now().toEpochMilliseconds(),
     val healthStatus: String,
     val diseaseName: String? = "Not specified",
     val probability: Double?,
     val description: String = "No description available",
     val questionAnswered: String? = null,
-    val isConfirmed: Boolean = false
+    val isConfirmed: Boolean = false,
+    val imageUploadedUrl: String?,
 )
 fun DiseaseSuggestion.toHealthHistory(
+    combinedId: String,
     healthStatus: String,
-    selectedSuggestion: String? = null
+    selectedSuggestion: String? = null,
+    serverImageUrl: String?
 ): HealthHistoryEntity {
     return HealthHistoryEntity(
+        id = combinedId,
         healthStatus = healthStatus,
         diseaseName = this.name,
         probability = this.probability,
         description = this.details?.description ?: "No description available",
         questionAnswered = selectedSuggestion,
-        isConfirmed = true
+        isConfirmed = true,
+        imageUploadedUrl = serverImageUrl
     )
+
 }
 

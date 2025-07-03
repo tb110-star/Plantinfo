@@ -11,12 +11,14 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.*
+import kotlinx.coroutines.delay
 import org.example.project.navigation.*
 import org.example.project.ui.components.BottomNavigationBar
 import org.example.project.ui.screens.*
 import org.example.project.ui.theme.AppTheme
 import org.example.project.ui.viewModels.PlantInfoViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
+import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -24,6 +26,9 @@ import org.koin.compose.viewmodel.koinViewModel
 fun App() {
     val plantViewModel: PlantInfoViewModel = koinViewModel()
     val viewModel: ThemeSettingsViewModel = koinViewModel()
+    val uploadImageViewModel: UploadImageViewModel = koinViewModel()
+    val navigateToHealthInfo by uploadImageViewModel.navigateToHealthInfo.collectAsState()
+
     val settings by viewModel.settings.collectAsState()
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(NavigationItem.Home) }
@@ -62,6 +67,8 @@ fun App() {
                         navItems = NavigationItem.entries,
                         selectedNavItem = selectedTab,
                         onNavItemSelection = { item ->
+                            println("BottomNav selected: ${item.label}")
+
                             selectedTab = item
                             navController.navigate(item.route) {
                                 popUpTo(NavigationItem.Home.route) { inclusive = false }
@@ -72,11 +79,26 @@ fun App() {
                 }
             }
         ) { innerPadding ->
+            LaunchedEffect(navigateToHealthInfo) {
+                println("LaunchedEffect: navigateToHealthInfo = $navigateToHealthInfo")
+
+                if (navigateToHealthInfo) {
+                    println("Navigating to HealthInfoScreen ")
+
+                    navController.navigate(NavigationItem.Search.route)
+                    delay(150)
+                    uploadImageViewModel.resetNavigateToHealthInfo()
+                }
+            }
+
             NavHost(
                 navController = navController,
                 startDestination = NavigationItem.Home.route,
                 modifier = Modifier.padding(innerPadding)
-            ) {
+            )
+
+            {
+
                 composable<HomeScreenRoutes> {
                     showBackIcon = false
                     currentTopBarTitle = NavigationItem.Home.label

@@ -185,13 +185,12 @@ fun AddImageSheetScreen(
                 Button(
                     onClick =  {
                         base64?.let { base64Str ->
-                        val request = uploadImageViewModel.createRequest(base64Str)
-                        healthInfoViewModel.loadHealthInfo(request)
+                      //  val request = uploadImageViewModel.createRequest(base64Str)
+                       // healthInfoViewModel.loadHealthInfo(request)
+                            uploadImageViewModel.setRequest(uploadImageViewModel.createRequest(base64Str))
+
+                            uploadImageViewModel.triggerNavigateToHealthInfo()
                         onCloseClick()
-                            //
-                            //  health screen navigation
-                          //
-                           // navigateToHealthScreen()
                         }
                     },
                     enabled = image != null,
