@@ -5,15 +5,13 @@ import org.example.project.data.local.plantHistoryRoomRepository.PlantHistoryRep
 import org.example.project.data.local.ThemeSettingRepository.getThemeSettingsRepository
 import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepository
 import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepositoryImpl
-import org.example.project.data.remote.ApiRepository
 import org.example.project.data.local.roomDataBase.AppDatabase
 import org.example.project.data.remote.ApiService
 import org.example.project.data.fakeData.FakeApiRepository
-
 import org.example.project.data.remote.ApiRepositoryInterface
-import org.example.project.ui.viewModels.HealthInfoViewModel
+import org.example.project.ui.viewModels.HealthViewModel
 import org.example.project.ui.viewModels.HistoryViewModel
-import org.example.project.ui.viewModels.PlantInfoViewModel
+import org.example.project.ui.viewModels.HomeViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
 import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.core.module.dsl.singleOf
@@ -34,8 +32,8 @@ val appModule = module {
     singleOf(::HealthHistoryRepositoryImpl) bind HealthHistoryRepository::class
     singleOf(::ThemeSettingsViewModel)
     singleOf(::UploadImageViewModel)
-    singleOf(::HealthInfoViewModel)
-    single { PlantInfoViewModel(
+    singleOf(::HealthViewModel)
+    single { HomeViewModel(
         repo = get(),
         historyRepository = get()
     )}

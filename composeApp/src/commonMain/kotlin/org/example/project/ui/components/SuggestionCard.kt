@@ -1,27 +1,14 @@
 package org.example.project.ui.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import coil3.compose.AsyncImage
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.error
-import kotlinproject.composeapp.generated.resources.placeholder
 import org.example.project.data.model.*
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SuggestionCard(
@@ -36,13 +23,14 @@ fun SuggestionCard(
 ) {
 
     Card(
-        onClick = { onExpandChange(!isExpanded) },
+        onClick = { onExpandChange(!isExpanded) },  // Toggle expand/collapse on click
         modifier = modifier
             .padding(vertical = 4.dp)
             .then(backgroundModifier),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Column(modifier = modifier.padding(16.dp)) {
+            // Disease name
             Text(
                 text = suggestion.name ?: "Unknown disease",
                 style = MaterialTheme.typography.titleMedium,
@@ -51,7 +39,7 @@ fun SuggestionCard(
             )
             Spacer(modifier.height(25.dp))
             Spacer(modifier = Modifier.weight(2f))
-
+            // Probability of the disease
             Text(
                 text = "Probability: ${suggestion.probability}",
                 style = MaterialTheme.typography.bodySmall,
@@ -59,9 +47,8 @@ fun SuggestionCard(
             )
             Spacer(modifier.height(10.dp))
 
-
-
             if (isExpanded) {
+                // Show description if available
                 suggestion.details?.description?.let {
                     Text(
                         text = it,
@@ -69,11 +56,10 @@ fun SuggestionCard(
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 }
-
                 Spacer(Modifier.height(8.dp))
                 Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
-
+                // Show classification
                 suggestion.details?.classification?.let {
                     Text(
                         text = "📝 Classification: ${it.joinToString()}",
@@ -83,7 +69,7 @@ fun SuggestionCard(
                         color = MaterialTheme.colorScheme.primary
                     )
                 }
-
+                // Show common names
                 suggestion.details?.commonName?.let {
                     Text(
                         text = "🌱 Common Names: ${it.joinToString()}",
@@ -97,7 +83,7 @@ fun SuggestionCard(
                 Spacer(Modifier.height(8.dp))
                 Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
-
+                // Treatments (chemical, biological, prevention)
                 suggestion.details?.treatment?.let { treatment ->
                     treatment.chemical?.let {
                         Surface(
@@ -143,7 +129,7 @@ fun SuggestionCard(
                 }
 
                 Spacer(Modifier.height(12.dp))
-
+                // Similar images
                 suggestion.similarImages.orEmpty().takeIf { it.isNotEmpty() }?.let { images ->
 
                     Text(
@@ -160,8 +146,7 @@ fun SuggestionCard(
                     )
                     Button(
                         onClick = {
-                            val healthEntity =
-                                onConfirm(suggestion)
+                            onConfirm(suggestion)
                             onExpandChange(false)
                         },
                         modifier = Modifier.fillMaxWidth()

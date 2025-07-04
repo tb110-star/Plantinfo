@@ -19,12 +19,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import org.example.project.data.local.roomModel.toPlantHistory
 import org.example.project.data.model.Suggestions
 import org.example.project.ui.components.ExpandableInfoCard
 import org.example.project.ui.components.SimilarImagesRow
-import org.example.project.ui.viewModels.HealthInfoViewModel
-import org.example.project.ui.viewModels.PlantInfoViewModel
+import org.example.project.ui.viewModels.HealthViewModel
+import org.example.project.ui.viewModels.HomeViewModel
 import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
@@ -35,8 +34,8 @@ fun DetailsPlantScreen(
     onBack: () -> Unit
 ) {
     val uploadImageViewModel: UploadImageViewModel = getKoin().get()
-    val vM: PlantInfoViewModel = koinViewModel()
-    val viewModel: HealthInfoViewModel = koinViewModel()
+    val vM: HomeViewModel = koinViewModel()
+    val viewModel: HealthViewModel = koinViewModel()
     val healthInfo = viewModel.healthInfo.collectAsState()
     val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
 
@@ -169,7 +168,7 @@ fun DetailsPlantScreen(
                 )
                 Button(
                     onClick = {
-                        vM.saveToPlantstory(
+                        vM.saveToPlantHistory(
                             suggestion = suggestion,
                             serverImageUrl = vM.serverImageUrl.value
                         )

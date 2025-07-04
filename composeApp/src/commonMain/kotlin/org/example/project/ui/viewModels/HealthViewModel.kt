@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepository
-import org.example.project.data.local.roomModel.HealthHistoryEntity
 import org.example.project.data.local.roomModel.toHealthHistory
 import org.example.project.data.model.DiseaseSuggestion
 import org.example.project.data.model.HealthAssessmentResponse
@@ -14,7 +13,7 @@ import org.example.project.data.model.Questions
 import org.example.project.data.model.RequestModel
 import org.example.project.data.remote.ApiRepositoryInterface
 
-class HealthInfoViewModel (
+class HealthViewModel (
     private val repo: ApiRepositoryInterface,
     private val historyRepository: HealthHistoryRepository
 
@@ -31,23 +30,15 @@ class HealthInfoViewModel (
     private val _selectedSuggestion = MutableStateFlow<String?>(null)
     val selectedSuggestion = _selectedSuggestion.asStateFlow()
 
-    fun onQuestionAnswered(isYes: Boolean, question: Questions) {
-
-        val selectedName = if (isYes) {
-            question.options?.yes?.name
-        } else {
-            question.options?.no?.name
-        } ?: ""
-        _selectedSuggestion.value = selectedName
-        println("Selected Suggestion: $selectedName")
-    }
+    // Loads health assessment data from API
     fun loadHealthInfo(request: RequestModel) {
         println("loadHealthInfo called with request: $request")
-
         viewModelScope.launch {
             _isLoading.value = true
             _errorMessage.value = null
             try {
+                println("loadHealthInfo started")
+
                 val result = repo.getHealthAssessment(request)
                 println(" Health assessment result: $result")
 
@@ -67,29 +58,8 @@ class HealthInfoViewModel (
             }
         }
     }
-    fun refreshUI() {
-        _healthInfo.value = _healthInfo.value
-    }
 
-    fun clearHealthInfo() {
-        _healthInfo.value = null
-    }
-
-    fun splitTextSmart(text: String, maxLength: Int = 300): Pair<String, String> {
-        if (text.length <= maxLength) return text to ""
-
-        val breakpoint = text.lastIndexOfAny(charArrayOf('.', '\n'), maxLength)
-            .takeIf { it != -1 } ?: maxLength
-
-        val firstPart = text.substring(0, breakpoint + 1).trimEnd()
-        val secondPart = text.substring(breakpoint + 1).trimStart()
-
-        return firstPart to secondPart
-    }
-    fun setUploadedImageInfo(localPath: String, serverUrl: String?) {
-        _serverImageUrl.value = serverUrl
-    }
-
+    // Saves a confirmed disease suggestion to the history database
     fun saveConfirmedSuggestion(suggestion: DiseaseSuggestion) {
         viewModelScope.launch {
             try {
@@ -111,4 +81,18 @@ class HealthInfoViewModel (
         }
     }
 
+    // Handles user answer to a question and updates the selected suggestion
+    fun onQuestionAnswered(isYes: Boolean, question: Questions) {
+
+        val selectedName = if (isYes) {
+            question.options?.yes?.name
+        } else {
+            question.options?.no?.name
+        } ?: ""
+        _selectedSuggestion.value = selectedName
+        println("Selected Suggestion: $selectedName")
+    }
+    fun refreshUI() {
+        _healthInfo.value = _healthInfo.value
+    }
 }

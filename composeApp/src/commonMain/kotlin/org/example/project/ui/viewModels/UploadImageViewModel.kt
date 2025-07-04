@@ -13,45 +13,30 @@ import shared.SharedImage
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
-class UploadImageViewModel(
-) : ViewModel(), CoroutineScope by MainScope()  {
+class UploadImageViewModel : ViewModel() {
     private val _image = MutableStateFlow<SharedImage?>(null)
-    val image: StateFlow<SharedImage?> = _image.asStateFlow()
+    val image: StateFlow<SharedImage?> = _image.asStateFlow()    // Holds the selected image
+
     private val _base64 = MutableStateFlow<String?>(null)
-    val base64: StateFlow<String?> = _base64.asStateFlow()
+    val base64: StateFlow<String?> = _base64.asStateFlow()    // Holds the Base64 string of the image
+
     private val _navigateToHealthInfo = MutableStateFlow(false)
     val navigateToHealthInfo = _navigateToHealthInfo.asStateFlow()
+
     private val _request = MutableStateFlow<RequestModel?>(null)
-    val request = _request.asStateFlow()
+    val request = _request.asStateFlow()    // Holds the request object
+
     private val _serverImageUrl = MutableStateFlow<String?>(null)
-    val serverImageUrl = _serverImageUrl.asStateFlow()
+    val serverImageUrl = _serverImageUrl.asStateFlow()     // Holds the server image URL after upload
 
-    fun setServerImageUrl(url: String?) {
-        _serverImageUrl.value = url
-    }
-
-
-    fun setRequest(req: RequestModel) {
-        _request.value = req
-    }
-    fun triggerNavigateToHealthInfo() {
-        println(" triggerNavigateToHealthInfo called")
-
-        _navigateToHealthInfo.value = true
-    }
-
-    fun resetNavigateToHealthInfo() {
-        println(" resetNavigateToHealthInfo called")
-
-        _navigateToHealthInfo.value = false
-    }
+    // Set image and process to Base64
     fun setImage(image: SharedImage?) {
         _image.value = image
         if (image != null) {
             onImageSelected(image)
         }
     }
-
+    // Convert image to Base64 string
     @OptIn(ExperimentalEncodingApi::class)
     private fun onImageSelected(sharedImage: SharedImage) {
         viewModelScope.launch {
@@ -59,10 +44,7 @@ class UploadImageViewModel(
             _base64.value = byteArray?.let { Base64.encode(it) }
         }
     }
-    fun clear() {
-        _image.value = null
-        _base64.value = null
-    }
+    // Create request object from Base64 string
     fun createRequest(base64: String): RequestModel {
         return RequestModel(
             images = listOf(base64),
@@ -71,6 +53,13 @@ class UploadImageViewModel(
             similarImagesS = true
         )
     }
-
+    // Clear all stored data
+    fun clear() {
+        _image.value = null
+        _base64.value = null
+        _request.value = null
+        _serverImageUrl.value = null
+        _navigateToHealthInfo.value = false
+    }
 }
 

@@ -1,6 +1,5 @@
 package org.example.project
 
-
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
@@ -11,24 +10,20 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.*
-import kotlinx.coroutines.delay
 import org.example.project.navigation.*
 import org.example.project.ui.components.BottomNavigationBar
 import org.example.project.ui.screens.*
 import org.example.project.ui.theme.AppTheme
-import org.example.project.ui.viewModels.PlantInfoViewModel
+import org.example.project.ui.viewModels.HomeViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
-import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
-    val plantViewModel: PlantInfoViewModel = koinViewModel()
+    val plantViewModel: HomeViewModel = koinViewModel()
     val viewModel: ThemeSettingsViewModel = koinViewModel()
-    val uploadImageViewModel: UploadImageViewModel = koinViewModel()
-    val navigateToHealthInfo by uploadImageViewModel.navigateToHealthInfo.collectAsState()
-
+  //  val uploadImageViewModel: UploadImageViewModel = koinViewModel()
     val settings by viewModel.settings.collectAsState()
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(NavigationItem.Home) }
@@ -79,42 +74,32 @@ fun App() {
                 }
             }
         ) { innerPadding ->
-            LaunchedEffect(navigateToHealthInfo) {
-                println("LaunchedEffect: navigateToHealthInfo = $navigateToHealthInfo")
-
-                if (navigateToHealthInfo) {
-                    println("Navigating to HealthInfoScreen ")
-
-                    navController.navigate(NavigationItem.Search.route)
-                    delay(150)
-                    uploadImageViewModel.resetNavigateToHealthInfo()
-                }
-            }
-
             NavHost(
                 navController = navController,
                 startDestination = NavigationItem.Home.route,
                 modifier = Modifier.padding(innerPadding)
             )
-
             {
-
                 composable<HomeScreenRoutes> {
                     showBackIcon = false
                     currentTopBarTitle = NavigationItem.Home.label
-                    PlantInfoScreen(
-                      
+                    HomeScreen(
                         onDetailsClick = { details ->
                             plantViewModel.selectSuggestion(details)
                             navController.navigate("details")
-
+                        },
+                        onNavigateToHealth = {
+                            navController.navigate(HealthScreenRoutes) {
+                                launchSingleTop = true
+                                popUpTo(NavigationItem.Home.route) { inclusive = false }
+                            }
                         }
                     )
                 }
                 composable<HealthScreenRoutes> {
-                    showBackIcon = false
-                    currentTopBarTitle = NavigationItem.Search.label
-                    HealthInfoScreen()
+                    showBackIcon = true
+                    currentTopBarTitle = "Health"
+                    HealthScreen()
                 }
                 composable<HistoryScreenRoutes> {
                     showBackIcon = false
@@ -129,7 +114,6 @@ fun App() {
                 composable("details") {
                     showBackIcon = true
                     currentTopBarTitle = "Details Info"
-                    val plantViewModel: PlantInfoViewModel = koinViewModel()
                     val suggestion by plantViewModel.selectedSuggestion.collectAsState()
 
                     if (suggestion != null) {
@@ -139,9 +123,6 @@ fun App() {
                         )
                     }
                 }
-
-
-
             }
         }
     }

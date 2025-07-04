@@ -6,38 +6,58 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepository
 import org.example.project.data.local.plantHistoryRoomRepository.PlantHistoryRepository
+import org.example.project.ui.screens.HistoryUiState
 
 class HistoryViewModel(
     private val plantRepo: PlantHistoryRepository,
     private val healthRepo: HealthHistoryRepository
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow(HistoryUiState.IDLE)
+    val uiState = _uiState.asStateFlow()
+
     private val _category = MutableStateFlow("All")
     val category = _category.asStateFlow()
 
-    val plantHistory = plantRepo.getAllHistory().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
-    val healthHistory = healthRepo.getAllHealthHistory().stateIn(viewModelScope, SharingStarted.Lazily, emptyList())
+    // Observes and holds the latest plant history data as StateFlow
+    val plantHistory = plantRepo.getAllHistory().stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,  // Starts collecting only when there is a subscriber
+        emptyList()
+    )
+    // Observes and holds the latest health history data as StateFlow
+    val healthHistory = healthRepo.getAllHealthHistory().stateIn(
+        viewModelScope,
+        SharingStarted.Lazily,
+        emptyList()
+    )
+
+
+
 
     fun setCategory(cat: String) {
         _category.value = cat
     }
 
-    fun deletePlant(id: Long) {
+    fun deletePlant(id: String) {
+        /*
         viewModelScope.launch {
-            plantRepo.getByIds(listOf(id)).firstOrNull()?.let {
-                plantRepo.saveToHistory(it.copy(isConfirmed = false)) // یا dao.delete()
-            }
+            plantRepo.deleteById(id)
+            loadHistory()
         }
+
+         */
     }
 
-    fun deleteHealth(id: Long) {
+    fun deleteHealth(id: String) {
+        /*
         viewModelScope.launch {
-          //  healthRepo.getByIds(listOf(id)).firstOrNull()?.let {
-            //    healthRepo.saveHealthRecord(it.copy(isConfirmed = false)) // یا dao.delete()
-          //  }
+            healthRepo.deleteById(id)
+            loadHistory()
         }
+
+         */
     }
 }

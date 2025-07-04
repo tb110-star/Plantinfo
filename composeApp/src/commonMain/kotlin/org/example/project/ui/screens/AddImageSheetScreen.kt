@@ -1,6 +1,5 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -19,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.example.project.ui.viewModels.HealthInfoViewModel
-import org.example.project.ui.viewModels.PlantInfoViewModel
+import org.example.project.ui.viewModels.HealthViewModel
+import org.example.project.ui.viewModels.HomeViewModel
 
 import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -32,12 +31,12 @@ import shared.rememberCameraManager
 import shared.rememberGalleryManager
 @Composable
 fun AddImageSheetScreen(
-
+    onHealthRequestSent: () -> Unit,
     onCloseClick: () -> Unit
 ) {
     val uploadImageViewModel: UploadImageViewModel = koinViewModel()
-    val plantInfoViewModel: PlantInfoViewModel = koinViewModel()
-    val healthInfoViewModel:HealthInfoViewModel = koinViewModel()
+    val homeViewModel: HomeViewModel = koinViewModel()
+    val healthViewModel:HealthViewModel = koinViewModel()
     val coroutineScope = rememberCoroutineScope()
     val image by uploadImageViewModel.image.collectAsState()
     val imageBitmapState = remember { mutableStateOf<ImageBitmap?>(null) }
@@ -167,7 +166,7 @@ fun AddImageSheetScreen(
                 onClick = {
                     base64?.let { base64Str ->
                         val request = uploadImageViewModel.createRequest(base64Str)
-                        plantInfoViewModel.loadPlantInfo(request)
+                        homeViewModel.loadPlantInfo(request)
                         onCloseClick()
                     }
                 },
@@ -185,12 +184,24 @@ fun AddImageSheetScreen(
                 Button(
                     onClick =  {
                         base64?.let { base64Str ->
-                      //  val request = uploadImageViewModel.createRequest(base64Str)
-                       // healthInfoViewModel.loadHealthInfo(request)
-                            uploadImageViewModel.setRequest(uploadImageViewModel.createRequest(base64Str))
+                        val request = uploadImageViewModel.createRequest(base64Str)
+                        healthViewModel.loadHealthInfo(request)
+                          //  uploadImageViewModel.setRequest(uploadImageViewModel.createRequest(base64Str))
+                          //  uploadImageViewModel.triggerNavigateToHealthInfo()
+                            /*
+                            coroutineScope.launch {
+                                healthInfoViewModel.isLoading
+                                    .collect { loading ->
+                                        if (loading) {
+                                            uploadImageViewModel.triggerNavigateToHealthInfo()
+                                            cancel()
+                                        }
+                                    }
+                            }
 
-                            uploadImageViewModel.triggerNavigateToHealthInfo()
-                        onCloseClick()
+                             */
+                            onCloseClick()
+                            onHealthRequestSent()
                         }
                     },
                     enabled = image != null,

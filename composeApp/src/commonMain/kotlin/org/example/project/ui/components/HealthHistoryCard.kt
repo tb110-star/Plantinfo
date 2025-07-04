@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -76,9 +77,19 @@ fun HealthHistoryCard(
                         placeholder = placeholderPainter,
                         error = errorPainter,
                         modifier = Modifier
-                            .clip(RoundedCornerShape(50))
-                            .height(if (expanded) 80.dp else 50.dp)
-                            .fillMaxWidth(0.2f),
+                            .clip(RoundedCornerShape(8.dp))
+                            .let { base ->
+                                if (expanded) {
+                                    base
+                                        .size(120.dp)
+                                        .clip(RoundedCornerShape(8.dp))
+                                } else {
+                                    base
+                                        .size(60.dp)
+                                        .clip(RoundedCornerShape(50))
+                                }
+
+                            },
                         contentScale = ContentScale.Crop
                     )
                 }

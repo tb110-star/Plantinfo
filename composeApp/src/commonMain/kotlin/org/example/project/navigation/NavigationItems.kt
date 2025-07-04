@@ -14,6 +14,6 @@ enum class NavigationItem(
 )
 {
     Home(HomeScreenRoutes, "Home", Icons.Default.Home),
-    Search(HealthScreenRoutes, "Health", Icons.Default.Healing),
+   // Health(HealthScreenRoutes, "Health", Icons.Default.Healing),
     History(HistoryScreenRoutes, "History", Icons.Default.History)
 }
