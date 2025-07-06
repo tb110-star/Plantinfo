@@ -115,112 +115,118 @@ fun AddImageSheetScreen(
         )
     }
 
-    //
     Box(
         Modifier
             .fillMaxWidth()
+            .fillMaxHeight(0.75f)
             .graphicsLayer { alpha = 0.95f }
-            .background(Color.White.copy(alpha = 0.15f))
+            .background(Color.White.copy(alpha = 0.05f))
             .blur(0.3.dp)
             .padding(24.dp)
     ) {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Add Image of Plant", style = MaterialTheme.typography.titleLarge)
-            Spacer(Modifier.height(16.dp))
-
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Button(onClick = { launchGallery.value = true }) {
-                    Icon(Icons.Default.Photo, "Gallery")
-                    Spacer(Modifier.width(8.dp))
-                    Text("Gallery")
-                }
-
-                Button(onClick = { launchCamera.value = true }) {
-                    Icon(Icons.Default.CameraAlt, "Camera")
-                    Spacer(Modifier.width(8.dp))
-                    Text("Camera")
-                }
-            }
-
-            Spacer(Modifier.height(24.dp))
-            if (imageBitmapState.value != null) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text("Add Image of Plant", style = MaterialTheme.typography.titleLarge)
                 Spacer(Modifier.height(24.dp))
-                Image(
-                    bitmap = imageBitmapState.value!!,
-                    contentDescription = "Selected Image",
-                    modifier = Modifier
-                        .size(180.dp)
-                        .clip(CircleShape)
-                        .background(Color.LightGray)
-                )
-            }
-            Spacer(Modifier.height(16.dp))
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ){
-            Button(
-                onClick = {
-                    base64?.let { base64Str ->
-                        val request = uploadImageViewModel.createRequest(base64Str)
-                        homeViewModel.loadPlantInfo(request)
-                        onCloseClick()
-                    }
-                },
-                enabled = image != null,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = if (image != null)
-                        MaterialTheme.colorScheme.primary
-                    else
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
-                ),
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Get Plant Info")
-            }
-                Button(
-                    onClick =  {
-                        base64?.let { base64Str ->
-                        val request = uploadImageViewModel.createRequest(base64Str)
-                        healthViewModel.loadHealthInfo(request)
-                          //  uploadImageViewModel.setRequest(uploadImageViewModel.createRequest(base64Str))
-                          //  uploadImageViewModel.triggerNavigateToHealthInfo()
-                            /*
-                            coroutineScope.launch {
-                                healthInfoViewModel.isLoading
-                                    .collect { loading ->
-                                        if (loading) {
-                                            uploadImageViewModel.triggerNavigateToHealthInfo()
-                                            cancel()
-                                        }
-                                    }
-                            }
 
-                             */
-                            onCloseClick()
-                            onHealthRequestSent()
-                        }
-                    },
-                    enabled = image != null,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = if (image != null)
-                            MaterialTheme.colorScheme.primary
-                        else
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
-                    ),
-                    modifier = Modifier.weight(1f)
+                val buttonModifier = Modifier.width(160.dp)
+
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text("Get Health Info")
+                    Button(
+                        onClick = { launchGallery.value = true },
+                        modifier = buttonModifier
+                    ) {
+                        Icon(Icons.Default.Photo, contentDescription = "Gallery")
+                        Spacer(Modifier.width(8.dp))
+                        Text("Gallery")
+                    }
+
+                    Button(
+                        onClick = { launchCamera.value = true },
+                        modifier = buttonModifier
+                    ) {
+                        Icon(Icons.Default.CameraAlt, contentDescription = "Camera")
+                        Spacer(Modifier.width(8.dp))
+                        Text("Camera")
+                    }
                 }
-        }
-            Spacer(Modifier.height(16.dp))
+
+                Spacer(Modifier.height(32.dp))
+
+                if (imageBitmapState.value != null) {
+                    Image(
+                        bitmap = imageBitmapState.value!!,
+                        contentDescription = "Selected Image",
+                        modifier = Modifier
+                            .size(180.dp)
+                            .clip(CircleShape)
+                            .background(Color.LightGray)
+                    )
+                    Spacer(Modifier.height(32.dp))
+                }
+
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Button(
+                        onClick = {
+                            base64?.let { base64Str ->
+                                val request = uploadImageViewModel.createRequest(base64Str)
+                                homeViewModel.loadPlantInfo(request)
+                                onCloseClick()
+                                uploadImageViewModel.clear()
+
+                            }
+                        },
+                        enabled = image != null,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (image != null)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
+                        ),
+                        modifier = buttonModifier
+                    ) {
+                        Text("Get Plant Info")
+                    }
+
+                    Button(
+                        onClick = {
+                            base64?.let { base64Str ->
+                                val request = uploadImageViewModel.createRequest(base64Str)
+                                healthViewModel.loadHealthInfo(request)
+                                onCloseClick()
+                                onHealthRequestSent()
+                                uploadImageViewModel.clear()
+
+                            }
+                        },
+                        enabled = image != null,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (image != null)
+                                MaterialTheme.colorScheme.primary
+                            else
+                                MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
+                        ),
+                        modifier = buttonModifier
+                    ) {
+                        Text("Get Health Info")
+                    }
+                }
+            }
 
             TextButton(onClick = onCloseClick) {
                 Text("Cancel")
             }
         }
     }
+
 }

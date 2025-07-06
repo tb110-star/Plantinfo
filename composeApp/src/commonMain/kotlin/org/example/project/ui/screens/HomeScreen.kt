@@ -64,38 +64,7 @@ fun HomeScreen(
     val healthInfo by healthViewModel.healthInfo.collectAsState()
     val healthSuggestions = healthInfo?.result?.disease?.suggestions.orEmpty()
     val hasHealthData = healthSuggestions.isNotEmpty()
-/*
-    Scaffold(
-        floatingActionButton = {
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                if (hasHealthData) {
-                    FloatingActionButton(
-                        onClick = onNavigateToHealth,
-                        containerColor = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
-                    ) {
-                        Icon(Icons.Default.Healing, contentDescription = "Go to Health")
-                    }
-                }
-                FloatingActionButton(
-                    onClick = viewModel::enableAddSheet,
-                    containerColor = Color(0xE8651313),
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
 
-                ) {
-                    Icon(Icons.Default.Camera, contentDescription = "Upload Image")
-                }
-            }
-        }
-    )
-
- */
     Scaffold(
         floatingActionButton = {
             Box(
@@ -195,7 +164,10 @@ fun HomeScreen(
             // Show the Add Image bottom sheet if enabled
             if (isShowingAddSheet) {
                 ModalBottomSheet(
-                    onDismissRequest = viewModel::disableAddSheet
+                    onDismissRequest = viewModel::disableAddSheet,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .fillMaxHeight(0.75f)
                 ) {
                     AddImageSheetScreen(
                         onHealthRequestSent = {
