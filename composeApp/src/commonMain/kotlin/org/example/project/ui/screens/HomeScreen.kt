@@ -26,10 +26,15 @@ import org.example.project.ui.viewModels.HomeViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.filled.Healing
+import androidx.compose.material.icons.filled.MedicalInformation
+import androidx.compose.material.icons.filled.MedicalServices
+import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
+import org.example.project.ui.viewModels.HealthViewModel
 
 // Enum to represent the UI state of the Home screen
 
@@ -55,18 +60,75 @@ fun HomeScreen(
         else -> HomeUiState.EMPTY
     }
     val suggestions = plantInfo?.result?.classification?.suggestions.orEmpty()
-
+    val healthViewModel: HealthViewModel = koinViewModel()
+    val healthInfo by healthViewModel.healthInfo.collectAsState()
+    val healthSuggestions = healthInfo?.result?.disease?.suggestions.orEmpty()
+    val hasHealthData = healthSuggestions.isNotEmpty()
+/*
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = viewModel::enableAddSheet,
-                containerColor = Color(0xE8651313),
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            ) {
-                Icon(Icons.Default.Camera, contentDescription = "Upload Image")
+            Row (
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ){
+                if (hasHealthData) {
+                    FloatingActionButton(
+                        onClick = onNavigateToHealth,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
+                    ) {
+                        Icon(Icons.Default.Healing, contentDescription = "Go to Health")
+                    }
+                }
+                FloatingActionButton(
+                    onClick = viewModel::enableAddSheet,
+                    containerColor = Color(0xE8651313),
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.padding(start = 16.dp, bottom = 16.dp)
+
+                ) {
+                    Icon(Icons.Default.Camera, contentDescription = "Upload Image")
+                }
             }
         }
-    ) { innerPadding ->
+    )
+
+ */
+    Scaffold(
+        floatingActionButton = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 16.dp)
+            ) {
+                if (hasHealthData) {
+                    FloatingActionButton(
+                        onClick = onNavigateToHealth,
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier
+                            .align(Alignment.BottomStart)
+                            .padding(start = 24.dp, bottom = 8.dp)
+                    ) {
+                        Icon(Icons.Default.MedicalServices, contentDescription = "Go to Health")
+                    }
+                }
+
+                FloatingActionButton(
+                    onClick = viewModel::enableAddSheet,
+                    containerColor = Color(0xE8651313),
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
+                    modifier = Modifier.align(Alignment.BottomEnd)
+                ) {
+                    Icon(Icons.Default.Camera, contentDescription = "Upload Image")
+                }
+            }
+        }
+    )
+
+    { innerPadding ->
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
