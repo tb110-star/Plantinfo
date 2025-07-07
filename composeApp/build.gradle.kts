@@ -47,6 +47,8 @@ kotlin {
             implementation ("com.google.accompanist:accompanist-permissions:0.30.1")
             implementation("io.ktor:ktor-client-android:3.1.3")
             implementation(libs.androidx.room.paging)
+            implementation("io.coil-kt:coil-compose:2.5.0")
+
 
 
 

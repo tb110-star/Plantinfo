@@ -1,32 +1,28 @@
 package kmp.image.picker
 
+
 import android.content.Context
 import android.net.Uri
 import androidx.core.content.FileProvider
-import org.example.project.R
 import java.io.File
-import java.util.Objects
 
-class ComposeFileProvider : FileProvider(
-    R.xml.path_provider
-) {
-    companion object {
-        fun getImageUri(context: Context): Uri {
-            // 1
-            val tempFile = File.createTempFile(
-                "picture_${System.currentTimeMillis()}", ".png", context.cacheDir
-            ).apply {
-                createNewFile()
-            }
-            // 2
-            val authority = context.applicationContext.packageName + ".provider"
-            // 3
-            println("getImageUri: ${tempFile.absolutePath}")
-            return getUriForFile(
-                Objects.requireNonNull(context),
-                authority,
-                tempFile,
-            )
+class ComposeFileProvider : FileProvider()
+
+object ImageUriHelper {
+    fun createTempImageUri(context: Context): Uri {
+        val tempFile = File.createTempFile(
+            "picture_${System.currentTimeMillis()}",
+            ".jpg",
+            context.cacheDir
+        ).apply {
+            createNewFile()
         }
+
+        val authority = "${context.packageName}.provider"
+        return FileProvider.getUriForFile(
+            context,
+            authority,
+            tempFile
+        )
     }
 }

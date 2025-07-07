@@ -1,21 +1,16 @@
 package org.example.project.ui.viewModels
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 import org.example.project.data.model.RequestModel
-import shared.SharedImage
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 class UploadImageViewModel : ViewModel() {
-    private val _image = MutableStateFlow<SharedImage?>(null)
-    val image: StateFlow<SharedImage?> = _image.asStateFlow()    // Holds the selected image
+    private val _image = MutableStateFlow<ByteArray?>(null)
+    val image: StateFlow<ByteArray?> = _image.asStateFlow()    // Holds the selected image
 
     private val _base64 = MutableStateFlow<String?>(null)
     val base64: StateFlow<String?> = _base64.asStateFlow()    // Holds the Base64 string of the image
@@ -28,20 +23,14 @@ class UploadImageViewModel : ViewModel() {
 
     private val _serverImageUrl = MutableStateFlow<String?>(null)
     val serverImageUrl = _serverImageUrl.asStateFlow()     // Holds the server image URL after upload
-
-    // Set image and process to Base64
-    fun setImage(image: SharedImage?) {
-        _image.value = image
-        if (image != null) {
-            onImageSelected(image)
-        }
-    }
-    // Convert image to Base64 string
     @OptIn(ExperimentalEncodingApi::class)
-    private fun onImageSelected(sharedImage: SharedImage) {
-        viewModelScope.launch {
-            val byteArray = sharedImage.toByteArray()
-            _base64.value = byteArray?.let { Base64.encode(it) }
+    // Set image and process to Base64
+    fun setImage(byteArray: ByteArray?) {
+        _image.value = byteArray
+        if (byteArray != null) {
+            _base64.value = Base64.encode(byteArray)
+            println("setImage called, byteArray=${byteArray?.size}")
+
         }
     }
     // Create request object from Base64 string
@@ -61,5 +50,7 @@ class UploadImageViewModel : ViewModel() {
         _serverImageUrl.value = null
         _navigateToHealthInfo.value = false
     }
+
 }
+
 

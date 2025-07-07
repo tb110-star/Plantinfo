@@ -13,22 +13,22 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.decodeToImageBitmap
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.example.project.data.imagePickerPermission.shared.createImageManager
 import org.example.project.ui.viewModels.HealthViewModel
 import org.example.project.ui.viewModels.HomeViewModel
-
 import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import shared.PermissionCallback
 import shared.PermissionStatus
 import shared.PermissionType
 import shared.createPermissionsManager
-import shared.rememberCameraManager
-import shared.rememberGalleryManager
+
 @Composable
 fun AddImageSheetScreen(
     onHealthRequestSent: () -> Unit,
@@ -61,26 +61,21 @@ fun AddImageSheetScreen(
         }
     })
 
-    val cameraManager = rememberCameraManager {
+    val imageManager = createImageManager { byteArray ->
         coroutineScope.launch {
-            val bitmap = withContext(Dispatchers.Default) { it?.toImageBitmap() }
-            uploadImageViewModel.setImage(it)
+            val bitmap = withContext(Dispatchers.Default) {
+                byteArray?.decodeToImageBitmap()
+            }
+            uploadImageViewModel.setImage(byteArray)
             imageBitmapState.value = bitmap
         }
     }
 
-    val galleryManager = rememberGalleryManager {
-        coroutineScope.launch {
-            val bitmap = withContext(Dispatchers.Default) { it?.toImageBitmap() }
-            uploadImageViewModel.setImage(it)
-            imageBitmapState.value = bitmap
-        }
-    }
 
     // Permission Launch
     if (launchGallery.value) {
         if (permissionsManager.isPermissionGranted(PermissionType.GALLERY)) {
-            galleryManager.launch()
+            imageManager.launchGallery()
         } else {
             permissionsManager.askPermission(PermissionType.GALLERY)
         }
@@ -89,7 +84,7 @@ fun AddImageSheetScreen(
 
     if (launchCamera.value) {
         if (permissionsManager.isPermissionGranted(PermissionType.CAMERA)) {
-            cameraManager.launch()
+            imageManager.launchCamera()
         } else {
             permissionsManager.askPermission(PermissionType.CAMERA)
         }
@@ -179,17 +174,19 @@ fun AddImageSheetScreen(
                     Button(
                         onClick = {
                             base64?.let { base64Str ->
+                                println("Sending request with base64: ${base64?.take(30)}")
+                                homeViewModel.clear()
+
                                 val request = uploadImageViewModel.createRequest(base64Str)
                                 homeViewModel.loadPlantInfo(request)
                                 onCloseClick()
                                 uploadImageViewModel.clear()
                                 imageBitmapState.value = null
-
                             }
                         },
                         enabled = image != null,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (image != null)
+                            containerColor = if (image != null && base64 != null)
                                 MaterialTheme.colorScheme.primary
                             else
                                 MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
@@ -202,17 +199,19 @@ fun AddImageSheetScreen(
                     Button(
                         onClick = {
                             base64?.let { base64Str ->
+                                println("Sending request with base64: ${base64?.take(30)}")
+                                healthViewModel.clear()
                                 val request = uploadImageViewModel.createRequest(base64Str)
                                 healthViewModel.loadHealthInfo(request)
                                 onCloseClick()
                                 onHealthRequestSent()
                                 uploadImageViewModel.clear()
-
+                                imageBitmapState.value = null
                             }
                         },
                         enabled = image != null,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (image != null)
+                            containerColor = if (image != null && base64 != null)
                                 MaterialTheme.colorScheme.primary
                             else
                                 MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)
@@ -231,3 +230,4 @@ fun AddImageSheetScreen(
     }
 
 }
+
