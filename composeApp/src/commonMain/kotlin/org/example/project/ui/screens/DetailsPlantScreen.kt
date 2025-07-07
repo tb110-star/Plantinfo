@@ -8,6 +8,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Landscape
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material.icons.filled.WbSunny
@@ -33,17 +34,41 @@ fun DetailsPlantScreen(
     suggestion: Suggestions,
     onBack: () -> Unit
 ) {
-    val uploadImageViewModel: UploadImageViewModel = getKoin().get()
     val vM: HomeViewModel = koinViewModel()
-    val viewModel: HealthViewModel = koinViewModel()
-    val healthInfo = viewModel.healthInfo.collectAsState()
-    val suggestions = healthInfo.value?.result?.disease?.suggestions ?: emptyList()
+    val showDialog = remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+    val showSnackbar = remember { mutableStateOf(false) }
+    val snackbarMessage = remember { mutableStateOf("") }
+
 
     val d = suggestion.details
     val wMin = d.watering?.min ?: "-"
     val wMax = d.watering?.max ?: "-"
+    LaunchedEffect(showSnackbar.value) {
+        if (showSnackbar.value) {
+            snackbarHostState.showSnackbar(
+                message = snackbarMessage.value,
+                duration = SnackbarDuration.Indefinite
+            )
+            showSnackbar.value = false
+        }
+    }
 
-    Scaffold { innerPadding ->
+
+    Scaffold (
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        floatingActionButton = {
+        FloatingActionButton(
+            onClick = {
+              showDialog.value = true
+            },
+            containerColor = Color(0xE8D29B9B)
+            ) {
+            Icon(Icons.Default.Save, contentDescription = "Save Plant Info")
+        }
+    }
+    ){ innerPadding ->
         Box(
             modifier = Modifier
                 .padding(innerPadding)
@@ -166,24 +191,50 @@ fun DetailsPlantScreen(
                     remainingDescription = restUses,
                     backgroundColor = Color(0xFFCCAAAA).copy(alpha = 0.7f)
                 )
-                Button(
-                    onClick = {
-                        vM.saveToPlantHistory(
-                            suggestion = suggestion,
-                            serverImageUrl = vM.serverImageUrl.value
-                        )
-                        onBack()
-                    }
-                )
-                {
-                    Text("Confirm & Save")
-                }
-
-
             }
         }
-
-
     }
+    if (showDialog.value) {
+        AlertDialog(
+            onDismissRequest = { showDialog.value = false },
+            title = { Text("Confirm Save") },
+            text = { Text("Do you want to save this plant to history?") },
+            confirmButton = {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Button(
+                        onClick = { showDialog.value = false },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("No")
+                    }
+                    Button(
+                        onClick = {
+                            vM.saveToPlantHistory(
+                                suggestion = suggestion,
+                                serverImageUrl = vM.serverImageUrl.value,
+                            ) { success ->
+                                snackbarMessage.value = if (success) "Saved successfully!" else "Error saving!"
+
+                                showSnackbar.value = true
+                                showDialog.value = false
+                                onBack()
+                            }
+                        },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Yes")
+                    }
+
+                }
+            }
+        )
+    }
+
+
+
+
 }
 

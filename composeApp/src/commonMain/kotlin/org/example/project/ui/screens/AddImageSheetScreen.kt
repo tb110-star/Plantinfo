@@ -183,6 +183,7 @@ fun AddImageSheetScreen(
                                 homeViewModel.loadPlantInfo(request)
                                 onCloseClick()
                                 uploadImageViewModel.clear()
+                                imageBitmapState.value = null
 
                             }
                         },

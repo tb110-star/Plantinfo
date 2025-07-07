@@ -47,6 +47,8 @@ class HomeViewModel(
     // Loads plant info by sending a request to the API
     fun loadPlantInfo(request: RequestModel) {
         viewModelScope.launch {
+            _plantInfo.value = null
+
             _isLoading.value = true
             try {
                 val result = repo.getPlantIdentification(request)
@@ -64,8 +66,9 @@ class HomeViewModel(
     // Saves the selected suggestion to the plant history database
     fun saveToPlantHistory(
         suggestion: Suggestions,
-        serverImageUrl: String?
-    ) {
+        serverImageUrl: String?,
+        onResult: (Boolean) -> Unit
+    )  {
         viewModelScope.launch {
             try {
                 println("saveToPlantstory called with  serverImageUrl=$serverImageUrl")
@@ -78,9 +81,11 @@ class HomeViewModel(
 
                 historyRepository.saveToHistory(entity)
                 println("Saved successfully: $entity")
-
+                onResult(true)
             } catch (e: Exception) {
                 println("Error saving Plant history: $e")
+                onResult(false)
+
             }
         }
     }

@@ -9,6 +9,8 @@ import org.example.project.data.local.roomDataBase.AppDatabase
 import org.example.project.data.remote.ApiService
 import org.example.project.data.fakeData.FakeApiRepository
 import org.example.project.data.remote.ApiRepositoryInterface
+import org.example.project.data.remote.ApiRepository
+
 import org.example.project.ui.viewModels.HealthViewModel
 import org.example.project.ui.viewModels.HistoryViewModel
 import org.example.project.ui.viewModels.HomeViewModel
@@ -25,9 +27,9 @@ val appModule = module {
     single { get<AppDatabase>().plantHistoryDao() }
     single{ get<AppDatabase>().healthHistoryDao() }
     single { getThemeSettingsRepository() }
-    // singleOf(::ApiRepository) bind ApiRepositoryInterface::class
+     singleOf(::ApiRepository) bind ApiRepositoryInterface::class
 
-    singleOf(::FakeApiRepository) bind ApiRepositoryInterface::class
+   // singleOf(::FakeApiRepository) bind ApiRepositoryInterface::class
     singleOf(::PlantHistoryRepositoryImpl) bind PlantHistoryRepository::class
     singleOf(::HealthHistoryRepositoryImpl) bind HealthHistoryRepository::class
     singleOf(::ThemeSettingsViewModel)
