@@ -9,14 +9,12 @@ import org.example.project.utils.loadJsonFromResources
 
 class FakeApiRepository() : ApiRepositoryInterface
 {
-    override suspend fun getPlantIdentification(request: RequestModel): PlantIdentificationResult {
-        println("FakePlantRepository -> getPlantIdentification called with: $request")
+    override suspend fun getPlantIdentification(request: RequestModel):  Result<PlantIdentificationResult> {
         delay(500)
         val json = loadJsonFromResources("mock_plant_response.json")
         return Json { ignoreUnknownKeys = true }.decodeFromString(json)
     }
-    override suspend fun getHealthAssessment(request: RequestModel): HealthAssessmentResponse {
-        println("FakePlantRepository -> getHealthAssessment called with: $request")
+    override suspend fun getHealthAssessment(request: RequestModel): Result<HealthAssessmentResponse> {
         delay(500)
         val json = loadJsonFromResources("mock_health_response.json")
         return Json { ignoreUnknownKeys = true }.decodeFromString(json)

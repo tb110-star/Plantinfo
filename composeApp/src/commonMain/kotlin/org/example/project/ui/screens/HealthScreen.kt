@@ -77,7 +77,7 @@ fun HealthScreen(healthViewModel: HealthViewModel) {
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = errorMessage ?: "No health info available.",
+                            text = errorMessage ?:  "Oops!! something went wrong !!",
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(8.dp))

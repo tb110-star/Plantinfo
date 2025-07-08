@@ -11,11 +11,10 @@ import io.ktor.http.*
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.PlantIdentificationResult
 import org.example.project.data.model.RequestModel
-import kotlinx.serialization.json.JsonElement
 
 
 enum class AppLogLevel {
-    DEBUG, INFO, WARN, ERROR
+    DEBUG, INFO, ERROR
 }
 
 fun appLog(level: AppLogLevel, message: String) {
@@ -41,8 +40,10 @@ class ApiService {
         coerceInputValues = true
     }
 
-    suspend fun identifyPlant(request: RequestModel): PlantIdentificationResult? {
-        return try {
+ //   suspend fun identifyPlant(request: RequestModel): PlantIdentificationResult? {
+      suspend fun identifyPlant(request: RequestModel): Result<PlantIdentificationResult>{
+
+    return try {
             val jsonBody = jsonFormatter.encodeToString(request)
 
             appLog(AppLogLevel.DEBUG, "identifyPlant request body:\n$jsonBody")
@@ -65,25 +66,39 @@ class ApiService {
             appLog(AppLogLevel.DEBUG, "identifyPlant response status: ${response.status}")
 
             val rawJson = response.bodyAsText()
-            appLog(AppLogLevel.DEBUG, "Raw JSON response:\n$rawJson")
+        return when (response.status) {
+            HttpStatusCode.OK,
+            HttpStatusCode.Created -> {
+                val result = jsonFormatter.decodeFromString<PlantIdentificationResult>(rawJson)
+                appLog(AppLogLevel.INFO, "identifyPlant success")
+                Result.success(result)
+            }
 
-            // pretty print
-            val jsonElement = jsonFormatter.parseToJsonElement(rawJson)
-            val prettyJson = jsonFormatter.encodeToString(JsonElement.serializer(), jsonElement)
-            appLog(AppLogLevel.DEBUG, "Pretty JSON response:\n$prettyJson")
+            HttpStatusCode.Unauthorized -> {
+                Result.failure(Exception("Unauthorized: API key invalid"))
+            }
 
-            val body = jsonFormatter.decodeFromString<PlantIdentificationResult>(rawJson)
-            appLog(AppLogLevel.INFO, "identifyPlant success")
-            body
+            HttpStatusCode.InternalServerError -> {
+                Result.failure(Exception("Server Error: Try again later"))
+            }
+
+            else -> {
+                Result.failure(Exception("Unexpected error: ${response.status}"))
+            }
+        }
 
         } catch (e: Exception) {
             appLog(AppLogLevel.ERROR, "identifyPlant failed: ${e.message}")
-            null
-        }
+          //  null
+        Result.failure(e)
+
+    }
     }
 
-    suspend fun assessPlantHealth(request: RequestModel): HealthAssessmentResponse? {
-        return try {
+  //  suspend fun assessPlantHealth(request: RequestModel): HealthAssessmentResponse? {
+  suspend fun assessPlantHealth(request: RequestModel):Result<HealthAssessmentResponse> {
+
+      return try {
             val jsonBody = jsonFormatter.encodeToString(request)
 
             appLog(AppLogLevel.DEBUG, "assessPlantHealth request body:\n$jsonBody")
@@ -106,19 +121,33 @@ class ApiService {
             appLog(AppLogLevel.DEBUG, "assessPlantHealth response status: ${response.status}")
 
             val rawJson = response.bodyAsText()
-            appLog(AppLogLevel.DEBUG, "Raw JSON response:\n$rawJson")
+          return when (response.status) {
+              HttpStatusCode.OK,
+              HttpStatusCode.Created -> {
+                  val result = jsonFormatter.decodeFromString<HealthAssessmentResponse>(rawJson)
+                  appLog(AppLogLevel.INFO, "identifyHealth success")
+                  Result.success(result)
+              }
 
-            val jsonElement = jsonFormatter.parseToJsonElement(rawJson)
-            val prettyJson = jsonFormatter.encodeToString(JsonElement.serializer(), jsonElement)
-            appLog(AppLogLevel.DEBUG, "Pretty JSON response:\n$prettyJson")
+              HttpStatusCode.Unauthorized -> {
+                  Result.failure(Exception("Unauthorized: API key invalid"))
+              }
 
-            val body = jsonFormatter.decodeFromString<HealthAssessmentResponse>(rawJson)
-            appLog(AppLogLevel.INFO, "assessPlantHealth success")
-            body
+              HttpStatusCode.InternalServerError -> {
+                  Result.failure(Exception("Server Error: Try again later"))
+              }
 
-        } catch (e: Exception) {
+              else -> {
+                  Result.failure(Exception("Unexpected error: ${response.status}"))
+              }
+          }
+
+
+      } catch (e: Exception) {
             appLog(AppLogLevel.ERROR, "assessPlantHealth failed: ${e.message}")
-            null
+          //  null
+            Result.failure(e)
+
         }
     }
 }

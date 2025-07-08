@@ -32,30 +32,27 @@ class HealthViewModel (
 
     // Loads health assessment data from API
     fun loadHealthInfo(request: RequestModel) {
-        println("Sending NEW Health request with: $request")
         viewModelScope.launch {
             _healthInfo.value = null
             _isLoading.value = true
             _errorMessage.value = null
             try {
-                println("loadHealthInfo started")
-
                 val result = repo.getHealthAssessment(request)
-                println(" Health assessment result: $result")
+                result.fold(
+                    onSuccess = { response ->
 
-                _healthInfo.value = result
-                _serverImageUrl.value = result.input.images.firstOrNull()
+                        _healthInfo.value = response
+                        _serverImageUrl.value = response.input.images.firstOrNull()
+                    },
+                    onFailure = { error ->
+                        println("Error: ${error.message}")
+                        _healthInfo.value = null
+                        _errorMessage.value = error.message ?: "An unknown error occurred"
 
-                println("Emitting health info: $healthInfo")
-
-            } catch (e: Exception) {
-                println("Error loading health info: $e")
-                _errorMessage.value = e.message
-                _healthInfo.value = null
+                    }
+                )
             } finally {
                 _isLoading.value = false
-                println(" loadHealthInfo finished - isLoading: ${_isLoading.value}")
-
             }
         }
     }
@@ -100,8 +97,9 @@ class HealthViewModel (
         _healthInfo.value = null
         _isLoading.value = false
         _serverImageUrl.value = null
-        _errorMessage.value = null
         _selectedSuggestion.value = null
+        _errorMessage.value = null
+
     }
 
 }

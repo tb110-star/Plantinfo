@@ -7,13 +7,11 @@ import org.example.project.data.model.RequestModel
 class ApiRepository(
     private val api: ApiService
 ) : ApiRepositoryInterface {
-    override suspend fun getPlantIdentification(request: RequestModel): PlantIdentificationResult {
+    override suspend fun getPlantIdentification(request: RequestModel): Result<PlantIdentificationResult>  {
         return api.identifyPlant(request)
-            ?: throw IllegalStateException("identifyPlant returned null")
     }
 
-    override suspend fun getHealthAssessment(request: RequestModel): HealthAssessmentResponse {
+    override suspend fun getHealthAssessment(request: RequestModel):  Result<HealthAssessmentResponse> {
         return api.assessPlantHealth(request)
-            ?: throw IllegalStateException("assessPlantHealth returned null")
     }
 }

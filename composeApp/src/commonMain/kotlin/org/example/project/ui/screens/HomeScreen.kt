@@ -41,7 +41,8 @@ import org.example.project.ui.viewModels.HealthViewModel
 enum class HomeUiState {
     EMPTY,
     LOADING,
-    DATA
+    DATA,
+    ERROR
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,17 +55,19 @@ fun HomeScreen(
     val isShowingAddSheet by viewModel.isShowingAddSheet.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
     val plantInfo by viewModel.plantInfo.collectAsState()
-    val uiState = when {
-        isLoading -> HomeUiState.LOADING
-        plantInfo != null -> HomeUiState.DATA
-        else -> HomeUiState.EMPTY
-    }
+
     val suggestions = plantInfo?.result?.classification?.suggestions.orEmpty()
     val healthViewModel: HealthViewModel = koinViewModel()
     val healthInfo by healthViewModel.healthInfo.collectAsState()
     val healthSuggestions = healthInfo?.result?.disease?.suggestions.orEmpty()
     val hasHealthData = healthSuggestions.isNotEmpty()
-
+    val errorMessage by healthViewModel.errorMessage.collectAsState()
+    val uiState = when {
+        isLoading -> HomeUiState.LOADING
+        plantInfo != null -> HomeUiState.DATA
+        errorMessage != null -> HomeUiState.ERROR
+        else -> HomeUiState.EMPTY
+    }
     Scaffold(
         floatingActionButton = {
             Box(
@@ -160,6 +163,24 @@ fun HomeScreen(
                         }
                     }
                 }
+                HomeUiState.ERROR -> {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = errorMessage ?: "Oops!! something went wrong !!",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(onClick = {
+                            viewModel.clear()
+                        }) {
+                            Text("Retry")
+                        }
+                    }
+                }
+
             }
             // Show the Add Image bottom sheet if enabled
             if (isShowingAddSheet) {

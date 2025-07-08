@@ -31,6 +31,8 @@ class HomeViewModel(
 
     private val _selectedSuggestion = MutableStateFlow<Suggestions?>(null)
     val selectedSuggestion = _selectedSuggestion.asStateFlow()
+    private val _errorMessage = MutableStateFlow<String?>(null)
+    val errorMessage = _errorMessage.asStateFlow()
 
     fun enableAddSheet(){
         _isShowingAddSheet.value = true
@@ -46,20 +48,23 @@ class HomeViewModel(
 
     // Loads plant info by sending a request to the API
     fun loadPlantInfo(request: RequestModel) {
-        println("Sending NEW Health request with: $request")
         viewModelScope.launch {
             _plantInfo.value = null
             _isLoading.value = true
             try {
-                println("loadPlantInfo started")
-
                 val result = repo.getPlantIdentification(request)
-                _plantInfo.value = result
-                _serverImageUrl.value = result.input.images.firstOrNull()
+                result.fold(
+                    onSuccess = { response ->
+                        _plantInfo.value = response
+                        _serverImageUrl.value = response.input.images.firstOrNull()
+                    },
+                    onFailure = { error ->
+                        println("Error: ${error.message}")
+                        _plantInfo.value = null
+                        _errorMessage.value = error.message ?: "An unknown error occurred"
 
-            } catch (e: Exception) {
-                println("Error loading plant info: $e")
-                _plantInfo.value = null
+                    }
+                )
             } finally {
                 _isLoading.value = false
             }
@@ -109,6 +114,8 @@ class HomeViewModel(
         _isLoading.value = false
         _serverImageUrl.value = null
         _selectedSuggestion.value = null
+        _errorMessage.value = null
+
     }
 
 }
