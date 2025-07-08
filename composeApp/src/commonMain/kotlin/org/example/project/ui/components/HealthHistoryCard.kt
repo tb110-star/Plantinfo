@@ -45,6 +45,7 @@ fun HealthHistoryCard(
 
     val placeholderPainter = painterResource(Res.drawable.placeholder)
     val errorPainter = painterResource(Res.drawable.error)
+    val confidencePercent = ((health.probability ?: 0.0) * 100).toInt()
 
     Card(
         onClick = { expanded = !expanded },
@@ -67,7 +68,7 @@ fun HealthHistoryCard(
                     Text(health.diseaseName ?: "No name", style = MaterialTheme.typography.titleMedium)
                     Text("Health", color = Color.Gray, style = MaterialTheme.typography.bodyMedium)
 
-                    Text("Probability: ${(health.probability ?: 0.0 * 100).toInt()}%", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                    Text("Confidence: $confidencePercent%", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
                 }
 
                 imageUrl?.let {

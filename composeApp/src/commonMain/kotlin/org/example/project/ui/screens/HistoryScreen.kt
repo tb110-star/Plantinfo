@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.project.ui.components.HealthHistoryCard
+import org.example.project.ui.components.HistoryCategorySelector
 import org.example.project.ui.components.PlantHistoryCard
 import org.example.project.ui.viewModels.HistoryItem
 import org.example.project.ui.viewModels.HistoryViewModel
@@ -47,7 +48,7 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
         else -> HistoryUiState.DATA
     }
     Column {
-        Row(
+       /* Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier
                 .fillMaxWidth()
@@ -60,6 +61,11 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
             }
         }
 
+        */
+        HistoryCategorySelector(
+            selected = category,
+            onCategorySelected = { viewModel.setCategory(it) }
+        )
         when (uiState) {
             HistoryUiState.LOADING -> {
                 Box(
