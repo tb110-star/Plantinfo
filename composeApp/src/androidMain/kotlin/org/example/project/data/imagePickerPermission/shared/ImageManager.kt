@@ -65,7 +65,16 @@ actual fun createImageManager(onResult: (ByteArray?) -> Unit): ImageManager {
         )
     }
 }
-
+fun resizeBitmap(bitmap: Bitmap, maxSize: Int = 512): Bitmap {
+    val width = bitmap.width
+    val height = bitmap.height
+    val ratio = width.toFloat() / height
+    return if (ratio > 1) {
+        Bitmap.createScaledBitmap(bitmap, maxSize, (maxSize / ratio).toInt(), true)
+    } else {
+        Bitmap.createScaledBitmap(bitmap, (maxSize * ratio).toInt(), maxSize, true)
+    }
+}
 private fun CoroutineScope.loadAndReturnImage(
     uri: Uri,
     context: Context,
@@ -81,8 +90,9 @@ private fun CoroutineScope.loadAndReturnImage(
             val result = loader.execute(request).drawable
             val bitmap = (result as? BitmapDrawable)?.bitmap
             val byteArray = bitmap?.let { bmp ->
+                val resized = resizeBitmap(bmp,maxSize = 512)
                 val output = ByteArrayOutputStream()
-                bmp.compress(Bitmap.CompressFormat.JPEG, 85, output)
+                resized.compress(Bitmap.CompressFormat.JPEG, 85, output)
                 output.toByteArray()
             }
             onResult(byteArray)

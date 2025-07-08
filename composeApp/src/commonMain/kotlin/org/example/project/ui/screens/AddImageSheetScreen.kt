@@ -172,6 +172,7 @@ fun AddImageSheetScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
+
                         onClick = {
                             base64?.let { base64Str ->
                                 println("Sending request with base64: ${base64?.take(30)}")
@@ -182,6 +183,7 @@ fun AddImageSheetScreen(
                                 onCloseClick()
                                 uploadImageViewModel.clear()
                                 imageBitmapState.value = null
+
                             }
                         },
                         enabled = image != null,
