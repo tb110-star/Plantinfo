@@ -29,12 +29,12 @@ enum class HealthUiState {
     ERROR
 }
 @Composable
-fun HealthScreen() {
+fun HealthScreen(healthViewModel: HealthViewModel) {
    // val uploadImageViewModel: UploadImageViewModel = koinViewModel()
-    val viewModel: HealthViewModel = koinViewModel()
-    val healthInfo by viewModel.healthInfo.collectAsState()
-    val isLoading by viewModel.isLoading.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
+   // val viewModel: HealthViewModel = koinViewModel()
+    val healthInfo by healthViewModel.healthInfo.collectAsState()
+    val isLoading by healthViewModel.isLoading.collectAsState()
+    val errorMessage by healthViewModel.errorMessage.collectAsState()
     val suggestions = healthInfo?.result?.disease?.suggestions.orEmpty()
     var expandedId by remember { mutableStateOf<String?>(null) }// Holds the ID of the currently expanded SuggestionCard, or null if none is expanded
     val uiState = when {
@@ -81,7 +81,7 @@ fun HealthScreen() {
                             style = MaterialTheme.typography.titleMedium
                         )
                         Spacer(modifier = Modifier.height(8.dp))
-                        Button(onClick = { viewModel.refreshUI() }) {
+                        Button(onClick = { healthViewModel.refreshUI() }) {
                             Text("Retry")
                         }
                     }
@@ -112,7 +112,7 @@ fun HealthScreen() {
                                     rowItems.forEach { suggestion ->
                                         SuggestionCard(
                                             onConfirm = { confirmed ->
-                                                viewModel.saveConfirmedSuggestion(confirmed)
+                                                healthViewModel.saveConfirmedSuggestion(confirmed)
                                             },
                                             suggestion = suggestion,
                                             isExpanded = false,
@@ -138,7 +138,7 @@ fun HealthScreen() {
                                 item {
                                     SuggestionCard(
                                         onConfirm = { confirmed ->
-                                            viewModel.saveConfirmedSuggestion(confirmed)
+                                            healthViewModel.saveConfirmedSuggestion(confirmed)
                                         },
                                         suggestion = suggestion,
                                         isExpanded = true,// This is the expanded card
@@ -161,9 +161,9 @@ fun HealthScreen() {
                             item {
                                 QuestionCard(
                                     question = question,
-                                    selectedSuggestion = viewModel.selectedSuggestion.collectAsState().value,
+                                    selectedSuggestion = healthViewModel.selectedSuggestion.collectAsState().value,
                                     onAnswerSelected = { isYes ->
-                                        viewModel.onQuestionAnswered(isYes, question)
+                                        healthViewModel.onQuestionAnswered(isYes, question)
                                     }
                                 )
                             }

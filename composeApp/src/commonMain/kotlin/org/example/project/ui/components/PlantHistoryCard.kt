@@ -52,7 +52,7 @@ fun PlantHistoryCard(
                 onLongClick = { onDelete() }
             ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.3f))
     ) {
         Column(Modifier.padding(12.dp)) {
             Row(

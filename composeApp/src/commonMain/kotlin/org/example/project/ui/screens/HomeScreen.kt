@@ -170,6 +170,7 @@ fun HomeScreen(
                         .fillMaxHeight(0.75f)
                 ) {
                     AddImageSheetScreen(
+                        healthViewModel = healthViewModel,
                         onHealthRequestSent = {
                             onNavigateToHealth() // Navigate to health screen when requested
                         },

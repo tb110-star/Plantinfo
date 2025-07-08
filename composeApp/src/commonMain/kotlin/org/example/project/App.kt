@@ -14,6 +14,7 @@ import org.example.project.navigation.*
 import org.example.project.ui.components.BottomNavigationBar
 import org.example.project.ui.screens.*
 import org.example.project.ui.theme.AppTheme
+import org.example.project.ui.viewModels.HealthViewModel
 import org.example.project.ui.viewModels.HomeViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -21,6 +22,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
+    val healthViewModel: HealthViewModel = koinViewModel()
     val plantViewModel: HomeViewModel = koinViewModel()
     val viewModel: ThemeSettingsViewModel = koinViewModel()
   //  val uploadImageViewModel: UploadImageViewModel = koinViewModel()
@@ -99,7 +101,7 @@ fun App() {
                 composable<HealthScreenRoutes> {
                     showBackIcon = true
                     currentTopBarTitle = "Health"
-                    HealthScreen()
+                    HealthScreen(healthViewModel = healthViewModel)
                 }
                 composable<HistoryScreenRoutes> {
                     showBackIcon = false

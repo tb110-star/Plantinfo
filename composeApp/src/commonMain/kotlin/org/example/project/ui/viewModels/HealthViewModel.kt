@@ -32,8 +32,7 @@ class HealthViewModel (
 
     // Loads health assessment data from API
     fun loadHealthInfo(request: RequestModel) {
-        println("Sending NEW request with: $request")
-        println("loadHealthInfo called with request: $request")
+        println("Sending NEW Health request with: $request")
         viewModelScope.launch {
             _healthInfo.value = null
             _isLoading.value = true

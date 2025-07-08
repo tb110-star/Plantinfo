@@ -31,12 +31,13 @@ import shared.createPermissionsManager
 
 @Composable
 fun AddImageSheetScreen(
+    healthViewModel: HealthViewModel,
     onHealthRequestSent: () -> Unit,
     onCloseClick: () -> Unit
 ) {
     val uploadImageViewModel: UploadImageViewModel = koinViewModel()
     val homeViewModel: HomeViewModel = koinViewModel()
-    val healthViewModel:HealthViewModel = koinViewModel()
+   // val healthViewModel:HealthViewModel = koinViewModel()
     val coroutineScope = rememberCoroutineScope()
     val image by uploadImageViewModel.image.collectAsState()
     val imageBitmapState = remember { mutableStateOf<ImageBitmap?>(null) }
@@ -172,7 +173,6 @@ fun AddImageSheetScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Button(
-
                         onClick = {
                             base64?.let { base64Str ->
                                 println("Sending request with base64: ${base64?.take(30)}")
@@ -197,23 +197,29 @@ fun AddImageSheetScreen(
                     ) {
                         Text("Get Plant Info")
                     }
+                    val canSendHealth = (image != null && base64 != null)
 
                     Button(
                         onClick = {
+
                             base64?.let { base64Str ->
-                                println("Sending request with base64: ${base64?.take(30)}")
+                                println("Sending request with base64: ${base64?.length}")
                                 healthViewModel.clear()
                                 val request = uploadImageViewModel.createRequest(base64Str)
                                 healthViewModel.loadHealthInfo(request)
-                                onCloseClick()
-                                onHealthRequestSent()
                                 uploadImageViewModel.clear()
                                 imageBitmapState.value = null
+
+                                onHealthRequestSent()
+                                onCloseClick()
+
+
                             }
                         },
-                        enabled = image != null,
+                      //  enabled = image != null,
+                        enabled = canSendHealth,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (image != null && base64 != null)
+                            containerColor = if (canSendHealth)
                                 MaterialTheme.colorScheme.primary
                             else
                                 MaterialTheme.colorScheme.primary.copy(alpha = 0.18f)

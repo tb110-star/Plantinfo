@@ -46,11 +46,13 @@ class HomeViewModel(
 
     // Loads plant info by sending a request to the API
     fun loadPlantInfo(request: RequestModel) {
-        println("Sending NEW request with: $request")
+        println("Sending NEW Health request with: $request")
         viewModelScope.launch {
             _plantInfo.value = null
             _isLoading.value = true
             try {
+                println("loadPlantInfo started")
+
                 val result = repo.getPlantIdentification(request)
                 _plantInfo.value = result
                 _serverImageUrl.value = result.input.images.firstOrNull()
