@@ -40,7 +40,6 @@ class HealthViewModel (
                 val result = repo.getHealthAssessment(request)
                 result.fold(
                     onSuccess = { response ->
-
                         _healthInfo.value = response
                         _serverImageUrl.value = response.input.images.firstOrNull()
                     },
@@ -48,7 +47,6 @@ class HealthViewModel (
                         println("Error: ${error.message}")
                         _healthInfo.value = null
                         _errorMessage.value = error.message ?: "An unknown error occurred"
-
                     }
                 )
             } finally {

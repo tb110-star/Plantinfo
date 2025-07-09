@@ -37,7 +37,6 @@ fun AddImageSheetScreen(
 ) {
     val uploadImageViewModel: UploadImageViewModel = koinViewModel()
     val homeViewModel: HomeViewModel = koinViewModel()
-   // val healthViewModel:HealthViewModel = koinViewModel()
     val coroutineScope = rememberCoroutineScope()
     val image by uploadImageViewModel.image.collectAsState()
     val imageBitmapState = remember { mutableStateOf<ImageBitmap?>(null) }
@@ -172,12 +171,12 @@ fun AddImageSheetScreen(
                     Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
+                    val canSendPlant = (image != null && base64 != null)
                     Button(
                         onClick = {
                             base64?.let { base64Str ->
                                 println("Sending request with base64: ${base64?.take(30)}")
                                 homeViewModel.clear()
-
                                 val request = uploadImageViewModel.createRequest(base64Str)
                                 homeViewModel.loadPlantInfo(request)
                                 onCloseClick()
@@ -186,7 +185,7 @@ fun AddImageSheetScreen(
 
                             }
                         },
-                        enabled = image != null,
+                        enabled = canSendPlant,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = if (image != null && base64 != null)
                                 MaterialTheme.colorScheme.primary

@@ -62,7 +62,6 @@ class HomeViewModel(
                         println("Error: ${error.message}")
                         _plantInfo.value = null
                         _errorMessage.value = error.message ?: "An unknown error occurred"
-
                     }
                 )
             } finally {

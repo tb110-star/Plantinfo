@@ -30,9 +30,9 @@ enum class HealthUiState {
     ERROR
 }
 @Composable
-fun HealthScreen(healthViewModel: HealthViewModel) {
-   // val uploadImageViewModel: UploadImageViewModel = koinViewModel()
-   // val viewModel: HealthViewModel = koinViewModel()
+fun HealthScreen(
+    healthViewModel: HealthViewModel
+) {
     val healthInfo by healthViewModel.healthInfo.collectAsState()
     val isLoading by healthViewModel.isLoading.collectAsState()
     val errorMessage by healthViewModel.errorMessage.collectAsState()
