@@ -24,6 +24,6 @@ fun createColorSchemes(palette: MaterialThemeColorsPalette): Pair<ColorScheme, C
 fun getSelectedThemeColors(selected: MyThemeColor): Pair<ColorScheme, ColorScheme> =
     when (selected) {
         MyThemeColor.GREEN -> createColorSchemes(GreenColorBase)
-        // MyThemeColor.ORANGE -> createColorSchemes(OrangeColorBase)
+         MyThemeColor.ORANGE -> createColorSchemes(OrangeColorBase)
         // ...
     }

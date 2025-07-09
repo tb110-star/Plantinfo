@@ -21,6 +21,7 @@ import org.example.project.ui.viewModels.HealthViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import org.example.project.ui.components.TextScreenStateCard
 
 
 enum class HealthUiState {
@@ -67,7 +68,9 @@ fun HealthScreen(healthViewModel: HealthViewModel) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         CircularProgressIndicator()
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text("Loading health data...")
+                        TextScreenStateCard(
+                            message = "Loading health data..."
+                        )
                     }
                 }
 
@@ -76,14 +79,12 @@ fun HealthScreen(healthViewModel: HealthViewModel) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            text = errorMessage ?:  "Oops!! something went wrong !!",
-                            style = MaterialTheme.typography.titleMedium
+                        TextScreenStateCard(
+                            message = "Oops!! something went wrong !!\nRetry"
                         )
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        Button(onClick = { healthViewModel.refreshUI() }) {
-                            Text("Retry")
-                        }
+
                     }
                 }
 

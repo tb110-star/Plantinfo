@@ -15,4 +15,6 @@ interface HealthHistoryDao {
 
     @Query("SELECT * FROM health_history ORDER BY id DESC")
     fun getAllHealthRecords(): Flow<List<HealthHistoryEntity>>
+    @Query("DELETE FROM health_history WHERE id = :id")
+    suspend fun deleteById(id: String)
 }

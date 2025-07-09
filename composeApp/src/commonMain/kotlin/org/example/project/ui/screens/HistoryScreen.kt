@@ -1,26 +1,27 @@
 package org.example.project.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
 import org.example.project.ui.components.HealthHistoryCard
 import org.example.project.ui.components.HistoryCategorySelector
 import org.example.project.ui.components.PlantHistoryCard
+import org.example.project.ui.components.SwipeToDeleteCard
+import org.example.project.ui.components.TextScreenStateCard
 import org.example.project.ui.viewModels.HistoryItem
 import org.example.project.ui.viewModels.HistoryViewModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -75,16 +76,11 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
                     CircularProgressIndicator()
                 }
             }
-
             HistoryUiState.EMPTY -> {
-                Box(
-                    Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("No history available.")
-                }
+                TextScreenStateCard(
+                    message = "Storage is empty.\nPlease enter and save your first record!"
+                )
             }
-
             HistoryUiState.DATA -> {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
@@ -92,17 +88,27 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
                     items(allItems) { item ->
                         when (item) {
                             is HistoryItem.PlantItem -> {
-                                PlantHistoryCard(
-                                    plant = item.plant,
-                                    onDelete = { viewModel.deletePlant(item.plant.id) }
-                                )
+                                SwipeToDeleteCard(
+                                    onDeleteConfirmed = {
+                                        viewModel.deletePlant(item.plant.id)
+                                    }
+                                ) {
+                                    PlantHistoryCard(
+                                        plant = item.plant,
+                                        onDelete = {}                                    )
+                                }
                             }
-
                             is HistoryItem.HealthItem -> {
-                                HealthHistoryCard(
-                                    health = item.health,
-                                    onDelete = { viewModel.deleteHealth(item.health.id) }
-                                )
+                                SwipeToDeleteCard(
+                                    onDeleteConfirmed = {
+                                        viewModel.deleteHealth(item.health.id)
+                                    }
+                                ) {
+                                    HealthHistoryCard(
+                                        health = item.health,
+                                        onDelete = { }
+                                    )
+                                }
                             }
                         }
                     }
@@ -110,12 +116,9 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
             }
 
             HistoryUiState.ERROR -> {
-                Box(
-                    Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text("An error occurred. Please try again.")
-                }
+                TextScreenStateCard(
+                    message = "An error occurred. Please try again!"
+                )
             }
 
             else -> {}

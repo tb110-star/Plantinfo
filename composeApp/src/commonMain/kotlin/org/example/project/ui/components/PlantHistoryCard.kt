@@ -1,5 +1,5 @@
 package org.example.project.ui.components
-
+import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,11 +38,11 @@ fun PlantHistoryCard(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val imageUrl = plant.imageUploadedUrl
-    println("Trying to load image: $imageUrl for plant: ${plant.name}")
     val placeholderPainter = painterResource(Res.drawable.placeholder)
     val errorPainter = painterResource(Res.drawable.error)
     val confidencePercent = ((plant.probability ?: 0.0) * 100).toInt()
-
+    var showDialog by remember { mutableStateOf(false) }
+    val offsetX = remember { Animatable(0f) }
     Card(
         onClick = { expanded = !expanded },
         modifier = Modifier

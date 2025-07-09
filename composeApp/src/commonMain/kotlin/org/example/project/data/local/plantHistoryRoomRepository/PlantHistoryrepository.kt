@@ -7,6 +7,8 @@ interface PlantHistoryRepository {
     suspend fun saveToHistory(plant: PlantHistoryEntity)
     fun getAllHistory(): Flow<List<PlantHistoryEntity>>
     suspend fun getByIds(ids: List<Long>): List<PlantHistoryEntity>
-  //  suspend fun getMappedByIds(ids: List<Long>): Map<Long, PlantHistoryEntity>
+    suspend fun deleteById(id: String)
+
+    //  suspend fun getMappedByIds(ids: List<Long>): Map<Long, PlantHistoryEntity>
   //  suspend fun count(): Int
 }

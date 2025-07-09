@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepository
 import org.example.project.data.local.plantHistoryRoomRepository.PlantHistoryRepository
 import org.example.project.ui.screens.HistoryUiState
@@ -33,31 +34,18 @@ class HistoryViewModel(
         SharingStarted.Lazily,
         emptyList()
     )
-
-
-
-
     fun setCategory(cat: String) {
         _category.value = cat
     }
-
     fun deletePlant(id: String) {
-        /*
         viewModelScope.launch {
             plantRepo.deleteById(id)
-            loadHistory()
         }
-
-         */
     }
-
     fun deleteHealth(id: String) {
-        /*
+
         viewModelScope.launch {
             healthRepo.deleteById(id)
-            loadHistory()
         }
-
-         */
     }
 }

@@ -1,5 +1,6 @@
 package org.example.project.data.remote
 
+import org.example.project.data.local.Daos.PlantHistoryDao
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.PlantIdentificationResult
 import org.example.project.data.model.RequestModel
@@ -14,4 +15,6 @@ class ApiRepository(
     override suspend fun getHealthAssessment(request: RequestModel):  Result<HealthAssessmentResponse> {
         return api.assessPlantHealth(request)
     }
+
+
 }

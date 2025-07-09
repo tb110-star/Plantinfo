@@ -6,4 +6,6 @@ import org.example.project.data.local.roomModel.HealthHistoryEntity
 interface HealthHistoryRepository {
     suspend fun saveHealthRecord(health: HealthHistoryEntity)
     fun getAllHealthHistory():Flow<List<HealthHistoryEntity>>
+    suspend fun deleteById(id: String)
+
 }

@@ -14,6 +14,9 @@ class PlantHistoryRepositoryImpl(
     override fun getAllHistory(): Flow<List<PlantHistoryEntity>> = dao.getAllAsFlow()
 
     override suspend fun getByIds(ids: List<Long>) = dao.loadAll(ids)
+    override suspend fun deleteById(id: String) {
+        dao.deleteById(id)
+    }
 
   //  override suspend fun getMappedByIds(ids: List<Long>) = dao.loadMapped(ids)
 

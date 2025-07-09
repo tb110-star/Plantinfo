@@ -24,7 +24,6 @@ class MainActivity : ComponentActivity(){
         initJsonLoader(applicationContext)
         lifecycleScope.launch {
             val json = loadJsonFromResources("mock_plant_response.json")
-            Log.d("JSONTest", json)
         }
 
         val factory = RoomFactory(application)

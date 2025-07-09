@@ -232,7 +232,10 @@ fun AddImageSheetScreen(
             }
 
             TextButton(onClick = onCloseClick) {
-                Text("Cancel")
+                Text(
+                    text = "Cancel",
+                    color =  MaterialTheme.colorScheme.onPrimary
+                )
             }
         }
     }

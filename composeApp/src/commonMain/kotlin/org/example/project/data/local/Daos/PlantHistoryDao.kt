@@ -20,17 +20,14 @@ interface PlantHistoryDao{
 /*
     @Query("SELECT COUNT(*) as count FROM plantHistory")
     suspend fun count(): Int
-
-
-
-
-
     @Query("SELECT * FROM plantHistory WHERE id in (:ids)")
     suspend fun loadMapped(ids: List<Long>): Map<
             @MapColumn(columnName = "id")
             Long,
             PlantHistoryEntity,
             >
-
  */
+@Query("DELETE FROM plantHistory WHERE id = :id")
+suspend fun deleteById(id: String)
+
 }

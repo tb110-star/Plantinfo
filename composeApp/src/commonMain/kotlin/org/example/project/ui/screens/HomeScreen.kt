@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.rotate
+import org.example.project.ui.components.TextScreenStateCard
 import org.example.project.ui.viewModels.HealthViewModel
 
 // Enum to represent the UI state of the Home screen
@@ -125,13 +126,14 @@ fun HomeScreen(
                             modifier = Modifier
                                 .size(100.dp)
                                 .rotate(rotation),
-                            tint = MaterialTheme.colorScheme.primary
+                            tint = MaterialTheme.colorScheme.onPrimary
+
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = "Please scan a plant to get started.",
-                            style = MaterialTheme.typography.titleMedium
+                        TextScreenStateCard(
+                            message = "Please scan a plant to get started."
                         )
+
                     }
                 }
                 // Show loading spinner with a loading message
@@ -139,9 +141,8 @@ fun HomeScreen(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         CircularProgressIndicator()
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = "Loading plant data...",
-                            style = MaterialTheme.typography.titleMedium
+                        TextScreenStateCard(
+                            message =  "Loading plant data..."
                         )
                     }
                 }
@@ -168,9 +169,8 @@ fun HomeScreen(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            text = errorMessage ?: "Oops!! something went wrong !!",
-                            style = MaterialTheme.typography.titleMedium
+                        TextScreenStateCard(
+                            message =  "Oops!! something went wrong !!"
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Button(onClick = {
