@@ -1,0 +1,161 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "470ae02fdf369e7f37f3b8790d03926d",
+    "entities": [
+      {
+        "tableName": "plantHistory",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `date` INTEGER NOT NULL, `name` TEXT, `probability` REAL, `imageUrl` TEXT, `description` TEXT NOT NULL, `wateringMin` INTEGER, `wateringMax` INTEGER, `bestWatering` TEXT, `bestLight` TEXT, `bestSoil` TEXT, `uses` TEXT, `isConfirmed` INTEGER NOT NULL, `imageUploadedUrl` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "probability",
+            "columnName": "probability",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "imageUrl",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "wateringMin",
+            "columnName": "wateringMin",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "wateringMax",
+            "columnName": "wateringMax",
+            "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "bestWatering",
+            "columnName": "bestWatering",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bestLight",
+            "columnName": "bestLight",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "bestSoil",
+            "columnName": "bestSoil",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "uses",
+            "columnName": "uses",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isConfirmed",
+            "columnName": "isConfirmed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUploadedUrl",
+            "columnName": "imageUploadedUrl",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "health_history",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `date` INTEGER NOT NULL, `healthStatus` TEXT NOT NULL, `diseaseName` TEXT, `probability` REAL, `description` TEXT NOT NULL, `questionAnswered` TEXT, `isConfirmed` INTEGER NOT NULL, `imageUploadedUrl` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "healthStatus",
+            "columnName": "healthStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "diseaseName",
+            "columnName": "diseaseName",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "probability",
+            "columnName": "probability",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "questionAnswered",
+            "columnName": "questionAnswered",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "isConfirmed",
+            "columnName": "isConfirmed",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageUploadedUrl",
+            "columnName": "imageUploadedUrl",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '470ae02fdf369e7f37f3b8790d03926d')"
+    ]
+  }
+}
