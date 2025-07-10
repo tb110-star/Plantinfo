@@ -25,7 +25,11 @@ import org.example.project.ui.components.PlantCard
 import org.example.project.ui.viewModels.HomeViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.Healing
 import androidx.compose.material.icons.filled.MedicalInformation
 import androidx.compose.material.icons.filled.MedicalServices
@@ -33,9 +37,13 @@ import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.layout.ContentScale
 import org.example.project.ui.components.TextScreenStateCard
 import org.example.project.ui.viewModels.HealthViewModel
+import org.example.project.ui.viewModels.UploadImageViewModel
+import org.jetbrains.compose.resources.decodeToImageBitmap
 
 // Enum to represent the UI state of the Home screen
 
@@ -69,6 +77,11 @@ fun HomeScreen(
         errorMessage != null -> HomeUiState.ERROR
         else -> HomeUiState.EMPTY
     }
+    val uploadImageViewModel: UploadImageViewModel = koinViewModel()
+    val image = viewModel.image.value
+    val bitmap = image?.decodeToImageBitmap()
+
+
     Scaffold(
         floatingActionButton = {
             Box(
@@ -148,6 +161,30 @@ fun HomeScreen(
                 }
                 // Show list of plant suggestions
                 HomeUiState.DATA -> {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+
+                    if (bitmap != null) {
+                        Image(
+                            bitmap = bitmap,
+                            contentDescription = "Selected Image",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .width(300.dp)
+                                .height(150.dp)
+                                .clip(RoundedCornerShape(20.dp))
+                                .background( MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
+
+                                .align(Alignment.CenterHorizontally)
+                                .padding(top = 16.dp)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
+
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         contentPadding = PaddingValues(8.dp),
@@ -162,6 +199,7 @@ fun HomeScreen(
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                         }
+                    }
                     }
                 }
                 HomeUiState.ERROR -> {

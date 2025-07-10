@@ -6,17 +6,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import org.example.project.ui.components.HealthHistoryCard
 import org.example.project.ui.components.HistoryCategorySelector
 import org.example.project.ui.components.PlantHistoryCard
@@ -49,20 +43,6 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
         else -> HistoryUiState.DATA
     }
     Column {
-       /* Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            listOf("All", "Plant", "Health").forEach {
-                Button(onClick = { viewModel.setCategory(it) }) {
-                    Text(it)
-                }
-            }
-        }
-
-        */
         HistoryCategorySelector(
             selected = category,
             onCategorySelected = { viewModel.setCategory(it) }

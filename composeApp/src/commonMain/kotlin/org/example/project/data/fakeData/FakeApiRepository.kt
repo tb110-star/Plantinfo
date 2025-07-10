@@ -12,11 +12,16 @@ class FakeApiRepository() : ApiRepositoryInterface
     override suspend fun getPlantIdentification(request: RequestModel):  Result<PlantIdentificationResult> {
         delay(500)
         val json = loadJsonFromResources("mock_plant_response.json")
-        return Json { ignoreUnknownKeys = true }.decodeFromString(json)
+        return Result.success(
+            Json { ignoreUnknownKeys = true }.decodeFromString<PlantIdentificationResult>(json)
+        )
+
     }
     override suspend fun getHealthAssessment(request: RequestModel): Result<HealthAssessmentResponse> {
         delay(500)
         val json = loadJsonFromResources("mock_health_response.json")
-        return Json { ignoreUnknownKeys = true }.decodeFromString(json)
+        return Result.success(
+            Json { ignoreUnknownKeys = true }.decodeFromString<HealthAssessmentResponse>(json)
+        )
     }
 }

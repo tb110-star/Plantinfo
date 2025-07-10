@@ -3,8 +3,10 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.AlertDialog
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -57,24 +59,33 @@ fun SwipeToDeleteCard(
                 scope.launch { offsetX.animateTo(0f) }
             },
             confirmButton = {
-                androidx.compose.material.TextButton(onClick = {
+                TextButton(onClick = {
                     showDialog = false
                     onDeleteConfirmed()
                     scope.launch { offsetX.snapTo(0f) }
                 }) {
-                    Text("Delete")
+                    Text("Delete", color = MaterialTheme.colorScheme.error)
                 }
             },
             dismissButton = {
-                androidx.compose.material.TextButton(onClick = {
+                TextButton(onClick = {
                     showDialog = false
                     scope.launch { offsetX.animateTo(0f) }
                 }) {
                     Text("Cancel")
                 }
             },
-            title = { Text("Delete Item") },
-            text = { Text("Are you sure you want to delete this item?") }
+            title = {
+                Text("Delete Item", color = MaterialTheme.colorScheme.onSurface)
+            },
+            text = {
+                Text(
+                    "Are you sure you want to delete this item?",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            },
+            containerColor = MaterialTheme.colorScheme.surface,
+            shape = MaterialTheme.shapes.medium
         )
     }
 }
