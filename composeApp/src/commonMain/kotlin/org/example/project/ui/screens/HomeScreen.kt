@@ -163,14 +163,13 @@ fun HomeScreen(
                 HomeUiState.DATA -> {
                     Column(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .padding(horizontal = 16.dp),
+                            .fillMaxSize(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         if (bitmap != null && !isShowingAddSheet) {
                         Box(
                             modifier = Modifier
-                                .width(350.dp)
+                                .width(400.dp)
                                 .height(150.dp)
                                 .clip(RoundedCornerShape(20.dp))
                                 .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
@@ -186,10 +185,10 @@ fun HomeScreen(
                                 )
                             }
                         }
+                        Spacer(modifier = Modifier.height(8.dp))
 
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(8.dp),
                         verticalArrangement = Arrangement.Top
                     ) {
                         items(
@@ -232,6 +231,7 @@ fun HomeScreen(
                 ) {
                     AddImageSheetScreen(
                         healthViewModel = healthViewModel,
+                        homeViewModel = viewModel,
                         onHealthRequestSent = {
                             onNavigateToHealth() // Navigate to health screen when requested
                         },

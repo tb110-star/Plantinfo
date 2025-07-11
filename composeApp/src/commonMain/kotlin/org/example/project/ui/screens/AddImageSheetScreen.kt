@@ -31,12 +31,12 @@ import shared.createPermissionsManager
 
 @Composable
 fun AddImageSheetScreen(
-    healthViewModel: HealthViewModel,
+    healthViewModel: HealthViewModel = koinViewModel(),
+    homeViewModel: HomeViewModel  = koinViewModel(),
     onHealthRequestSent: () -> Unit,
     onCloseClick: () -> Unit
 ) {
     val uploadImageViewModel: UploadImageViewModel = koinViewModel()
-    val homeViewModel: HomeViewModel = koinViewModel()
     val coroutineScope = rememberCoroutineScope()
     val image by uploadImageViewModel.image.collectAsState()
     val imageBitmapState = remember { mutableStateOf<ImageBitmap?>(null) }
@@ -175,14 +175,13 @@ fun AddImageSheetScreen(
                     Button(
                         onClick = {
                             base64?.let { base64Str ->
-                                println("Sending request with base64: ${base64?.take(30)}")
                                 homeViewModel.clear()
                                 val request = uploadImageViewModel.createRequest(base64Str)
                                 homeViewModel.loadPlantInfo(request)
                                 homeViewModel.setImage(uploadImageViewModel.image.value)
-                                onCloseClick()
                                 uploadImageViewModel.clear()
                                 imageBitmapState.value = null
+                                onCloseClick()
 
                             }
                         },
@@ -201,13 +200,10 @@ fun AddImageSheetScreen(
 
                     Button(
                         onClick = {
-
                             base64?.let { base64Str ->
-                                println("Sending request with base64: ${base64?.length}")
                                 healthViewModel.clear()
                                 val request = uploadImageViewModel.createRequest(base64Str)
                                 healthViewModel.loadHealthInfo(request)
-
                                 healthViewModel.setImage(uploadImageViewModel.image.value)
                                // uploadImageViewModel.clear()
                                 imageBitmapState.value = null
@@ -218,7 +214,6 @@ fun AddImageSheetScreen(
 
                             }
                         },
-                      //  enabled = image != null,
                         enabled = canSendHealth,
                         colors = ButtonDefaults.buttonColors(
                             containerColor = if (canSendHealth)

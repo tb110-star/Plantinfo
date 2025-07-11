@@ -15,6 +15,7 @@ import org.example.project.ui.components.BottomNavigationBar
 import org.example.project.ui.screens.*
 import org.example.project.ui.theme.AppTheme
 import org.example.project.ui.viewModels.HealthViewModel
+import org.example.project.ui.viewModels.HistoryViewModel
 import org.example.project.ui.viewModels.HomeViewModel
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
 import org.koin.compose.viewmodel.koinViewModel
@@ -22,6 +23,7 @@ import org.koin.compose.viewmodel.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
+    val historyViewModel: HistoryViewModel = koinViewModel()
     val healthViewModel: HealthViewModel = koinViewModel()
     val plantViewModel: HomeViewModel = koinViewModel()
     val viewModel: ThemeSettingsViewModel = koinViewModel()
@@ -106,7 +108,9 @@ fun App() {
                 composable<HistoryScreenRoutes> {
                     showBackIcon = false
                     currentTopBarTitle = NavigationItem.History.label
-                    HistoryScreen()
+                    HistoryScreen(
+                        viewModel = historyViewModel
+                    )
                 }
                 composable<SettingScreenRoutes> {
                     showBackIcon = true
@@ -120,6 +124,7 @@ fun App() {
 
                     if (suggestion != null) {
                         DetailsPlantScreen(
+                            vM = plantViewModel,
                             suggestion = suggestion!!,
                             onBack = { navController.popBackStack() }
                         )

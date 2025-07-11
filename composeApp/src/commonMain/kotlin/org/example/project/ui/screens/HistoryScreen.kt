@@ -29,8 +29,8 @@ enum class HistoryUiState {
 @Composable
 fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
     val category by viewModel.category.collectAsState()
-    val plants by viewModel.plantHistory.collectAsState()
-    val health by viewModel.healthHistory.collectAsState()
+    val plants by viewModel.plantHistory.collectAsState(emptyList())
+    val health by viewModel.healthHistory.collectAsState(emptyList())
 
     // Determine UI state based on data availability
     val allItems = when (category) {

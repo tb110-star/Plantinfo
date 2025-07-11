@@ -23,17 +23,9 @@ class HistoryViewModel(
     val category = _category.asStateFlow()
 
     // Observes and holds the latest plant history data as StateFlow
-    val plantHistory = plantRepo.getAllHistory().stateIn(
-        viewModelScope,
-        SharingStarted.Lazily,  // Starts collecting only when there is a subscriber
-        emptyList()
-    )
-    // Observes and holds the latest health history data as StateFlow
-    val healthHistory = healthRepo.getAllHealthHistory().stateIn(
-        viewModelScope,
-        SharingStarted.Lazily,
-        emptyList()
-    )
+
+    val plantHistory = plantRepo.getAllHistory()
+    val healthHistory = healthRepo.getAllHealthHistory()
     fun setCategory(cat: String) {
         _category.value = cat
     }

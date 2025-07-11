@@ -28,7 +28,7 @@ val appModule = module {
     single{ get<AppDatabase>().healthHistoryDao() }
     single { getThemeSettingsRepository() }
     singleOf(::ApiRepository) bind ApiRepositoryInterface::class
-   // singleOf(::FakeApiRepository) bind ApiRepositoryInterface::class
+  //  singleOf(::FakeApiRepository) bind ApiRepositoryInterface::class
     singleOf(::PlantHistoryRepositoryImpl) bind PlantHistoryRepository::class
     singleOf(::HealthHistoryRepositoryImpl) bind HealthHistoryRepository::class
     singleOf(::ThemeSettingsViewModel)

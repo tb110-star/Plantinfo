@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -50,17 +51,29 @@ fun PlantCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
+                Surface(
+                    shape = RoundedCornerShape(4.dp),
+                    color = Color.Yellow.copy(alpha = 0.5f),
+                    tonalElevation = 2.dp,
+                    modifier = Modifier
+                        .size(width = 48.dp, height = 28.dp)
+                ) {
+                    Text(
+                        text = "${(plant.probability * 100).toInt()}%",
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp, vertical = 4.dp),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Black
+                    )
+                }
+                Spacer(modifier = Modifier.height(6.dp))
+
                 Text(
                     text = plant.name,
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                Spacer(modifier = Modifier.height(6.dp))
-                Text(
-                    text = "Confidence: ${(plant.probability * 100).toInt()}%",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-                )
+
             }
 
             Spacer(modifier = Modifier.width(16.dp))

@@ -101,38 +101,46 @@ fun HealthScreen(
                             .padding(horizontal = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .width(400.dp)
-                                .height(150.dp)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
-                                .align(Alignment.CenterHorizontally)
-                        ) {
-                            if (bitmap != null) {
-                                Image(
-                                    bitmap = bitmap,
-                                    contentDescription = "Selected Image",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                )
-                            }
-                        }
-                        // Summary card
-                     //   item {
-                        Spacer(modifier = Modifier.height(16.dp))
 
-                        healthInfo?.let {
+                        LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(4.dp)
+                    ) {
+                            item{
+                            Box(
+                                modifier = Modifier
+                                    .width(400.dp)
+                                    .height(150.dp)
+                                    .clip(RoundedCornerShape(20.dp))
+                                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
+                                    .align(Alignment.CenterHorizontally)
+                            ) {
+                                if (bitmap != null) {
+                                    Image(
+                                        bitmap = bitmap,
+                                        contentDescription = "Selected Image",
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                    )
+                                }
+                            }
+                            }
+                            // Summary card
+                               item {
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            healthInfo?.let {
                                 HealthSummaryCard(healthInfo = it)
 
-                        }
-                       // }
-                        Spacer(modifier = Modifier.height(16.dp))
+                            }
+                                   Spacer(modifier = Modifier.height(16.dp))
 
-                        // Question
-                        healthInfo?.result?.disease?.question?.let { question ->
-                         //   item {
+                               }
+
+                            // Question
+                            healthInfo?.result?.disease?.question?.let { question ->
+                                   item {
                                 QuestionCard(
                                     question = question,
                                     selectedSuggestion = healthViewModel.selectedSuggestion.collectAsState().value,
@@ -140,14 +148,11 @@ fun HealthScreen(
                                         healthViewModel.onQuestionAnswered(isYes, question)
                                     }
                                 )
-                          //  }
-                        }
-                        Spacer(modifier = Modifier.height(16.dp))
+                                       Spacer(modifier = Modifier.height(16.dp))
 
-                        LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(4.dp)
-                    ) {
+                                   }
+
+                            }
 
 
                         // Suggestions

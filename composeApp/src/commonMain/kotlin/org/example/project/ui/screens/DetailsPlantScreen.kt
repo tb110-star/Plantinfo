@@ -31,10 +31,10 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun DetailsPlantScreen(
+    vM: HomeViewModel  = koinViewModel(),
     suggestion: Suggestions,
     onBack: () -> Unit
 ) {
-    val vM: HomeViewModel = koinViewModel()
     val showDialog = remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
