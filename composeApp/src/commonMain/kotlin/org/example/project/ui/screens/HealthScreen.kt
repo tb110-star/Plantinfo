@@ -1,5 +1,6 @@
 package org.example.project.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,7 +22,10 @@ import org.example.project.ui.viewModels.HealthViewModel
 import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import org.example.project.ui.components.TextScreenStateCard
+import org.jetbrains.compose.resources.decodeToImageBitmap
 
 
 enum class HealthUiState {
@@ -55,6 +59,8 @@ fun HealthScreen(
             RoundedCornerShape(16.dp)
         )
         .blur(0.1.dp)
+    val image = healthViewModel.image.value
+    val bitmap = image?.decodeToImageBitmap()
 
     Scaffold { innerPadding ->
         Box(
@@ -89,17 +95,60 @@ fun HealthScreen(
                 }
 
                 HealthUiState.DATA -> {
-                    LazyColumn(
-                        modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(8.dp)
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 16.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        // Summary card
-                        item {
-                            healthInfo?.let {
-                                HealthSummaryCard(healthInfo = it)
-                                Spacer(Modifier.height(16.dp))
+                        Box(
+                            modifier = Modifier
+                                .width(400.dp)
+                                .height(150.dp)
+                                .clip(RoundedCornerShape(20.dp))
+                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
+                                .align(Alignment.CenterHorizontally)
+                        ) {
+                            if (bitmap != null) {
+                                Image(
+                                    bitmap = bitmap,
+                                    contentDescription = "Selected Image",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
                             }
                         }
+                        // Summary card
+                     //   item {
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        healthInfo?.let {
+                                HealthSummaryCard(healthInfo = it)
+
+                        }
+                       // }
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        // Question
+                        healthInfo?.result?.disease?.question?.let { question ->
+                         //   item {
+                                QuestionCard(
+                                    question = question,
+                                    selectedSuggestion = healthViewModel.selectedSuggestion.collectAsState().value,
+                                    onAnswerSelected = { isYes ->
+                                        healthViewModel.onQuestionAnswered(isYes, question)
+                                    }
+                                )
+                          //  }
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(4.dp)
+                    ) {
+
 
                         // Suggestions
                         if (expandedId == null) {
@@ -157,18 +206,8 @@ fun HealthScreen(
                             }
                         }
 
-                        // Question
-                        healthInfo?.result?.disease?.question?.let { question ->
-                            item {
-                                QuestionCard(
-                                    question = question,
-                                    selectedSuggestion = healthViewModel.selectedSuggestion.collectAsState().value,
-                                    onAnswerSelected = { isYes ->
-                                        healthViewModel.onQuestionAnswered(isYes, question)
-                                    }
-                                )
-                            }
-                        }
+
+                    }
                     }
                 }
             }

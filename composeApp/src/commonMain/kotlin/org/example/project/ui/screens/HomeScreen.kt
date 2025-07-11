@@ -167,23 +167,25 @@ fun HomeScreen(
                             .padding(horizontal = 16.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-
-                    if (bitmap != null) {
-                        Image(
-                            bitmap = bitmap,
-                            contentDescription = "Selected Image",
-                            contentScale = ContentScale.Crop,
+                        if (bitmap != null && !isShowingAddSheet) {
+                        Box(
                             modifier = Modifier
-                                .width(300.dp)
+                                .width(350.dp)
                                 .height(150.dp)
                                 .clip(RoundedCornerShape(20.dp))
-                                .background( MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
-
+                                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
                                 .align(Alignment.CenterHorizontally)
-                                .padding(top = 16.dp)
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
+                        ) {
+
+                                Image(
+                                    bitmap = bitmap,
+                                    contentDescription = "Selected Image",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                )
+                            }
+                        }
 
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),

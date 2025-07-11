@@ -181,7 +181,7 @@ fun AddImageSheetScreen(
                                 homeViewModel.loadPlantInfo(request)
                                 homeViewModel.setImage(uploadImageViewModel.image.value)
                                 onCloseClick()
-                              //  uploadImageViewModel.clear()
+                                uploadImageViewModel.clear()
                                 imageBitmapState.value = null
 
                             }
@@ -207,7 +207,9 @@ fun AddImageSheetScreen(
                                 healthViewModel.clear()
                                 val request = uploadImageViewModel.createRequest(base64Str)
                                 healthViewModel.loadHealthInfo(request)
-                                uploadImageViewModel.clear()
+
+                                healthViewModel.setImage(uploadImageViewModel.image.value)
+                               // uploadImageViewModel.clear()
                                 imageBitmapState.value = null
 
                                 onHealthRequestSent()

@@ -1,5 +1,7 @@
 package org.example.project.ui.viewModels
 
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +31,11 @@ class HealthViewModel (
     val errorMessage = _errorMessage.asStateFlow()
     private val _selectedSuggestion = MutableStateFlow<String?>(null)
     val selectedSuggestion = _selectedSuggestion.asStateFlow()
-
+    private val _image = mutableStateOf<ByteArray?>(null)
+    val image: State<ByteArray?> = _image
+    fun setImage(newImage: ByteArray?) {
+        _image.value = newImage
+    }
     // Loads health assessment data from API
     fun loadHealthInfo(request: RequestModel) {
         viewModelScope.launch {

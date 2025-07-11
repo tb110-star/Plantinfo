@@ -59,7 +59,7 @@ fun App() {
                 )
             },
             bottomBar = {
-                if (!showBackIcon) {
+            //    if (!showBackIcon) {
                     BottomNavigationBar(
                         navItems = NavigationItem.entries,
                         selectedNavItem = selectedTab,
@@ -73,7 +73,7 @@ fun App() {
                             }
                         }
                     )
-                }
+             //   }
             }
         ) { innerPadding ->
             NavHost(
