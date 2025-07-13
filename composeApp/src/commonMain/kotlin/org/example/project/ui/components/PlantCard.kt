@@ -52,14 +52,14 @@ fun PlantCard(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Surface(
-                    shape = RoundedCornerShape(4.dp),
-                    color = Color.Yellow.copy(alpha = 0.5f),
+                    shape = RoundedCornerShape(6.dp),
+                    color = Color(0xFFF5E65E),
                     tonalElevation = 2.dp,
                     modifier = Modifier
-                        .size(width = 48.dp, height = 28.dp)
+                        .size(width = 75.dp, height = 28.dp)
                 ) {
                     Text(
-                        text = "${(plant.probability * 100).toInt()}%",
+                        text = "Conf: ${(plant.probability * 100).toInt()}%",
                         modifier = Modifier
                             .padding(horizontal = 8.dp, vertical = 4.dp),
                         style = MaterialTheme.typography.labelSmall,

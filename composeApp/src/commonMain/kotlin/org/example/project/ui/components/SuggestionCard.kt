@@ -41,9 +41,9 @@ fun SuggestionCard(
             Spacer(modifier = Modifier.weight(2f))
             // Probability of the disease
             Text(
-                text = "Probability: ${suggestion.probability}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+                text = "Confidence: ${suggestion.probability}",
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color(0xFFF5E65E)
             )
             Spacer(modifier.height(10.dp))
 
@@ -60,68 +60,92 @@ fun SuggestionCard(
                 Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
                 // Show classification
+                /*
                 suggestion.details?.classification?.let {
                     Text(
-                        text = "📝 Classification: ${it.joinToString()}",
-                        style = MaterialTheme.typography.bodySmall,
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
+                        text = "📝 Classification:\n\n${it.joinToString()}",
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
+                 */
+                suggestion.details?.classification
+                    .takeIf { !it.isNullOrEmpty() }
+                    ?.let { classificationList ->
+                        Text(
+                            text = "📝 Classification: ${classificationList.joinToString()}",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
+                Spacer(modifier.height(10.dp))
+
+                Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
+
                 // Show common names
+              /*
                 suggestion.details?.commonName?.let {
                     Text(
-                        text = "🌱 Common Names: ${it.joinToString()}",
-                        style = MaterialTheme.typography.bodySmall,
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.SemiBold,
-                        color = MaterialTheme.colorScheme.primary
+                        text = "🌱 Common Names:\n\n${it.joinToString()}",
+                        style = MaterialTheme.typography.bodyMedium,
                     )
                 }
+               */
+                suggestion.details?.commonName
+                    .takeIf { !it.isNullOrEmpty() }
+                    ?.let { commonNames ->
+                        Text(
+                            text = "🌱 Common Names: ${commonNames.joinToString()}",
+                            style = MaterialTheme.typography.bodyMedium,
+                        )
+                    }
 
                 Spacer(Modifier.height(8.dp))
                 Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
                 // Treatments (chemical, biological, prevention)
                 suggestion.details?.treatment?.let { treatment ->
-                    treatment.chemical?.let {
+                    treatment.chemical
+                       ?.takeIf { it.isNotEmpty() }
+                        ?.let {
                         Surface(
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f),
                             shape = MaterialTheme.shapes.small,
                             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                         ) {
                             Text(
-                                text = "⚗️ Chemical: ${it.joinToString()}",
-                                style = MaterialTheme.typography.bodySmall,
+                                text = "⚗️ Chemical treatment:\n\n${it.joinToString()}",
+                                style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
                     }
 
-                    treatment.biological?.let {
+                    treatment.biological
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.let {
                         Surface(
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f),
                             shape = MaterialTheme.shapes.small,
                             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                         ) {
                             Text(
-                                text = "🦠 Biological: ${it.joinToString()}",
-                                style = MaterialTheme.typography.bodySmall,
+                                text = "🦠 Biological treatment:\n\n${it.joinToString()}",
+                                style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
                     }
 
-                    treatment.prevention?.let {
+                    treatment.prevention
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.let {
                         Surface(
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.2f),
                             shape = MaterialTheme.shapes.small,
                             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
                         ) {
                             Text(
-                                text = "🛡️ Prevention: ${it.joinToString()}",
-                                style = MaterialTheme.typography.bodySmall,
+                                text = "🛡️ Prevention treatment:\n\n${it.joinToString()}",
+                                style = MaterialTheme.typography.bodyMedium,
                                 modifier = Modifier.padding(8.dp)
                             )
                         }
@@ -140,8 +164,6 @@ fun SuggestionCard(
                     SimilarImagesRow(
                         images = images,
                          getImageUrlSmall = { it.urlSmall },
-                      //  getImageUrlSmall = { "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" },
-                      //  getImageUrlLarge =  { "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png" }
                          getImageUrlLarge = { it.url }
                     )
                     }

@@ -123,12 +123,13 @@ fun DetailsPlantScreen(
 
                 Spacer(Modifier.height(12.dp))
                 // Watering
+                /*
                 val wateringInfo = suggestion.details.watering
                 val bestWatering = suggestion.details.bestWatering.orEmpty()
 
                 val shortWatering = buildString {
                     if (wateringInfo != null) {
-                        append("Min:${wMin} , Max: ${wMax}\n")
+                        append("Min:${wMin} , Max: ${wMax}")
                     }
                 }.ifEmpty { "No watering data available." }
 
@@ -149,7 +150,41 @@ fun DetailsPlantScreen(
 
                 Spacer(Modifier.height(12.dp))
 
+
+                 */
+                suggestion.details.watering?.let { w ->
+                    val short = "Min:${w.min} , Max:${w.max}"
+                    val rest = suggestion.details.bestWatering.orEmpty()
+                    ExpandableInfoCard(
+                        title = "Watering",
+                        icon = Icons.Default.WaterDrop,
+                        iconColor = Color(0xFF42A5F5),
+                        shortDescription = short,
+                        remainingDescription = rest,
+                        backgroundColor = Color(0xFFB3E5FC).copy(alpha = 0.7f)
+                    )
+                    Spacer(Modifier.height(12.dp))
+                }
+
 // Light
+
+                suggestion.details.bestLightCondition
+                    .orEmpty()
+                    .takeIf(String::isNotBlank)
+                    ?.let { text ->
+                        val (short, rest) = vM.splitTextSmart(text)
+                        ExpandableInfoCard(
+                            title = "Light",
+                            icon = Icons.Default.WbSunny,
+                            iconColor = Color(0xFFFFC107),
+                            shortDescription = short,
+                            remainingDescription = rest,
+                            backgroundColor = Color(0xFFE0E3BC).copy(alpha = 0.7f)
+                        )
+                        Spacer(Modifier.height(12.dp))
+                    }
+
+                /*
                 val lightText = suggestion.details.bestLightCondition?.takeIf { it.isNotBlank() } ?: "No light data available."
                 val (shortLight, restLight) = vM.splitTextSmart(lightText)
 
@@ -164,7 +199,10 @@ fun DetailsPlantScreen(
 
                 Spacer(Modifier.height(12.dp))
 
+
+                 */
 // Soil
+                /*
                 val soilText = suggestion.details.bestSoilType?.takeIf { it.isNotBlank() } ?: "No soil data available."
                 val (shortSoil, restSoil) = vM.splitTextSmart(soilText)
 
@@ -179,7 +217,25 @@ fun DetailsPlantScreen(
 
                 Spacer(Modifier.height(12.dp))
 
+
+                 */
+                suggestion.details.bestSoilType
+                    .orEmpty()
+                    .takeIf(String::isNotBlank)
+                    ?.let { text ->
+                        val (short, rest) = vM.splitTextSmart(text)
+                        ExpandableInfoCard(
+                            title = "Soil",
+                            icon = Icons.Default.Landscape,
+                            iconColor = Color(0xFF795548),
+                            shortDescription = short,
+                            remainingDescription = rest,
+                            backgroundColor = Color(0xFFD7CCC8).copy(alpha = 0.7f)
+                        )
+                        Spacer(Modifier.height(12.dp))
+                    }
 // Uses
+                /*
                 val usesText = suggestion.details.commonUses?.takeIf { it.isNotBlank() } ?: "No usage data available."
                 val (shortUses, restUses) = vM.splitTextSmart(usesText)
 
@@ -191,6 +247,22 @@ fun DetailsPlantScreen(
                     remainingDescription = restUses,
                     backgroundColor = Color(0xFFCCAAAA).copy(alpha = 0.7f)
                 )
+                */
+                suggestion.details.commonUses
+                    .orEmpty()
+                    .takeIf(String::isNotBlank)
+                    ?.let { text ->
+                        val (short, rest) = vM.splitTextSmart(text)
+                        ExpandableInfoCard(
+                            title = "Uses",
+                            icon = Icons.Default.Spa,
+                            iconColor = Color(0xFF3EB6AB),
+                            shortDescription = short,
+                            remainingDescription = rest,
+                            backgroundColor = Color(0xFFCCAAAA).copy(alpha = 0.7f)
+                        )
+                        Spacer(Modifier.height(12.dp))
+                    }
             }
         }
     }

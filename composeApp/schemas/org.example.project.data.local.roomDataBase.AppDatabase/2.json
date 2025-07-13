@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "470ae02fdf369e7f37f3b8790d03926d",
+    "identityHash": "910108bae653e001d2e7972c3871e0c6",
     "entities": [
       {
         "tableName": "plantHistory",
@@ -92,7 +92,7 @@
       },
       {
         "tableName": "health_history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `date` INTEGER NOT NULL, `healthStatus` TEXT NOT NULL, `diseaseName` TEXT, `probability` REAL, `description` TEXT NOT NULL, `questionAnswered` TEXT, `isConfirmed` INTEGER NOT NULL, `imageUploadedUrl` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `date` INTEGER NOT NULL, `healthStatus` TEXT NOT NULL, `diseaseName` TEXT, `probability` REAL, `description` TEXT NOT NULL, `classification` TEXT, `commonNames` TEXT, `chemicalTreatment` TEXT, `biologicalTreatment` TEXT, `preventionTreatment` TEXT, `questionAnswered` TEXT, `isConfirmed` INTEGER NOT NULL, `imageUploadedUrl` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -129,6 +129,31 @@
             "notNull": true
           },
           {
+            "fieldPath": "classification",
+            "columnName": "classification",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "commonNames",
+            "columnName": "commonNames",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "chemicalTreatment",
+            "columnName": "chemicalTreatment",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "biologicalTreatment",
+            "columnName": "biologicalTreatment",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "preventionTreatment",
+            "columnName": "preventionTreatment",
+            "affinity": "TEXT"
+          },
+          {
             "fieldPath": "questionAnswered",
             "columnName": "questionAnswered",
             "affinity": "TEXT"
@@ -155,7 +180,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '470ae02fdf369e7f37f3b8790d03926d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '910108bae653e001d2e7972c3871e0c6')"
     ]
   }
 }

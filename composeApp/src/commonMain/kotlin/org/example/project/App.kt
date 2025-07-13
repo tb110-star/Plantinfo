@@ -86,7 +86,7 @@ fun App() {
             {
                 composable<HomeScreenRoutes> {
                     showBackIcon = false
-                    currentTopBarTitle = NavigationItem.Home.label
+                    currentTopBarTitle =/* NavigationItem.Home.label*/"Plantfo"
                     HomeScreen(
                         onDetailsClick = { details ->
                             plantViewModel.selectSuggestion(details)
@@ -118,9 +118,9 @@ fun App() {
                     SettingsScreen()
                 }
                 composable("details") {
-                    showBackIcon = true
-                    currentTopBarTitle = "Details Info"
                     val suggestion by plantViewModel.selectedSuggestion.collectAsState()
+                    showBackIcon = true
+                    currentTopBarTitle = suggestion?.name?:"Details Info"
 
                     if (suggestion != null) {
                         DetailsPlantScreen(

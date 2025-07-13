@@ -93,7 +93,10 @@ fun PlantHistoryCard(
 
             if (expanded) {
                 Spacer(Modifier.height(8.dp))
-                Text(
+                plant.bestLight
+                    .takeIf { !it.isNullOrBlank() && it != "Not specified" }
+                    ?.let { light ->
+                    Text(
                     text = "🌞 Best Light: ${plant.bestLight}",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -102,6 +105,10 @@ fun PlantHistoryCard(
                         .background(Color.Black.copy(alpha = 0.1f))
                         .padding(8.dp)
                 )
+                    }
+                plant.bestSoil
+                    .takeIf { !it.isNullOrBlank() && it != "Not specified" }
+                    ?.let { soil ->
                 Text(
                     text = "🌱 Best Soil: ${plant.bestSoil}",
                     modifier = Modifier
@@ -111,6 +118,10 @@ fun PlantHistoryCard(
                         .background(Color.Black.copy(alpha = 0.1f))
                         .padding(8.dp)
                 )
+                }
+                plant.bestWatering
+                    .takeIf { !it.isNullOrBlank() && it != "Not specified" }
+                    ?.let { watering ->
                 Text(
                     text = "💧 Best Watering: ${plant.bestWatering}",
                     modifier = Modifier
@@ -120,6 +131,11 @@ fun PlantHistoryCard(
                         .background(Color.Black.copy(alpha = 0.1f))
                         .padding(8.dp)
                 )
+                }
+
+                plant.uses
+                    .takeIf { !it.isNullOrBlank() && it != "Not specified" }
+                    ?.let { uses ->
                 Text(
                     text = "🔍 Uses: ${plant.uses}",
                     modifier = Modifier
@@ -129,6 +145,7 @@ fun PlantHistoryCard(
                         .background(Color.Black.copy(alpha = 0.1f))
                         .padding(8.dp)
                 )
+                }
                 Text(
                     text = "📝 Description: ${plant.description}",
                     modifier = Modifier

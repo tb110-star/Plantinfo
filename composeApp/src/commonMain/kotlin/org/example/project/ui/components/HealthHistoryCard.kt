@@ -103,16 +103,7 @@ fun HealthHistoryCard(
                 Spacer(Modifier.height(8.dp))
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "\uD83D\uDCDD Classification:${health.description}",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(4.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Black.copy(alpha = 0.1f))
-                        .padding(8.dp)
-                )
-                Text(
-                    text = "❓ Answered Q: ${health.questionAnswered ?: "N/A"}",
+                    text = "\uD83D\uDCDD Description: ${health.description}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)
@@ -121,6 +112,75 @@ fun HealthHistoryCard(
                         .padding(8.dp)
                 )
 
+                health.classification
+                    ?.takeIf { it != "No classification available" }
+                    ?.let {
+                        Text(
+                            text = "📚 Classification: $it",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.Black.copy(alpha = 0.05f))
+                                .padding(8.dp)
+                        )
+                    }
+
+                health.commonNames
+                    ?.takeIf { it != "No common names available" }
+                    ?.let {
+                        Text(
+                            text = "🪴 Common Names: $it",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.Black.copy(alpha = 0.05f))
+                                .padding(8.dp)
+                        )
+                    }
+
+                health.chemicalTreatment
+                    ?.takeIf { it != "No chemical treatment available" }
+                    ?.let {
+                        Text(
+                            text = "🧪 Chemical Treatment: $it",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.Black.copy(alpha = 0.05f))
+                                .padding(8.dp)
+                        )
+                    }
+
+                health.biologicalTreatment
+                    ?.takeIf { it != "No biological treatment available" }
+                    ?.let {
+                        Text(
+                            text = "🧬 Biological Treatment: $it",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.Black.copy(alpha = 0.05f))
+                                .padding(8.dp)
+                        )
+                    }
+
+                health.preventionTreatment
+                    ?.takeIf { it != "No prevention treatment available" }
+                    ?.let {
+                        Text(
+                            text = "🚫 Prevention: $it",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.Black.copy(alpha = 0.05f))
+                                .padding(8.dp)
+                        )
+                    }
             }
         }
     }

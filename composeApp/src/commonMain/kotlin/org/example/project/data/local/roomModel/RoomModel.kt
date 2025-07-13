@@ -8,8 +8,6 @@ import org.example.project.data.model.DiseaseSuggestion
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.Suggestions
 
-
-
 @Entity(tableName = "plantHistory")
 data class PlantHistoryEntity(
     @PrimaryKey val id: String,
@@ -63,6 +61,13 @@ data class HealthHistoryEntity(
     val diseaseName: String? = "Not specified",
     val probability: Double?,
     val description: String = "No description available",
+
+    val classification: String? = null,
+    val commonNames: String? = null,
+    val chemicalTreatment: String? = null,
+    val biologicalTreatment: String? = null,
+    val preventionTreatment: String? = null,
+
     val questionAnswered: String? = null,
     val isConfirmed: Boolean = false,
     val imageUploadedUrl: String?,
@@ -79,6 +84,21 @@ fun DiseaseSuggestion.toHealthHistory(
         diseaseName = this.name,
         probability = this.probability,
         description = this.details?.description ?: "No description available",
+        classification = this.details?.classification?.takeIf { it.isNotEmpty() }?.joinToString()
+            ?: "No classification available",
+
+        commonNames = this.details?.commonName?.takeIf { it.isNotEmpty() }?.joinToString()
+            ?: "No common names available",
+
+        chemicalTreatment = this.details?.treatment?.chemical?.takeIf { it.isNotEmpty() }?.joinToString()
+            ?: "No chemical treatment available",
+
+        biologicalTreatment = this.details?.treatment?.biological?.takeIf { it.isNotEmpty() }?.joinToString()
+            ?: "No biological treatment available",
+
+        preventionTreatment = this.details?.treatment?.prevention?.takeIf { it.isNotEmpty() }?.joinToString()
+            ?: "No prevention treatment available",
+
         questionAnswered = selectedSuggestion,
         isConfirmed = true,
         imageUploadedUrl = serverImageUrl
