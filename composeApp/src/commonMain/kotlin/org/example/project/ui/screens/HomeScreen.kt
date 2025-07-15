@@ -169,7 +169,7 @@ fun HomeScreen(
                         if (bitmap != null && !isShowingAddSheet) {
                         Box(
                             modifier = Modifier
-                                .width(400.dp)
+                                .width(380.dp)
                                 .height(150.dp)
                                 .clip(RoundedCornerShape(20.dp))
                                 .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f))
@@ -187,7 +187,8 @@ fun HomeScreen(
                         }
                         Spacer(modifier = Modifier.height(8.dp))
 
-                    LazyColumn(
+
+                        LazyColumn(
                         modifier = Modifier.fillMaxSize(),
                         verticalArrangement = Arrangement.Top
                     ) {

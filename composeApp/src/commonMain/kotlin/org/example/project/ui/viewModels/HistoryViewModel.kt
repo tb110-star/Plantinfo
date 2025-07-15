@@ -3,21 +3,18 @@ package org.example.project.ui.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepository
 import org.example.project.data.local.plantHistoryRoomRepository.PlantHistoryRepository
-import org.example.project.ui.screens.HistoryUiState
 
 class HistoryViewModel(
     private val plantRepo: PlantHistoryRepository,
     private val healthRepo: HealthHistoryRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(HistoryUiState.IDLE)
-    val uiState = _uiState.asStateFlow()
+    //private val _uiState = MutableStateFlow(HistoryUiState.IDLE)
+   // val uiState = _uiState.asStateFlow()
 
     private val _category = MutableStateFlow("All")
     val category = _category.asStateFlow()

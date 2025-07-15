@@ -23,10 +23,7 @@ import coil3.compose.AsyncImage
 import org.example.project.data.model.Suggestions
 import org.example.project.ui.components.ExpandableInfoCard
 import org.example.project.ui.components.SimilarImagesRow
-import org.example.project.ui.viewModels.HealthViewModel
 import org.example.project.ui.viewModels.HomeViewModel
-import org.example.project.ui.viewModels.UploadImageViewModel
-import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -37,14 +34,11 @@ fun DetailsPlantScreen(
 ) {
     val showDialog = remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
     val showSnackbar = remember { mutableStateOf(false) }
     val snackbarMessage = remember { mutableStateOf("") }
 
 
     val d = suggestion.details
-    val wMin = d.watering?.min ?: "-"
-    val wMax = d.watering?.max ?: "-"
     LaunchedEffect(showSnackbar.value) {
         if (showSnackbar.value) {
             snackbarHostState.showSnackbar(
@@ -123,35 +117,6 @@ fun DetailsPlantScreen(
 
                 Spacer(Modifier.height(12.dp))
                 // Watering
-                /*
-                val wateringInfo = suggestion.details.watering
-                val bestWatering = suggestion.details.bestWatering.orEmpty()
-
-                val shortWatering = buildString {
-                    if (wateringInfo != null) {
-                        append("Min:${wMin} , Max: ${wMax}")
-                    }
-                }.ifEmpty { "No watering data available." }
-
-                val restWatering = if (bestWatering.isNotBlank()) {
-                    "Best watering:\n\n$bestWatering"
-                } else {
-                    "No Best watering data available."
-                }
-                ExpandableInfoCard(
-                    title = "Watering",
-                    icon = Icons.Default.WaterDrop,
-                    iconColor = Color(0xFF42A5F5),
-                    shortDescription = shortWatering,
-                    remainingDescription = restWatering,
-                    backgroundColor = Color(0xFFB3E5FC).copy(alpha = 0.7f)
-                )
-
-
-                Spacer(Modifier.height(12.dp))
-
-
-                 */
                 suggestion.details.watering?.let { w ->
                     val short = "Min:${w.min} , Max:${w.max}"
                     val rest = suggestion.details.bestWatering.orEmpty()
@@ -184,41 +149,7 @@ fun DetailsPlantScreen(
                         Spacer(Modifier.height(12.dp))
                     }
 
-                /*
-                val lightText = suggestion.details.bestLightCondition?.takeIf { it.isNotBlank() } ?: "No light data available."
-                val (shortLight, restLight) = vM.splitTextSmart(lightText)
-
-                ExpandableInfoCard(
-                    title = "Light",
-                    icon = Icons.Default.WbSunny,
-                    iconColor = Color(0xFFFFC107),
-                    shortDescription = shortLight,
-                    remainingDescription = restLight,
-                    backgroundColor = Color(0xFFE0E3BC).copy(alpha = 0.7f)
-                )
-
-                Spacer(Modifier.height(12.dp))
-
-
-                 */
 // Soil
-                /*
-                val soilText = suggestion.details.bestSoilType?.takeIf { it.isNotBlank() } ?: "No soil data available."
-                val (shortSoil, restSoil) = vM.splitTextSmart(soilText)
-
-                ExpandableInfoCard(
-                    title = "Soil",
-                    icon = Icons.Default.Landscape,
-                    iconColor = Color(0xFF795548),
-                    shortDescription = shortSoil,
-                    remainingDescription = restSoil,
-                    backgroundColor = Color(0xFFD7CCC8).copy(alpha = 0.7f)
-                )
-
-                Spacer(Modifier.height(12.dp))
-
-
-                 */
                 suggestion.details.bestSoilType
                     .orEmpty()
                     .takeIf(String::isNotBlank)
@@ -235,19 +166,6 @@ fun DetailsPlantScreen(
                         Spacer(Modifier.height(12.dp))
                     }
 // Uses
-                /*
-                val usesText = suggestion.details.commonUses?.takeIf { it.isNotBlank() } ?: "No usage data available."
-                val (shortUses, restUses) = vM.splitTextSmart(usesText)
-
-                ExpandableInfoCard(
-                    title = "Uses",
-                    icon = Icons.Default.Spa,
-                    iconColor = Color(0xFF3EB6AB),
-                    shortDescription = shortUses,
-                    remainingDescription = restUses,
-                    backgroundColor = Color(0xFFCCAAAA).copy(alpha = 0.7f)
-                )
-                */
                 suggestion.details.commonUses
                     .orEmpty()
                     .takeIf(String::isNotBlank)
@@ -277,12 +195,6 @@ fun DetailsPlantScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Button(
-                        onClick = { showDialog.value = false },
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("No")
-                    }
-                    Button(
                         onClick = {
                             vM.saveToPlantHistory(
                                 suggestion = suggestion,
@@ -297,7 +209,14 @@ fun DetailsPlantScreen(
                         },
                         modifier = Modifier.weight(1f)
                     ) {
-                        Text("Yes")
+                        Text("Save")
+                    }
+
+                    Button(
+                        onClick = { showDialog.value = false },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text("Cancle")
                     }
 
                 }

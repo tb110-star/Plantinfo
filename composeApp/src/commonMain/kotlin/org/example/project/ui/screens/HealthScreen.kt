@@ -24,6 +24,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import org.example.project.data.model.DiseaseSuggestion
 import org.example.project.ui.components.TextScreenStateCard
 import org.jetbrains.compose.resources.decodeToImageBitmap
 
@@ -35,7 +36,7 @@ enum class HealthUiState {
 }
 @Composable
 fun HealthScreen(
-    healthViewModel: HealthViewModel
+    healthViewModel: HealthViewModel = koinViewModel()
 ) {
     val healthInfo by healthViewModel.healthInfo.collectAsState()
     val isLoading by healthViewModel.isLoading.collectAsState()
@@ -61,6 +62,8 @@ fun HealthScreen(
         .blur(0.1.dp)
     val image = healthViewModel.image.value
     val bitmap = image?.decodeToImageBitmap()
+    val showDialog = remember { mutableStateOf(false) }
+    val pendingSuggestion = remember { mutableStateOf<DiseaseSuggestion?>(null) }
 
     Scaffold { innerPadding ->
         Box(
@@ -79,7 +82,6 @@ fun HealthScreen(
                         )
                     }
                 }
-
                 HealthUiState.ERROR -> {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,7 +95,6 @@ fun HealthScreen(
 
                     }
                 }
-
                 HealthUiState.DATA -> {
                     Column(
                         modifier = Modifier
@@ -132,12 +133,9 @@ fun HealthScreen(
 
                             healthInfo?.let {
                                 HealthSummaryCard(healthInfo = it)
-
                             }
                                    Spacer(modifier = Modifier.height(16.dp))
-
                                }
-
                             // Question
                             healthInfo?.result?.disease?.question?.let { question ->
                                    item {
@@ -149,12 +147,8 @@ fun HealthScreen(
                                     }
                                 )
                                        Spacer(modifier = Modifier.height(16.dp))
-
                                    }
-
                             }
-
-
                         // Suggestions
                         if (expandedId == null) {
                             val grouped = suggestions.chunked(2)
@@ -193,7 +187,9 @@ fun HealthScreen(
                                 item {
                                     SuggestionCard(
                                         onConfirm = { confirmed ->
-                                            healthViewModel.saveConfirmedSuggestion(confirmed)
+                                          //  healthViewModel.saveConfirmedSuggestion(confirmed)
+                                            pendingSuggestion.value = confirmed
+                                            showDialog.value = true
                                         },
                                         suggestion = suggestion,
                                         isExpanded = true,// This is the expanded card
@@ -210,12 +206,53 @@ fun HealthScreen(
                                 }
                             }
                         }
-
-
                     }
                     }
                 }
             }
         }
+    }
+    if (showDialog.value){
+        AlertDialog(
+            onDismissRequest = {
+                showDialog.value = false
+                pendingSuggestion.value = null
+            },
+            title = { Text("Confirm Save") },
+            text = { Text("Do you want to save this result to history?") },
+            confirmButton = {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                Button(
+                    onClick = {
+                    pendingSuggestion.value?.let {
+                        healthViewModel.saveConfirmedSuggestion(it)
+                    }
+                    showDialog.value = false
+                    pendingSuggestion.value = null
+                },
+                    modifier = Modifier.weight(1f)
+
+                ) {
+                    Text("Save")
+                }
+
+            Button(
+                onClick =
+                    {
+                    showDialog.value = false
+                    pendingSuggestion.value = null
+                    },
+                modifier = Modifier.weight(1f)
+
+            ) {
+                    Text("Cancel")
+                   }
+                }
+
+            }
+        )
     }
 }

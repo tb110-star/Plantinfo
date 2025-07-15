@@ -1,5 +1,4 @@
 package org.example.project.ui.components
-import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,15 +33,15 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun PlantHistoryCard(
     plant: PlantHistoryEntity,
-    onDelete: () -> Unit
+   // onDelete: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val imageUrl = plant.imageUploadedUrl
     val placeholderPainter = painterResource(Res.drawable.placeholder)
     val errorPainter = painterResource(Res.drawable.error)
     val confidencePercent = ((plant.probability ?: 0.0) * 100).toInt()
-    var showDialog by remember { mutableStateOf(false) }
-    val offsetX = remember { Animatable(0f) }
+  //  var showDialog by remember { mutableStateOf(false) }
+  //  val offsetX = remember { Animatable(0f) }
     Card(
         onClick = { expanded = !expanded },
         modifier = Modifier
@@ -50,7 +49,7 @@ fun PlantHistoryCard(
             .padding(8.dp)
             .combinedClickable(
                 onClick = { expanded = !expanded },
-                onLongClick = { onDelete() }
+               // onLongClick = { onDelete() }
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.3f))
@@ -63,7 +62,7 @@ fun PlantHistoryCard(
                 Column {
                     Text(plant.name ?: "No name", style = MaterialTheme.typography.titleMedium)
                     Text("Plant", color = Color.Gray, style = MaterialTheme.typography.bodyMedium)
-                    Text("Confidence: $confidencePercent%", style = MaterialTheme.typography.bodySmall, color = Color.Gray)
+                    Text("Confidence: $confidencePercent%", style = MaterialTheme.typography.bodySmall, color = Color.Yellow)
                 }
 
                 imageUrl?.let {
@@ -95,7 +94,7 @@ fun PlantHistoryCard(
                 Spacer(Modifier.height(8.dp))
                 plant.bestLight
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
-                    ?.let { light ->
+                    ?.let { _ ->
                     Text(
                     text = "🌞 Best Light: ${plant.bestLight}",
                     modifier = Modifier
@@ -108,7 +107,7 @@ fun PlantHistoryCard(
                     }
                 plant.bestSoil
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
-                    ?.let { soil ->
+                    ?.let { _ ->
                 Text(
                     text = "🌱 Best Soil: ${plant.bestSoil}",
                     modifier = Modifier
@@ -121,7 +120,7 @@ fun PlantHistoryCard(
                 }
                 plant.bestWatering
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
-                    ?.let { watering ->
+                    ?.let { _ ->
                 Text(
                     text = "💧 Best Watering: ${plant.bestWatering}",
                     modifier = Modifier
@@ -135,7 +134,7 @@ fun PlantHistoryCard(
 
                 plant.uses
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
-                    ?.let { uses ->
+                    ?.let { _ ->
                 Text(
                     text = "🔍 Uses: ${plant.uses}",
                     modifier = Modifier

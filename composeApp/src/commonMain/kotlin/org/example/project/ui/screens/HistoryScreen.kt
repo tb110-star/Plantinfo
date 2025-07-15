@@ -20,7 +20,7 @@ import org.example.project.ui.viewModels.HistoryItem
 import org.example.project.ui.viewModels.HistoryViewModel
 import org.koin.compose.viewmodel.koinViewModel
 enum class HistoryUiState {
-    IDLE,
+
     LOADING,
     EMPTY,
     DATA,
@@ -75,7 +75,8 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
                                 ) {
                                     PlantHistoryCard(
                                         plant = item.plant,
-                                        onDelete = {}                                    )
+                                      //  onDelete = {}
+                                    )
                                 }
                             }
                             is HistoryItem.HealthItem -> {
@@ -86,7 +87,7 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
                                 ) {
                                     HealthHistoryCard(
                                         health = item.health,
-                                        onDelete = { }
+                                       // onDelete = { }
                                     )
                                 }
                             }
@@ -101,7 +102,7 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
                 )
             }
 
-            else -> {}
+
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -60,17 +61,18 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(400.dp)
+                    .height(380.dp)
                     .padding(horizontal = 24.dp)
-                    .clip(RoundedCornerShape(45.dp))
+
             ) {
                 Image(
                     painter = logoPainter,
                     contentDescription = "Logo",
                     modifier = Modifier
                         .fillMaxSize()
+
                         .clip(RoundedCornerShape(45.dp)),
-                    contentScale = ContentScale.Fit
+                    contentScale = ContentScale.Crop
                 )
 
                 Canvas(modifier = Modifier.fillMaxSize()) {
@@ -105,7 +107,7 @@ fun WelcomeScreen(onStartClick: () -> Unit) {
                 .height(50.dp)
                 .fillMaxWidth()
         ) {
-            Text(text = "Start", fontSize = 18.sp, color = Color.White)
+            Text(text = "Start", fontSize = 28.sp, color = Color.White)
         }
     }
 }

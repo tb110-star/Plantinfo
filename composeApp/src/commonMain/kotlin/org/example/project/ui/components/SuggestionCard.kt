@@ -6,7 +6,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.example.project.data.model.*
 
@@ -57,17 +56,9 @@ fun SuggestionCard(
                     )
                 }
                 Spacer(Modifier.height(8.dp))
-                Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
+                HorizontalDivider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
                 // Show classification
-                /*
-                suggestion.details?.classification?.let {
-                    Text(
-                        text = "📝 Classification:\n\n${it.joinToString()}",
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-                 */
                 suggestion.details?.classification
                     .takeIf { !it.isNullOrEmpty() }
                     ?.let { classificationList ->
@@ -78,17 +69,9 @@ fun SuggestionCard(
                     }
                 Spacer(modifier.height(10.dp))
 
-                Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
+                HorizontalDivider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
 
                 // Show common names
-              /*
-                suggestion.details?.commonName?.let {
-                    Text(
-                        text = "🌱 Common Names:\n\n${it.joinToString()}",
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-               */
                 suggestion.details?.commonName
                     .takeIf { !it.isNullOrEmpty() }
                     ?.let { commonNames ->
@@ -99,7 +82,7 @@ fun SuggestionCard(
                     }
 
                 Spacer(Modifier.height(8.dp))
-                Divider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
+                HorizontalDivider(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f))
                 Spacer(Modifier.height(8.dp))
                 // Treatments (chemical, biological, prevention)
                 suggestion.details?.treatment?.let { treatment ->
