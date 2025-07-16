@@ -5,7 +5,7 @@ It allows users to identify plants from images, detect diseases, and get detaile
 
 ---
 <p align="center">
-  <img src="logo.png" alt="Plantfo Logo" width="350"/>
+  <img src="logo.png" alt="Plantfo Logo" width="350" style="border-radius: 40px;"/>
 </p>
 
 ---
