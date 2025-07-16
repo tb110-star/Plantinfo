@@ -8,7 +8,7 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import io.ktor.client.statement.*
 import io.ktor.http.*
-import org.example.project.Secrets
+import org.example.project.secured.Secrets
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.PlantIdentificationResult
 import org.example.project.data.model.RequestModel
