@@ -18,4 +18,4 @@ captures
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # SecretKeys hidden from VCS
-composeApp/src/commonMain/kotlin/org/example/project/SecretKeys.kt
+composeApp/src/commonMain/kotlin/org/example/project/Keys
