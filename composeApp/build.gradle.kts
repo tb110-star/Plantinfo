@@ -4,6 +4,15 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
+import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.TaskAction
+
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.OutputFile
+import java.io.File
+
+
+
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)

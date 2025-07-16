@@ -8,11 +8,10 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import org.example.project.Secrets
 import org.example.project.data.model.HealthAssessmentResponse
 import org.example.project.data.model.PlantIdentificationResult
 import org.example.project.data.model.RequestModel
-
-
 enum class AppLogLevel {
     DEBUG, INFO, ERROR
 }
@@ -22,7 +21,7 @@ fun appLog(level: AppLogLevel, message: String) {
 }
 
 class ApiService {
-    private val apiKey = "Jm1Fqb01dwZtjONk7zpNQ6aBw7gaOOUp0WWeKBLBhivW3JG7sV"
+    private val apiKey = Secrets.PLANT_API_KEY
     private val baseUrl = "https://plant.id/api/v3"
     private val client = HttpClient {
         install(ContentNegotiation) {

@@ -10,7 +10,7 @@ It allows users to identify plants from images, detect diseases, and get detaile
 
 ---
 
-## 📸 Screenshots
+##  Screenshots
 
 <p align="center">
   <img src="Screenshot_20250716_083237.png" alt="Plant Screen" width="250"/>
@@ -22,19 +22,19 @@ It allows users to identify plants from images, detect diseases, and get detaile
 ---
 
 
-## ✨ Features
+##  Features
 
-- 📷 **Capture & Select Plant Image:** Take photos using the camera or select from the gallery  
-- 🌱 **Plant Identification:** Identify plants via the Plant.id API  
-- 🦠 **Disease Detection:** Detect common plant diseases from images  
-- 💧 **Plant Care Advice:** Provide watering, lighting, and soil recommendations  
-- 📖 **History:** Save results in local storage  
-- 📦 **Offline Mode:** Use Fake Repository with local JSON for development/testing  
-- 🔁 **Multi-platform Support:** Android & iOS with shared Kotlin Multiplatform UI
+-  **Capture & Select Plant Image:** Take photos using the camera or select from the gallery  
+-  **Plant Identification:** Identify plants via the Plant.id API  
+-  **Disease Detection:** Detect common plant diseases from images  
+-  **Plant Care Advice:** Provide watering, lighting, and soil recommendations  
+-  **History:** Save results in local storage  
+-  **Offline Mode:** Use Fake Repository with local JSON for development/testing  
+-  **Multi-platform Support:** Android & iOS with shared Kotlin Multiplatform UI
   
 ---
 
-## 🏗 Architecture & Technology
+##  Architecture & Technology
 
 ### Architecture
 - **MVVM** (Model–View–ViewModel) for clean separation of concerns  
@@ -59,7 +59,7 @@ It allows users to identify plants from images, detect diseases, and get detaile
 ---
 
 
-## 🛠 Development Plan
+##  Development Plan
 
 -  Development & Optimization for iOS 
 -  Firestore as an online database for plants & user settings
@@ -72,7 +72,7 @@ It allows users to identify plants from images, detect diseases, and get detaile
 
 ---
 
-## 👤 Author
+##  Author
 
 **Tarlan Bakhtiari**  
 *PlantCareApp – Kotlin Multiplatform Final Project*
