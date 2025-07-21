@@ -33,15 +33,12 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun PlantHistoryCard(
     plant: PlantHistoryEntity,
-   // onDelete: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val imageUrl = plant.imageUploadedUrl
     val placeholderPainter = painterResource(Res.drawable.placeholder)
     val errorPainter = painterResource(Res.drawable.error)
     val confidencePercent = ((plant.probability ?: 0.0) * 100).toInt()
-  //  var showDialog by remember { mutableStateOf(false) }
-  //  val offsetX = remember { Animatable(0f) }
     Card(
         onClick = { expanded = !expanded },
         modifier = Modifier
@@ -49,10 +46,9 @@ fun PlantHistoryCard(
             .padding(8.dp)
             .combinedClickable(
                 onClick = { expanded = !expanded },
-               // onLongClick = { onDelete() }
             ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.3f))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
     ) {
         Column(Modifier.padding(12.dp)) {
             Row(
@@ -96,7 +92,7 @@ fun PlantHistoryCard(
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
                     ?.let { _ ->
                     Text(
-                    text = "🌞 Best Light: ${plant.bestLight}",
+                    text = "🌞 Best Light  :  ${plant.bestLight}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)
@@ -109,7 +105,7 @@ fun PlantHistoryCard(
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
                     ?.let { _ ->
                 Text(
-                    text = "🌱 Best Soil: ${plant.bestSoil}",
+                    text = "🌱 Best Soil  :  ${plant.bestSoil}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)
@@ -122,7 +118,7 @@ fun PlantHistoryCard(
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
                     ?.let { _ ->
                 Text(
-                    text = "💧 Best Watering: ${plant.bestWatering}",
+                    text = "💧 Best Watering  :  ${plant.bestWatering}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)
@@ -136,7 +132,7 @@ fun PlantHistoryCard(
                     .takeIf { !it.isNullOrBlank() && it != "Not specified" }
                     ?.let { _ ->
                 Text(
-                    text = "🔍 Uses: ${plant.uses}",
+                    text = "🔍 Uses  :  ${plant.uses}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)
@@ -146,7 +142,7 @@ fun PlantHistoryCard(
                 )
                 }
                 Text(
-                    text = "📝 Description: ${plant.description}",
+                    text = "📝 Description  :  ${plant.description}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp)

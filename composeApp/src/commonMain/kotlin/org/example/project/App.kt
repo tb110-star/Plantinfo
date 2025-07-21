@@ -27,7 +27,6 @@ fun App() {
     val healthViewModel: HealthViewModel = koinViewModel()
     val plantViewModel: HomeViewModel = koinViewModel()
     val viewModel: ThemeSettingsViewModel = koinViewModel()
-  //  val uploadImageViewModel: UploadImageViewModel = koinViewModel()
     val settings by viewModel.settings.collectAsState()
     val navController = rememberNavController()
     var selectedTab by rememberSaveable { mutableStateOf(NavigationItem.Home) }
@@ -61,7 +60,7 @@ fun App() {
                 )
             },
             bottomBar = {
-            //    if (!showBackIcon) {
+
                     BottomNavigationBar(
                         navItems = NavigationItem.entries,
                         selectedNavItem = selectedTab,
@@ -75,7 +74,7 @@ fun App() {
                             }
                         }
                     )
-             //   }
+
             }
         ) { innerPadding ->
             NavHost(

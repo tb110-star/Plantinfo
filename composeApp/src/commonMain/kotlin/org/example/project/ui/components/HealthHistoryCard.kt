@@ -34,7 +34,6 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun HealthHistoryCard(
     health: HealthHistoryEntity,
-   // onDelete: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     val imageUrl = health.imageUploadedUrl
@@ -50,10 +49,9 @@ fun HealthHistoryCard(
             .padding(8.dp)
             .combinedClickable(
                 onClick = { expanded = !expanded },
-               // onLongClick = { onDelete() }
             ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.3f))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
     ) {
         Column(Modifier.padding(12.dp)) {
             Row(
@@ -95,21 +93,24 @@ fun HealthHistoryCard(
             if (expanded) {
                 Spacer(Modifier.height(8.dp))
                 Spacer(Modifier.height(8.dp))
-                Text(
-                    text = "\uD83D\uDCDD Description: ${health.description}",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(4.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .background(Color.Black.copy(alpha = 0.1f))
-                        .padding(8.dp)
-                )
-
+                health.description
+                    .takeIf { it != "No description available" && it.isNotBlank() }
+                    ?.let {
+                        Text(
+                            text = "📝 Description  :  $it",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.Black.copy(alpha = 0.1f))
+                                .padding(8.dp)
+                        )
+                    }
                 health.classification
                     ?.takeIf { it != "No classification available" }
                     ?.let {
                         Text(
-                            text = "📚 Classification: $it",
+                            text = "📚 Classification  :  $it",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(4.dp)
@@ -123,7 +124,7 @@ fun HealthHistoryCard(
                     ?.takeIf { it != "No common names available" }
                     ?.let {
                         Text(
-                            text = "🪴 Common Names: $it",
+                            text = "🪴 Common Names  :  $it",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(4.dp)
@@ -137,7 +138,7 @@ fun HealthHistoryCard(
                     ?.takeIf { it != "No chemical treatment available" }
                     ?.let {
                         Text(
-                            text = "🧪 Chemical Treatment: $it",
+                            text = "🧪 Chemical Treatment  :  $it",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(4.dp)
@@ -151,7 +152,7 @@ fun HealthHistoryCard(
                     ?.takeIf { it != "No biological treatment available" }
                     ?.let {
                         Text(
-                            text = "🧬 Biological Treatment: $it",
+                            text = "🧬 Biological Treatment  :  $it",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(4.dp)
@@ -165,7 +166,7 @@ fun HealthHistoryCard(
                     ?.takeIf { it != "No prevention treatment available" }
                     ?.let {
                         Text(
-                            text = "🚫 Prevention: $it",
+                            text = "🚫 Prevention  :  $it",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(4.dp)

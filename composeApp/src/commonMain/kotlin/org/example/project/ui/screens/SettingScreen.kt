@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.example.project.ui.theme.MyThemeColor
 import org.example.project.ui.viewModels.ThemeSettingsViewModel
-import org.koin.compose.getKoin
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

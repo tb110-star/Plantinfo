@@ -1,6 +1,5 @@
 package org.example.project.ui.screens
 
-import AddImageSheetScreen
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,22 +26,19 @@ import org.koin.compose.viewmodel.koinViewModel
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.filled.Healing
-import androidx.compose.material.icons.filled.MedicalInformation
 import androidx.compose.material.icons.filled.MedicalServices
-import androidx.compose.material.icons.filled.Medication
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.window.Dialog
 import org.example.project.ui.components.TextScreenStateCard
 import org.example.project.ui.viewModels.HealthViewModel
-import org.example.project.ui.viewModels.UploadImageViewModel
 import org.jetbrains.compose.resources.decodeToImageBitmap
 
 // Enum to represent the UI state of the Home screen
@@ -77,10 +73,9 @@ fun HomeScreen(
         errorMessage != null -> HomeUiState.ERROR
         else -> HomeUiState.EMPTY
     }
-    val uploadImageViewModel: UploadImageViewModel = koinViewModel()
     val image = viewModel.image.value
     val bitmap = image?.decodeToImageBitmap()
-
+    val isImageDialogOpen by viewModel.isImageDialogOpen.collectAsState()
 
     Scaffold(
         floatingActionButton = {
@@ -182,10 +177,13 @@ fun HomeScreen(
                                     contentScale = ContentScale.Crop,
                                     modifier = Modifier
                                         .fillMaxSize()
+                                        .clickable {
+                                            viewModel.openImageDialog()
+                                        }
                                 )
                             }
                         }
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
 
 
                         LazyColumn(
@@ -240,6 +238,28 @@ fun HomeScreen(
                     )
                 }
             }
+            if (isImageDialogOpen && bitmap != null) {
+                Dialog(onDismissRequest = { viewModel.closeImageDialog() }) {
+                    Box(
+                        modifier = Modifier
+                            .clickable { viewModel.closeImageDialog() },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            bitmap = bitmap,
+                            contentDescription = "Full Image",
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .aspectRatio(bitmap.width.toFloat() / bitmap.height.toFloat())
+                                .clip(RoundedCornerShape(12.dp))
+                        )
+                    }
+                }
+            }
+
+
+
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,9 +25,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.example.project.data.model.DiseaseSuggestion
 import org.example.project.ui.components.TextScreenStateCard
 import org.jetbrains.compose.resources.decodeToImageBitmap
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.window.Dialog
 
 
 enum class HealthUiState {
@@ -64,6 +68,7 @@ fun HealthScreen(
     val bitmap = image?.decodeToImageBitmap()
     val showDialog = remember { mutableStateOf(false) }
     val pendingSuggestion = remember { mutableStateOf<DiseaseSuggestion?>(null) }
+    val isImageDialogOpen by healthViewModel.isImageDialogOpen.collectAsState()
 
     Scaffold { innerPadding ->
         Box(
@@ -123,6 +128,9 @@ fun HealthScreen(
                                         contentScale = ContentScale.Crop,
                                         modifier = Modifier
                                             .fillMaxSize()
+                                            .clickable {
+                                                healthViewModel.openImageDialog()
+                                            }
                                     )
                                 }
                             }
@@ -254,5 +262,24 @@ fun HealthScreen(
 
             }
         )
+    }
+    if (isImageDialogOpen && bitmap != null) {
+        Dialog(onDismissRequest = { healthViewModel.closeImageDialog() }) {
+            Box(
+                modifier = Modifier
+                    .clickable { healthViewModel.closeImageDialog() },
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    bitmap = bitmap,
+                    contentDescription = "Full Image",
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .aspectRatio(bitmap.width.toFloat() / bitmap.height.toFloat())
+                        .clip(RoundedCornerShape(12.dp))
+                )
+            }
+        }
     }
 }

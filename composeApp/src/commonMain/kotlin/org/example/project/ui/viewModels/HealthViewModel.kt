@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.example.project.data.local.healthHistoryRoomRepository.HealthHistoryRepository
@@ -33,6 +34,16 @@ class HealthViewModel (
     val selectedSuggestion = _selectedSuggestion.asStateFlow()
     private val _image = mutableStateOf<ByteArray?>(null)
     val image: State<ByteArray?> = _image
+    private val _isImageDialogOpen = MutableStateFlow(false)
+    val isImageDialogOpen: StateFlow<Boolean> = _isImageDialogOpen
+
+    fun openImageDialog() {
+        _isImageDialogOpen.value = true
+    }
+
+    fun closeImageDialog() {
+        _isImageDialogOpen.value = false
+    }
     fun setImage(newImage: ByteArray?) {
         _image.value = newImage
     }
@@ -94,9 +105,7 @@ class HealthViewModel (
         _selectedSuggestion.value = selectedName
         println("Selected Suggestion: $selectedName")
     }
-    fun refreshUI() {
-        _healthInfo.value = _healthInfo.value
-    }
+
     fun clear() {
         _healthInfo.value = null
         _isLoading.value = false

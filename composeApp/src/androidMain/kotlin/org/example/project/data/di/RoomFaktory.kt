@@ -3,7 +3,6 @@ package org.example.project.data.di
 import android.app.Application
 import androidx.room.Room
 import androidx.sqlite.db.framework.FrameworkSQLiteOpenHelperFactory
-import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 import org.example.project.data.local.roomDataBase.AppDatabase
 import org.example.project.data.local.roomDataBase.DB_FILE_NAME

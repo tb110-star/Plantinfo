@@ -75,7 +75,6 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
                                 ) {
                                     PlantHistoryCard(
                                         plant = item.plant,
-                                      //  onDelete = {}
                                     )
                                 }
                             }
@@ -87,7 +86,6 @@ fun HistoryScreen(viewModel: HistoryViewModel = koinViewModel()) {
                                 ) {
                                     HealthHistoryCard(
                                         health = item.health,
-                                       // onDelete = { }
                                     )
                                 }
                             }
