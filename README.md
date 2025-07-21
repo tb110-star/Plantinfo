@@ -29,7 +29,7 @@ It allows users to identify plants from images, detect diseases, and get detaile
 -  **Disease Detection:** Detect common plant diseases from images  
 -  **Plant Care Advice:** Provide watering, lighting, and soil recommendations  
 -  **History:** Save results in local storage  
--  **Offline Mode:** Use Fake Repository with local JSON for development/testing  
+-  **Offline API Mock:** Use Fake Repository with local JSON for development/testing  
 -  **Multi-platform Support:** Android & iOS with shared Kotlin Multiplatform UI
   
 ---
@@ -75,4 +75,4 @@ It allows users to identify plants from images, detect diseases, and get detaile
 ##  Author
 
 **Tarlan Bakhtiari**  
-*PlantCareApp – Kotlin Multiplatform Final Project*
+*tarlan.bakhtiari@gmail.com*
