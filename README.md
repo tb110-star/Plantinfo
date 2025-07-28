@@ -1,7 +1,7 @@
 # 🌿 Plant Identifire App (Plantfo)
 
 **PlantCareApp** is a cross-platform application built with Kotlin Multiplatform.  
-It allows users to identify plants from images, detect diseases, and get detailed care instructions using the Plant.id API , saving feature in local storage.
+It allows users to identify plants from images, detect diseases, and get detailed care instructions using the Plant.id API (https://www.kindwise.com/plant-id) , saving feature in local storage.
 
 ---
 <p align="center">
