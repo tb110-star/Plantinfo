@@ -17,8 +17,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import kmp.image.picker.ImageUriHelper
-
-
 class AndroidImageManager(
     private val cameraLauncher: ManagedActivityResultLauncher<Uri, Boolean>,
     private val galleryLauncher: ManagedActivityResultLauncher<PickVisualMediaRequest, Uri?>,

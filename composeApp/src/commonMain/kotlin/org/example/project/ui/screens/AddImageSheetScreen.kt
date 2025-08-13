@@ -27,10 +27,10 @@ import org.example.project.ui.viewModels.HealthViewModel
 import org.example.project.ui.viewModels.HomeViewModel
 import org.example.project.ui.viewModels.UploadImageViewModel
 import org.koin.compose.viewmodel.koinViewModel
-import shared.PermissionCallback
-import shared.PermissionStatus
-import shared.PermissionType
-import shared.createPermissionsManager
+import org.example.project.data.imagePickerPermission.shared.PermissionCallback
+import org.example.project.data.imagePickerPermission.shared.PermissionStatus
+import org.example.project.data.imagePickerPermission.shared.PermissionType
+import org.example.project.data.imagePickerPermission.shared.createPermissionsManager
 
 @Composable
 fun AddImageSheetScreen(

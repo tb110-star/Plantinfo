@@ -1,4 +1,4 @@
-package shared
+package org.example.project.data.imagePickerPermission.shared
 
 import androidx.compose.runtime.Composable
 
